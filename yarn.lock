@@ -1143,6 +1143,13 @@
   resolved "https://registry.npm.taobao.org/@types/strip-json-comments/download/@types/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha1-mqMMBNshKpoGSdaub9UKzMQHSKE=
 
+"@types/vue-select@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@types/vue-select/-/vue-select-2.5.0.tgz#b674ab3f37bb591e0c9f37b984a52342422f284f"
+  integrity sha512-dQh+ytU5dNTTD41Be6YkN1icu/VTaVe1ntcHktk5/OLuhVsDAketgXaILPEGx91Mi3c8Gj+f2Yg+JMW/9gwEuw==
+  dependencies:
+    vue ">=2.0.0"
+
 "@types/webpack-env@^1.15.1":
   version "1.15.1"
   resolved "https://registry.npm.taobao.org/@types/webpack-env/download/@types/webpack-env-1.15.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fwebpack-env%2Fdownload%2F%40types%2Fwebpack-env-1.15.1.tgz#c8e84705e08eed430b5e15b39c65b0944e4d1422"
@@ -10364,6 +10371,11 @@ vue-router@^3.1.5:
   resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.1.6.tgz#45f5a3a3843e31702c061dd829393554e4328f89"
   integrity sha1-RfWjo4Q+MXAsBh3YKTk1VOQyj4k=
 
+vue-select@^3.9.5:
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-3.9.5.tgz#d70a3815c2cd9ad3eae75adf47dab6f787b30f98"
+  integrity sha512-r392oaLYepNxY+uY1EN7r05VPOqSWGEfZ3LtJ3NqhrRbWCpWQ5EPSMN3QL80HdN3H+o1ueQA9P58K1vgGZ5P3Q==
+
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npm.taobao.org/vue-style-loader/download/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -10385,7 +10397,7 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@^2.6.11:
+vue@>=2.0.0, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1585964813072&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
