@@ -1,19 +1,29 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <AddExperience />
+    <Experiences />
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+import AddExperience from '@/components/AddExperience.vue'
+import Experiences from '@/components/Experiences.vue'
+
+export default Vue.extend({
+  components: {
+    Experiences,
+    AddExperience,
+  },
+})
+</script>
 
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

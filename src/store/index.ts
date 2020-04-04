@@ -1,11 +1,14 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
+import experiencesModule from '@/store/experiences'
+import { RootState } from '@/store/types'
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
-});
+Vue.use(Vuex)
+
+export default new Vuex.Store<RootState>({
+  // state: {},
+  // mutations: {},
+  // actions: {},
+  modules: { experiences: experiencesModule },
+})
