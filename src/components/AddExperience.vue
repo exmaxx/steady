@@ -8,7 +8,7 @@
       <h3>Co se stalo?</h3>
       <label>
         Datum
-        <input v-model="form.datetime" type="text" placeholder="datum" />
+        <input type="date" />
       </label>
 
       <label>
@@ -54,7 +54,7 @@ import Vue from 'vue'
 import { mapMutations } from 'vuex'
 
 import { Experience } from '@/store/experiences/types'
-import {fetchActivities, fetchEmotions} from '@/lib/api/firebase'
+import { fetchActivities, fetchEmotions } from '@/lib/api/firebase'
 
 export default Vue.extend({
   name: 'AddExperience',
@@ -77,7 +77,7 @@ export default Vue.extend({
 
     emotions() {
       return fetchEmotions()
-    }
+    },
   },
 
   methods: {
