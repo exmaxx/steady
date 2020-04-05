@@ -1,4 +1,4 @@
-import { FirebaseTypes } from '@/lib/api/types'
+import * as FirebaseTypes from '@/lib/api/types'
 
 export const fetchEmotions = (): FirebaseTypes.Tag[] => [
   'stres',

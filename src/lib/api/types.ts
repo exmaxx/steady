@@ -1,4 +1,2 @@
-export namespace FirebaseTypes {
-  export type Tag = string
-  export type Activity = string
-}
+export type Tag = string
+export type Activity = string

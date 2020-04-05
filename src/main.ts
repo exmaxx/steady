@@ -1,9 +1,9 @@
 import Vue from 'vue'
+import VueSelect from 'vue-select'
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueSelect from 'vue-select'
 
 // Import global CSS
 import '@/main.scss'
