@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <AddExperience />
-    <Experiences />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-import AddExperience from '@/components/AddExperience.vue'
-import Experiences from '@/components/Experiences.vue'
+import AddExperience from '@/views/AddExperienceView.vue'
+import Experiences from '@/views/ExperiencesView.vue'
 
 export default Vue.extend({
   components: {

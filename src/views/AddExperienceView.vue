@@ -1,14 +1,6 @@
 <template>
   <div class="add-experience">
-    <button
-      v-if="!showForm"
-      class="pure-button pure-button-primary"
-      @click="showForm = true"
-    >
-      <i class="fas fa-plus"></i>
-    </button>
-
-    <form v-if="showForm" class="pure-form pure-form-aligned">
+    <form class="pure-form pure-form-aligned">
       <fieldset>
         <legend>Co se stalo?</legend>
 
@@ -100,9 +92,10 @@
       <button class="pure-button pure-button-primary" @click.prevent="submit">
         Pridej
       </button>
-      <button class="pure-button" @click.prevent="showForm = false">
-        Zavri
-      </button>
+
+      <router-link class="pure-button" :to="{ name: 'experiences' }">
+        Zpet
+      </router-link>
     </form>
   </div>
 </template>
@@ -119,7 +112,6 @@ export default Vue.extend({
 
   data() {
     return {
-      showForm: false,
       form: {
         datetime: '',
         story: '',
@@ -142,8 +134,8 @@ export default Vue.extend({
     ...mapMutations(['addExperience']),
 
     submit() {
-      this.showForm = false
       this.addExperience(this.form)
+      this.$router.push({name: 'experiences'})
     },
   },
 })

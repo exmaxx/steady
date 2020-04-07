@@ -1,5 +1,9 @@
 <template>
   <div>
+    <router-link :to="{ name: 'add-experience' }" class="pure-button pure-button-primary">
+      <i class="fas fa-plus"></i>
+    </router-link>
+
     <div v-for="experience in experiences" :key="experience.datetime">
       <h2>{{ experience.datetime }}</h2>
       <div>
