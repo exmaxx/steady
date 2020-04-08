@@ -5,8 +5,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import Firebase from '@/lib/api/firebase'
+
 // Import global CSS
 import '@/main.scss'
+
+// Firebase
+Firebase.init()
 
 // Config Vue
 Vue.config.productionTip = false

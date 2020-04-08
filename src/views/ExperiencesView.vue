@@ -1,6 +1,9 @@
 <template>
   <div>
-    <router-link :to="{ name: 'add-experience' }" class="pure-button pure-button-primary">
+    <router-link
+      :to="{ name: 'add-experience' }"
+      class="pure-button pure-button-primary"
+    >
       <i class="fas fa-plus"></i>
     </router-link>
 

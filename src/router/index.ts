@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Experiences from "@/views/ExperiencesView.vue";
+import Experiences from '@/views/ExperiencesView.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +19,9 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "add-experience" */ '../views/AddExperienceView.vue'),
+      import(
+        /* webpackChunkName: "add-experience" */ '../views/AddExperienceView.vue'
+      ),
   },
 ]
 

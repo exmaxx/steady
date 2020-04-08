@@ -15,6 +15,10 @@ export default Vue.extend({
     Experiences,
     AddExperience,
   },
+
+  mounted(): void {
+    this.$store.dispatch('fetchEmotions')
+  },
 })
 </script>
 

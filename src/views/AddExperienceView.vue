@@ -102,9 +102,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
-import { fetchActivities, fetchEmotions } from '@/lib/api/firebase'
+import Firebase from '@/lib/api/firebase'
 import { Experience } from '@/store/experiences/types'
 
 export default Vue.extend({
@@ -121,12 +121,10 @@ export default Vue.extend({
   },
 
   computed: {
-    activities() {
-      return fetchActivities()
-    },
+    ...mapState(['emotions']),
 
-    emotions() {
-      return fetchEmotions()
+    activities() {
+      return Firebase.getActivities()
     },
   },
 
@@ -135,7 +133,7 @@ export default Vue.extend({
 
     submit() {
       this.addExperience(this.form)
-      this.$router.push({name: 'experiences'})
+      this.$router.push({ name: 'experiences' })
     },
   },
 })
