@@ -18,6 +18,7 @@ export default Vue.extend({
 
   mounted(): void {
     this.$store.dispatch('fetchEmotions')
+    this.$store.dispatch('fetchActivities')
   },
 })
 </script>

@@ -1,6 +1,6 @@
-export type Tag = string
-export type Activity = string
+export type ServerTag = string
 
-export interface User {
+export interface ServerUser {
   emotions: string[]
+  activities: string[]
 }

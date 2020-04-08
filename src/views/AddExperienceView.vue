@@ -49,7 +49,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Co ti pomohlo</legend>
+        <legend>Co ti pomohlo?</legend>
 
         <div class="pure-control-group">
           <label :for="'solution-activity'">Aktivita?</label>
@@ -104,7 +104,6 @@
 import Vue from 'vue'
 import { mapMutations, mapState } from 'vuex'
 
-import Firebase from '@/lib/api/firebase'
 import { Experience } from '@/store/experiences/types'
 
 export default Vue.extend({
@@ -121,11 +120,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(['emotions']),
-
-    activities() {
-      return Firebase.getActivities()
-    },
+    ...mapState(['emotions', 'activities']),
   },
 
   methods: {
