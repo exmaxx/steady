@@ -33,6 +33,7 @@
             multiple
             push-tags
             :options="emotions"
+            @option:created="createEmotion($event)"
           />
         </div>
 
@@ -74,6 +75,7 @@
             multiple
             push-tags
             :options="emotions"
+            @option:created="createEmotion($event)"
           />
         </div>
 
@@ -102,7 +104,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapMutations, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
 import { Experience } from '@/store/experiences/types'
 
@@ -125,6 +127,7 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(['addExperience']),
+    ...mapActions(['createEmotion']),
 
     submit() {
       this.addExperience(this.form)

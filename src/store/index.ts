@@ -11,7 +11,7 @@ export default new Vuex.Store<RootState>({
   state: {
     experiences: [],
     emotions: [],
-    activities: []
+    activities: [],
   },
 
   mutations: {
@@ -29,6 +29,14 @@ export default new Vuex.Store<RootState>({
       Firebase.getActivities().then(activities =>
         activities.forEach(activity => commit('addActivity', activity))
       ),
+
+    createEmotion: ({ commit }, emotion) => {
+      Firebase.postEmotion(emotion).catch(error =>
+        console.error('Error in createEmotion action.', error)
+      )
+
+      commit('addEmotion', emotion)
+    },
   },
 
   modules: { experiences: experiencesModule },

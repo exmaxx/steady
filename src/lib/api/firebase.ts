@@ -38,12 +38,15 @@ export function init() {
   }
 }
 
-function getUser(): Promise<ServerUser> {
-  const db = firebase.firestore()
+const db = () => firebase.firestore()
 
-  return db
+const userDoc = () =>
+  db()
     .collection('users')
     .doc(TEMPORARY_USER_ID)
+
+function getUser(): Promise<ServerUser> {
+  return userDoc()
     .get()
     .then(doc => {
       if (!doc.exists) {
@@ -61,5 +64,19 @@ function getUser(): Promise<ServerUser> {
     })
 }
 
-export const getEmotions = (): Promise<Tag[]> => getUser().then(user => user.emotions)
-export const getActivities = (): Promise<Tag[]> => getUser().then(user => user.activities)
+export const getEmotions = (): Promise<Tag[]> =>
+  getUser().then(user => user.emotions)
+
+export const getActivities = (): Promise<Tag[]> =>
+  getUser().then(user => user.activities)
+
+export function postEmotion(emotion: Tag): Promise<void> {
+  return userDoc()
+    .set(
+      { emotions: firebase.firestore.FieldValue.arrayUnion(emotion) }, // adds the item to array without overwriting it
+      { merge: true }
+    )
+    .catch(error => {
+      console.error('Error writing document: ', error)
+    })
+}
