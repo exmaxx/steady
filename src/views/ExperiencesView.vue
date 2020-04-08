@@ -11,21 +11,35 @@
       <h2>{{ experience.datetime }}</h2>
       <div>
         <h3>Co se stalo</h3>
-        <div>{{ experience.story }}</div>
+        <div>{{ experience.situation }}</div>
 
-        <ul>
-          <li>tag udalosti 1</li>
-          <li>tag udalosti 2</li>
-          <li>tag udalosti 3</li>
+        <ul v-if="experience.situationActivities.length > 0">
+          <li v-for="activity in experience.situationActivities">
+            {{ activity }}
+          </li>
+        </ul>
+
+        <ul v-if="experience.situationEmotions.length > 0">
+          <li v-for="emotion in experience.situationEmotions">
+            {{ emotion }}
+          </li>
         </ul>
       </div>
 
       <div>
         <h3>Jak jsi to vyresil</h3>
         <div>{{ experience.solution }}</div>
-        <ul>
-          <li>tag reseni 1</li>
-          <li>tag reseni 2</li>
+
+        <ul v-if="experience.solutionActivities.length > 0">
+          <li v-for="activity in experience.solutionActivities">
+            {{ activity }}
+          </li>
+        </ul>
+
+        <ul v-if="experience.solutionEmotions.length > 0">
+          <li v-for="emotion in experience.solutionEmotions">
+            {{ emotion }}
+          </li>
         </ul>
       </div>
     </div>

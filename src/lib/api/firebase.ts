@@ -3,8 +3,12 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { Tag } from '@/store/types'
 import { ServerUser } from '@/lib/api/types'
+import { Tag } from '@/store/types'
+import { Experience } from '@/store/experiences/types'
+import DocumentReference = firebase.firestore.DocumentReference
+import DocumentData = firebase.firestore.DocumentData
+import { experienceConverter } from '@/lib/api/converters'
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
@@ -70,6 +74,14 @@ export const getEmotions = (): Promise<Tag[]> =>
 export const getActivities = (): Promise<Tag[]> =>
   getUser().then(user => user.activities)
 
+export const getExperiences = (): Promise<Experience[]> => {
+  return userDoc()
+    .collection('experiences')
+    .withConverter(experienceConverter)
+    .get()
+    .then(qs => qs.docs.map(doc => doc.data() as Experience))
+}
+
 export function postEmotion(emotion: Tag): Promise<void> {
   return userDoc()
     .set(
@@ -89,5 +101,16 @@ export function postActivity(activity: Tag): Promise<void> {
     )
     .catch(error => {
       console.error('Error writing activity document: ', error)
+    })
+}
+
+export function postExperience(
+  experience: Experience
+): Promise<void | DocumentReference<DocumentData>> {
+  return userDoc()
+    .collection('experiences')
+    .add(experience)
+    .catch(error => {
+      console.error('Error writing experience document: ', error)
     })
 }

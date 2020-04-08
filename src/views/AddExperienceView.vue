@@ -7,15 +7,16 @@
         <div class="pure-control-group">
           <label for="date"> Datum </label>
 
-          <input id="date" type="date" />
+          <input id="date" v-model="form.datetime" type="date" />
         </div>
 
         <div class="pure-control-group">
-          <label :for="'exp-activities'">Aktivita?</label>
+          <label :for="'situation-activities'">Aktivita?</label>
 
           <v-select
+            v-model="form.situationActivities"
             class="pure-input-2-3"
-            input-id="exp-activities"
+            input-id="situation-activities"
             taggable
             multiple
             push-tags
@@ -25,11 +26,12 @@
         </div>
 
         <div class="pure-control-group">
-          <label :for="'exp-emotions'">Pocity / emoce?</label>
+          <label :for="'situation-emotions'">Pocity / emoce?</label>
 
           <v-select
+            v-model="form.situationEmotions"
             class="pure-input-2-3"
-            input-id="exp-emotions"
+            input-id="situation-emotions"
             taggable
             multiple
             push-tags
@@ -39,11 +41,11 @@
         </div>
 
         <div class="pure-control-group">
-          <label for="exp-story">Podrobnejsi popis</label>
+          <label for="situation">Podrobnejsi popis</label>
 
           <textarea
-            id="exp-story"
-            v-model="form.story"
+            id="situation"
+            v-model="form.situation"
             class="pure-input-2-3"
             placeholder="popis situaci"
           ></textarea>
@@ -57,6 +59,7 @@
           <label :for="'solution-activity'">Aktivita?</label>
 
           <v-select
+            v-model="form.solutionActivities"
             class="pure-input-2-3"
             input-id="solution-activity"
             taggable
@@ -71,6 +74,7 @@
           <label :for="'solution-emotions'">Pocity / emoce?</label>
 
           <v-select
+            v-model="form.solutionEmotions"
             class="pure-input-2-3"
             input-id="solution-emotions"
             taggable
@@ -115,11 +119,7 @@ export default Vue.extend({
 
   data() {
     return {
-      form: {
-        datetime: '',
-        story: '',
-        solution: '',
-      } as Experience,
+      form: {} as Experience,
     }
   },
 
@@ -129,10 +129,10 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(['addExperience']),
-    ...mapActions(['createEmotion', 'createActivity']),
+    ...mapActions(['createEmotion', 'createActivity', 'createExperience']),
 
     submit() {
-      this.addExperience(this.form)
+      this.createExperience(this.form)
       this.$router.push({ name: 'experiences' })
     },
   },

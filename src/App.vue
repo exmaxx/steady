@@ -7,18 +7,11 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import AddExperience from '@/views/AddExperienceView.vue'
-import Experiences from '@/views/ExperiencesView.vue'
-
 export default Vue.extend({
-  components: {
-    Experiences,
-    AddExperience,
-  },
-
   mounted(): void {
     this.$store.dispatch('fetchEmotions')
     this.$store.dispatch('fetchActivities')
+    this.$store.dispatch('fetchExperiences')
   },
 })
 </script>

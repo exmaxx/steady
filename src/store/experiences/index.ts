@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 
+import * as Firebase from '@/lib/api/firebase'
 import { ExperiencesState, Experience } from '@/store/experiences/types'
 import { RootState } from '@/store/types'
 
@@ -9,6 +10,22 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
   mutations: {
     addExperience: (state, experience: Experience) => {
       state.push(experience)
+    },
+  },
+
+  actions: {
+    fetchExperiences: ({ commit }) => {
+      Firebase.getExperiences().then(experiences =>
+        experiences.map(experience => commit('addExperience', experience))
+      )
+    },
+
+    createExperience: ({ commit }, experience: Experience) => {
+      Firebase.postExperience(experience).catch(error =>
+        console.error('Error in action createExperience.', error)
+      )
+
+      commit('addExperience', experience)
     },
   },
 }
