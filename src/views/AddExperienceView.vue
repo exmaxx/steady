@@ -1,6 +1,6 @@
 <template>
   <div class="add-experience">
-    <form class="pure-form pure-form-aligned">
+    <form class="pure-form pure-form-aligned" @submit.prevent="submit">
       <fieldset>
         <legend>Co se stalo?</legend>
 
@@ -97,7 +97,7 @@
         </div>
       </fieldset>
 
-      <button class="pure-button pure-button-primary" @click.prevent="submit">
+      <button class="pure-button pure-button-primary" type="submit">
         Pridej
       </button>
 
