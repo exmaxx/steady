@@ -77,6 +77,17 @@ export function postEmotion(emotion: Tag): Promise<void> {
       { merge: true }
     )
     .catch(error => {
-      console.error('Error writing document: ', error)
+      console.error('Error writing emotion document: ', error)
+    })
+}
+
+export function postActivity(activity: Tag): Promise<void> {
+  return userDoc()
+    .set(
+      { activities: firebase.firestore.FieldValue.arrayUnion(activity) }, // adds the item to array without overwriting it
+      { merge: true }
+    )
+    .catch(error => {
+      console.error('Error writing activity document: ', error)
     })
 }

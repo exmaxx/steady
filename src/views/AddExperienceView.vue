@@ -20,6 +20,7 @@
             multiple
             push-tags
             :options="activities"
+            @option:created="createActivity($event)"
           />
         </div>
 
@@ -62,6 +63,7 @@
             multiple
             push-tags
             :options="activities"
+            @option:created="createActivity($event)"
           />
         </div>
 
@@ -127,7 +129,7 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(['addExperience']),
-    ...mapActions(['createEmotion']),
+    ...mapActions(['createEmotion', 'createActivity']),
 
     submit() {
       this.addExperience(this.form)
