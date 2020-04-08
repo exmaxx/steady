@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import * as Firebase from '@/lib/api/firebase'
+import Firebase from "@/lib/api/firebase";
 
 // Import global CSS
 import '@/main.scss'

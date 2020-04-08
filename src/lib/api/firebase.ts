@@ -21,7 +21,7 @@ const TEMPORARY_USER_ID = '7AAdTrXZFkWsD2e48GN3P56YZoR2'
  * `import firebase from 'firebase'` anywhere in the app.
  * But it is preferred to call firebase through this file.
  */
-export function init() {
+function init() {
   const firebaseConfig = {
     apiKey: 'AIzaSyCsxrMEk8GpTxzQpiGAeOcZ8uYo3yf0NIw',
     authDomain: 'slow-n-steady.firebaseapp.com',
@@ -68,13 +68,13 @@ function getUser(): Promise<ServerUser> {
     })
 }
 
-export const getEmotions = (): Promise<Tag[]> =>
+const getEmotions = (): Promise<Tag[]> =>
   getUser().then(user => user.emotions)
 
-export const getActivities = (): Promise<Tag[]> =>
+const getActivities = (): Promise<Tag[]> =>
   getUser().then(user => user.activities)
 
-export const getExperiences = (): Promise<Experience[]> => {
+const getExperiences = (): Promise<Experience[]> => {
   return userDoc()
     .collection('experiences')
     .withConverter(experienceConverter)
@@ -82,7 +82,7 @@ export const getExperiences = (): Promise<Experience[]> => {
     .then(qs => qs.docs.map(doc => doc.data() as Experience))
 }
 
-export function postEmotion(emotion: Tag): Promise<void> {
+function postEmotion(emotion: Tag): Promise<void> {
   return userDoc()
     .set(
       { emotions: firebase.firestore.FieldValue.arrayUnion(emotion) }, // adds the item to array without overwriting it
@@ -93,7 +93,7 @@ export function postEmotion(emotion: Tag): Promise<void> {
     })
 }
 
-export function postActivity(activity: Tag): Promise<void> {
+function postActivity(activity: Tag): Promise<void> {
   return userDoc()
     .set(
       { activities: firebase.firestore.FieldValue.arrayUnion(activity) }, // adds the item to array without overwriting it
@@ -104,7 +104,7 @@ export function postActivity(activity: Tag): Promise<void> {
     })
 }
 
-export function postExperience(
+function postExperience(
   experience: Experience
 ): Promise<void | DocumentReference<DocumentData>> {
   return userDoc()
@@ -114,3 +114,15 @@ export function postExperience(
       console.error('Error writing experience document: ', error)
     })
 }
+
+const Firebase = {
+  init,
+  getExperiences,
+  getActivities,
+  getEmotions,
+  postExperience,
+  postActivity,
+  postEmotion
+}
+
+export default Firebase

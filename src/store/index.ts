@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import * as Firebase from '@/lib/api/firebase'
+import Firebase from '@/lib/api/firebase'
 import experiencesModule from '@/store/experiences'
 import { RootState } from '@/store/types'
 
