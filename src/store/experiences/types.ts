@@ -1,5 +1,6 @@
 export interface Experience {
-  datetime: string
+  date: string
+  time: string
   situation: string
   situationEmotions: string[]
   situationActivities: string[]

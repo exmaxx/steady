@@ -2,22 +2,32 @@
   <div class="add-experience">
     <form class="pure-form pure-form-aligned" @submit.prevent="submit">
       <fieldset>
-        <legend>Co se stalo?</legend>
+        <legend>Datum a čas</legend>
 
         <div class="pure-control-group">
-          <label for="date"> Datum </label>
+          <label for="date">Datum</label>
 
-          <input
-            id="date"
-            v-model="$v.form.datetime.$model"
-            type="date"
-            required
-          />
+          <input id="date" v-model="$v.form.date.$model" type="date" required />
 
           <div class="errors">
             <div
               :style="{
-                visibility: $v.form.datetime.$error ? 'visible' : 'hidden',
+                visibility: $v.form.date.$error ? 'visible' : 'hidden',
+              }"
+              class="error "
+            >
+              This field is required.
+            </div>
+          </div>
+
+          <label for="time">Datum</label>
+
+          <input id="time" v-model="$v.form.time.$model" type="time" required />
+
+          <div class="errors">
+            <div
+              :style="{
+                visibility: $v.form.time.$error ? 'visible' : 'hidden',
               }"
               class="error "
             >
@@ -129,12 +139,13 @@
 </template>
 
 <script lang="ts">
+import dayjs from 'dayjs'
 import Vue from 'vue'
-import { mapActions, mapMutations, mapState } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
-import { Experience } from '@/store/experiences/types'
 import { emptyExperience } from '@/lib/helpers'
+import { Experience } from '@/store/experiences/types'
 
 export default Vue.extend({
   name: 'AddExperience',
@@ -143,7 +154,8 @@ export default Vue.extend({
     return {
       form: {
         ...emptyExperience,
-        datetime: '2020-01-01',
+        date: dayjs().format('YYYY-MM-DD'),
+        time: dayjs().format('HH:mm'),
       } as Experience,
       situationGroupValid: null as boolean | null,
       solutionGroupValid: null as boolean | null,
@@ -164,7 +176,8 @@ export default Vue.extend({
         solution,
         situation,
         situationEmotions,
-        datetime,
+        date,
+        time,
         solutionActivities,
         solutionEmotions,
       } = this.form
@@ -181,7 +194,11 @@ export default Vue.extend({
         solution === ''
       )
 
-      if (datetime && (this.situationGroupValid || this.solutionGroupValid)) {
+      if (
+        date &&
+        time &&
+        (this.situationGroupValid || this.solutionGroupValid)
+      ) {
         this.createExperience(this.form)
         this.$router.push({ name: 'experiences' })
       }
@@ -190,7 +207,10 @@ export default Vue.extend({
 
   validations: {
     form: {
-      datetime: {
+      date: {
+        required,
+      },
+      time: {
         required,
       },
     },

@@ -1,5 +1,6 @@
 export const emptyExperience = {
-  datetime: '',
+  date: '',
+  time: '',
   situation: '',
   situationEmotions: [],
   situationActivities: [],

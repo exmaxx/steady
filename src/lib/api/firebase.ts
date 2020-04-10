@@ -3,12 +3,12 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
+import { experienceConverter } from '@/lib/api/converters'
 import { ServerUser } from '@/lib/api/types'
-import { Tag } from '@/store/types'
 import { Experience } from '@/store/experiences/types'
+import { Tag } from '@/store/types'
 import DocumentReference = firebase.firestore.DocumentReference
 import DocumentData = firebase.firestore.DocumentData
-import { experienceConverter } from '@/lib/api/converters'
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
@@ -68,8 +68,7 @@ function getUser(): Promise<ServerUser> {
     })
 }
 
-const getEmotions = (): Promise<Tag[]> =>
-  getUser().then(user => user.emotions)
+const getEmotions = (): Promise<Tag[]> => getUser().then(user => user.emotions)
 
 const getActivities = (): Promise<Tag[]> =>
   getUser().then(user => user.activities)
@@ -122,7 +121,7 @@ const Firebase = {
   getEmotions,
   postExperience,
   postActivity,
-  postEmotion
+  postEmotion,
 }
 
 export default Firebase

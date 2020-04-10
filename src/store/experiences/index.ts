@@ -1,8 +1,8 @@
 import { Module } from 'vuex'
 
+import Firebase from '@/lib/api/firebase'
 import { ExperiencesState, Experience } from '@/store/experiences/types'
 import { RootState } from '@/store/types'
-import Firebase from "@/lib/api/firebase";
 
 const experiencesModule: Module<ExperiencesState, RootState> = {
   state: [],

@@ -7,20 +7,26 @@
       <i class="fas fa-plus"></i>
     </router-link>
 
-    <div v-for="experience in experiences" :key="experience.datetime">
-      <h2>{{ experience.datetime }}</h2>
+    <div
+      v-for="experience in experiences"
+      :key="experience.date + experience.time"
+    >
+      <h2>{{ experience.date }} {{ experience.time }}</h2>
       <div>
         <h3>Co se stalo</h3>
         <div>{{ experience.situation }}</div>
 
         <ul v-if="experience.situationActivities.length > 0">
-          <li v-for="activity in experience.situationActivities">
+          <li
+            v-for="activity in experience.situationActivities"
+            :key="activity"
+          >
             {{ activity }}
           </li>
         </ul>
 
         <ul v-if="experience.situationEmotions.length > 0">
-          <li v-for="emotion in experience.situationEmotions">
+          <li v-for="emotion in experience.situationEmotions" :key="emotion">
             {{ emotion }}
           </li>
         </ul>
@@ -31,13 +37,14 @@
         <div>{{ experience.solution }}</div>
 
         <ul v-if="experience.solutionActivities.length > 0">
-          <li v-for="activity in experience.solutionActivities">
+          <!-- TODO: Solve duplicate key with group above. -->
+          <li v-for="activity in experience.solutionActivities" :key="activity">
             {{ activity }}
           </li>
         </ul>
 
         <ul v-if="experience.solutionEmotions.length > 0">
-          <li v-for="emotion in experience.solutionEmotions">
+          <li v-for="emotion in experience.solutionEmotions" :key="emotion">
             {{ emotion }}
           </li>
         </ul>
