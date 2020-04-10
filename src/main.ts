@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueSelect from 'vue-select'
+import Vuelidate from 'vuelidate'
 
 import App from './App.vue'
 import router from './router'
@@ -15,6 +16,9 @@ Firebase.init()
 
 // Config Vue
 Vue.config.productionTip = false
+
+// Form Validation
+Vue.use(Vuelidate)
 
 // Register global components
 Vue.component('vSelect', VueSelect)
