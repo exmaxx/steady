@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueSelect from 'vue-select'
 import Vuelidate from 'vuelidate'
+import dayjs from 'dayjs'
+import Calendar from 'dayjs/plugin/calendar'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/cs'
 
 import App from './App.vue'
 import router from './router'
@@ -16,6 +21,12 @@ Firebase.init()
 
 // Config Vue
 Vue.config.productionTip = false
+
+// Config dayjs
+dayjs.extend(Calendar)
+dayjs.extend(relativeTime)
+dayjs.extend(localizedFormat)
+dayjs.locale('cs')
 
 // Form Validation
 Vue.use(Vuelidate)
