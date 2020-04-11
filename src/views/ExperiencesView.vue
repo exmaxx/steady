@@ -19,16 +19,28 @@
         {{ experience.date | dayInWeek }}
       </h5>
 
+      <!-- TODO: Create Experience class with helper methods (datetime, hasSituation, hasSolution,...) -->
+      <!-- TODO: Rename `solution` to `solutionStory` -->
+
       <div class="content">
-        <div class="situation">
+        <div
+          class="situation"
+          v-if="
+            experience.situation !== '' ||
+              experience.situationActivities.length > 0 ||
+              experience.situationEmotions.length > 0
+          "
+        >
           <h3>Situace</h3>
 
-          <div class="story">{{ experience.situation }}</div>
+          <div class="story" v-if="experience.situation !== ''">
+            {{ experience.situation }}
+          </div>
 
-          <div class="tags">
+          <div v-if="experience.situationActivities.length > 0" class="tags">
             <h4>Aktivity:</h4>
 
-            <ul v-if="experience.situationActivities.length > 0">
+            <ul>
               <li
                 v-for="activity in experience.situationActivities"
                 :key="activity"
@@ -38,10 +50,10 @@
             </ul>
           </div>
 
-          <div class="tags">
+          <div class="tags" v-if="experience.situationEmotions.length > 0">
             <h4>Emoce:</h4>
 
-            <ul v-if="experience.situationEmotions.length > 0">
+            <ul>
               <li
                 v-for="emotion in experience.situationEmotions"
                 :key="emotion"
@@ -52,18 +64,33 @@
           </div>
         </div>
 
-        <hr />
+        <hr
+          v-if="
+            experience.solution !== '' ||
+              experience.solutionActivities.length > 0 ||
+              experience.solutionEmotions.length > 0
+          "
+        />
 
-        <div class="solution">
+        <div
+          class="solution"
+          v-if="
+            experience.solution !== '' ||
+              experience.solutionActivities.length > 0 ||
+              experience.solutionEmotions.length > 0
+          "
+        >
           <h3>Řešení</h3>
 
           <div class="content">
-            <div class="story">{{ experience.solution }}</div>
+            <div class="story" v-if="experience.solution !== ''">
+              {{ experience.solution }}
+            </div>
 
-            <div class="tags">
+            <div class="tags" v-if="experience.solutionActivities.length > 0">
               <h4>Aktivity:</h4>
 
-              <ul v-if="experience.solutionActivities.length > 0">
+              <ul>
                 <li
                   v-for="activity in experience.solutionActivities"
                   :key="activity"
@@ -73,10 +100,10 @@
               </ul>
             </div>
 
-            <div class="tags">
+            <div class="tags" v-if="experience.solutionEmotions.length > 0">
               <h4>Emoce:</h4>
 
-              <ul v-if="experience.solutionEmotions.length > 0">
+              <ul>
                 <li
                   v-for="emotion in experience.solutionEmotions"
                   :key="emotion"
