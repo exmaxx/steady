@@ -76,6 +76,8 @@ const getActivities = (): Promise<Tag[]> =>
 const getExperiences = (): Promise<Experience[]> => {
   return userDoc()
     .collection('experiences')
+    .orderBy('date', 'desc')
+    .orderBy('time', 'desc')
     .withConverter(experienceConverter)
     .get()
     .then(qs => qs.docs.map(doc => doc.data() as Experience))
