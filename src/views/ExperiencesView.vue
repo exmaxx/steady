@@ -8,15 +8,15 @@
     </router-link>
 
     <div
-      class="experience"
       v-for="experience in experiences"
-      :key="experience.date + experience.time"
+      :key="experience.datetime"
+      class="experience"
     >
-      <h2>{{ `${experience.date} ${experience.time}` | formatDate }}</h2>
+      <h2>{{ experience.datetime | formatDate }}</h2>
 
       <h5>
-        {{ `${experience.date} ${experience.time}` | asIntervalDate }},
-        {{ experience.date | dayInWeek }}
+        {{ experience.datetime | dayInWeek }},
+        {{ experience.datetime | asIntervalDate }}
       </h5>
 
       <!-- TODO: Create Experience class with helper methods (datetime, hasSituation, hasSolution,...) -->
@@ -24,17 +24,17 @@
 
       <div class="content">
         <div
-          class="situation"
           v-if="
-            experience.situation !== '' ||
+            experience.situationStory !== '' ||
               experience.situationActivities.length > 0 ||
               experience.situationEmotions.length > 0
           "
+          class="situation"
         >
           <h3>Situace</h3>
 
-          <div class="story" v-if="experience.situation !== ''">
-            {{ experience.situation }}
+          <div v-if="experience.situationStory !== ''" class="story">
+            {{ experience.situationStory }}
           </div>
 
           <div v-if="experience.situationActivities.length > 0" class="tags">
@@ -50,7 +50,7 @@
             </ul>
           </div>
 
-          <div class="tags" v-if="experience.situationEmotions.length > 0">
+          <div v-if="experience.situationEmotions.length > 0" class="tags">
             <h4>Emoce:</h4>
 
             <ul>
@@ -66,28 +66,28 @@
 
         <hr
           v-if="
-            experience.solution !== '' ||
+            experience.solutionStory !== '' ||
               experience.solutionActivities.length > 0 ||
               experience.solutionEmotions.length > 0
           "
         />
 
         <div
-          class="solution"
           v-if="
-            experience.solution !== '' ||
+            experience.solutionStory !== '' ||
               experience.solutionActivities.length > 0 ||
               experience.solutionEmotions.length > 0
           "
+          class="solution"
         >
           <h3>Řešení</h3>
 
           <div class="content">
-            <div class="story" v-if="experience.solution !== ''">
-              {{ experience.solution }}
+            <div v-if="experience.solutionStory !== ''" class="story">
+              {{ experience.solutionStory }}
             </div>
 
-            <div class="tags" v-if="experience.solutionActivities.length > 0">
+            <div v-if="experience.solutionActivities.length > 0" class="tags">
               <h4>Aktivity:</h4>
 
               <ul>
@@ -100,7 +100,7 @@
               </ul>
             </div>
 
-            <div class="tags" v-if="experience.solutionEmotions.length > 0">
+            <div v-if="experience.solutionEmotions.length > 0" class="tags">
               <h4>Emoce:</h4>
 
               <ul>
@@ -120,15 +120,12 @@
 </template>
 
 <script lang="ts">
+import dayjs from 'dayjs'
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import dayjs from 'dayjs'
 
 export default Vue.extend({
   name: 'Experiences',
-  computed: {
-    ...mapState(['experiences']),
-  },
 
   filters: {
     formatDate(datetime: string) {
@@ -142,9 +139,13 @@ export default Vue.extend({
       return dayjs(datetime).fromNow()
     },
 
-    dayInWeek(date: string) {
-      return dayjs(date).format('dddd')
+    dayInWeek(datetime: string) {
+      return dayjs(datetime).format('dddd')
     },
+  },
+
+  computed: {
+    ...mapState(['experiences']),
   },
 })
 </script>

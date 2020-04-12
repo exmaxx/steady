@@ -1,10 +1,9 @@
 export interface Experience {
-  date: string
-  time: string
-  situation: string
+  datetime: string
+  situationStory: string
   situationEmotions: string[]
   situationActivities: string[]
-  solution: string
+  solutionStory: string
   solutionEmotions: string[]
   solutionActivities: string[]
 }

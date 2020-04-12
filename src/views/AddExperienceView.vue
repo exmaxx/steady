@@ -7,12 +7,12 @@
         <div class="pure-control-group">
           <label for="date">Datum</label>
 
-          <input id="date" v-model="$v.form.date.$model" type="date" required />
+          <input id="date" v-model="$v.date.$model" type="date" required />
 
           <div class="errors">
             <div
               :style="{
-                visibility: $v.form.date.$error ? 'visible' : 'hidden',
+                visibility: $v.date.$error ? 'visible' : 'hidden',
               }"
               class="error "
             >
@@ -22,12 +22,12 @@
 
           <label for="time">Datum</label>
 
-          <input id="time" v-model="$v.form.time.$model" type="time" required />
+          <input id="time" v-model="$v.time.$model" type="time" required />
 
           <div class="errors">
             <div
               :style="{
-                visibility: $v.form.time.$error ? 'visible' : 'hidden',
+                visibility: $v.time.$error ? 'visible' : 'hidden',
               }"
               class="error "
             >
@@ -44,7 +44,7 @@
           <label :for="'situation-activities'">Aktivita?</label>
 
           <v-select
-            v-model="form.situationActivities"
+            v-model="situationActivities"
             class="pure-input-2-3"
             input-id="situation-activities"
             taggable
@@ -59,7 +59,7 @@
           <label :for="'situation-emotions'">Pocity / emoce?</label>
 
           <v-select
-            v-model="form.situationEmotions"
+            v-model="situationEmotions"
             class="pure-input-2-3"
             input-id="situation-emotions"
             taggable
@@ -75,7 +75,7 @@
 
           <textarea
             id="situation"
-            v-model="form.situation"
+            v-model="situationStory"
             class="pure-input-2-3"
             placeholder="popis situaci"
           ></textarea>
@@ -89,7 +89,7 @@
           <label :for="'solution-activity'">Aktivita?</label>
 
           <v-select
-            v-model="form.solutionActivities"
+            v-model="solutionActivities"
             class="pure-input-2-3"
             input-id="solution-activity"
             taggable
@@ -104,7 +104,7 @@
           <label :for="'solution-emotions'">Pocity / emoce?</label>
 
           <v-select
-            v-model="form.solutionEmotions"
+            v-model="solutionEmotions"
             class="pure-input-2-3"
             input-id="solution-emotions"
             taggable
@@ -120,7 +120,7 @@
 
           <textarea
             id="solution"
-            v-model="form.solution"
+            v-model="solutionStory"
             class="pure-input-2-3"
             placeholder="napis reseni"
           ></textarea>
@@ -128,11 +128,11 @@
       </fieldset>
 
       <button class="pure-button pure-button-primary" type="submit">
-        Pridej
+        Přidej
       </button>
 
       <router-link class="pure-button" :to="{ name: 'experiences' }">
-        Zpet
+        Zpět
       </router-link>
     </form>
   </div>
@@ -144,20 +144,24 @@ import Vue from 'vue'
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapMutations, mapState } from 'vuex'
 
-import { emptyExperience } from '@/lib/helpers'
-import { Experience } from '@/store/experiences/types'
+import { Tag } from '@/store/types'
 
 export default Vue.extend({
   name: 'AddExperience',
 
   data() {
     return {
-      form: {
-        ...emptyExperience,
-        date: dayjs().format('YYYY-MM-DD'),
-        time: dayjs().format('HH:mm'),
-      } as Experience,
+      date: dayjs().format('YYYY-MM-DD'),
+      time: dayjs().format('HH:mm'),
+
+      situationStory: '',
+      situationActivities: [] as Tag[],
+      situationEmotions: [] as Tag[],
       situationGroupValid: null as boolean | null,
+
+      solutionStory: '',
+      solutionActivities: [] as Tag[],
+      solutionEmotions: [] as Tag[],
       solutionGroupValid: null as boolean | null,
     }
   },
@@ -173,25 +177,25 @@ export default Vue.extend({
     submit() {
       const {
         situationActivities,
-        solution,
-        situation,
+        solutionStory,
+        situationStory,
         situationEmotions,
         date,
         time,
         solutionActivities,
         solutionEmotions,
-      } = this.form
+      } = this
 
       this.situationGroupValid = !(
         situationActivities.length === 0 &&
         situationEmotions.length === 0 &&
-        situation === ''
+        situationStory === ''
       )
 
       this.solutionGroupValid = !(
         solutionActivities.length === 0 &&
         solutionEmotions.length === 0 &&
-        solution === ''
+        solutionStory === ''
       )
 
       if (
@@ -199,20 +203,27 @@ export default Vue.extend({
         time &&
         (this.situationGroupValid || this.solutionGroupValid)
       ) {
-        this.createExperience(this.form)
+        this.createExperience({
+          datetime: dayjs(`${this.date} ${this.time}`).toISOString(),
+          solutionStory,
+          solutionActivities,
+          solutionEmotions,
+          situationStory,
+          situationActivities,
+          situationEmotions,
+        })
+
         this.$router.push({ name: 'experiences' })
       }
     },
   },
 
   validations: {
-    form: {
-      date: {
-        required,
-      },
-      time: {
-        required,
-      },
+    date: {
+      required,
+    },
+    time: {
+      required,
     },
   },
 })
