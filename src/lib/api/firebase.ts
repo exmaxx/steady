@@ -3,9 +3,10 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { experienceConverter } from '@/lib/api/converters'
+import { experienceConverter, threadConverter } from '@/lib/api/converters'
 import { ServerUser } from '@/lib/api/types'
 import { Experience } from '@/store/experiences/types'
+import { Thread } from '@/store/threads/types'
 import { Tag } from '@/store/types'
 import DocumentReference = firebase.firestore.DocumentReference
 import DocumentData = firebase.firestore.DocumentData
@@ -13,6 +14,9 @@ import DocumentData = firebase.firestore.DocumentData
 // import 'firebase/functions'  // TODO: Add when functions needed
 
 const TEMPORARY_USER_ID = '7AAdTrXZFkWsD2e48GN3P56YZoR2'
+const USERS = 'users'
+const EXPERIENCES = 'experiences'
+const THREADS = 'threads'
 
 /**
  * Initializes Firebase.
@@ -46,7 +50,7 @@ const db = () => firebase.firestore()
 
 const userDoc = () =>
   db()
-    .collection('users')
+    .collection(USERS)
     .doc(TEMPORARY_USER_ID)
 
 function getUser(): Promise<ServerUser> {
@@ -75,7 +79,7 @@ const getActivities = (): Promise<Tag[]> =>
 
 const getExperiences = (): Promise<Experience[]> => {
   return userDoc()
-    .collection('experiences')
+    .collection(EXPERIENCES)
     .orderBy('datetime', 'desc')
     .withConverter(experienceConverter)
     .get()
@@ -108,21 +112,43 @@ function postExperience(
   experience: Experience
 ): Promise<void | DocumentReference<DocumentData>> {
   return userDoc()
-    .collection('experiences')
+    .collection(EXPERIENCES)
+    .withConverter(experienceConverter)
     .add(experience)
     .catch(error => {
       console.error('Error writing experience document: ', error)
     })
 }
 
+const getThreads = () => {
+  return userDoc()
+    .collection(THREADS)
+    .withConverter(threadConverter)
+    .get()
+    .catch(error => {
+      console.error('Error getting threads: ', error)
+    })
+}
+
+const postThreads = (thread: Thread) => {
+  return userDoc()
+    .collection(THREADS)
+    .withConverter(threadConverter)
+    .add(thread)
+    .catch(error => {
+      console.error('Error writing thread document: ', error)
+    })
+}
+
 const Firebase = {
   init,
   getExperiences,
-  getActivities,
-  getEmotions,
   postExperience,
+  getActivities,
   postActivity,
+  getEmotions,
   postEmotion,
+  getThreads,
 }
 
 export default Firebase

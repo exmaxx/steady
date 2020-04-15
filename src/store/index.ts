@@ -3,13 +3,13 @@ import Vuex from 'vuex'
 
 import Firebase from '@/lib/api/firebase'
 import experiencesModule from '@/store/experiences'
+import threadsModule from '@/store/threads'
 import { RootState } from '@/store/types'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store<RootState>({
   state: {
-    experiences: [],
     emotions: [],
     activities: [],
   },
@@ -47,5 +47,5 @@ export default new Vuex.Store<RootState>({
     },
   },
 
-  modules: { experiences: experiencesModule },
+  modules: { experiences: experiencesModule, threads: threadsModule },
 })

@@ -1,6 +1,7 @@
 import { Experience } from '@/store/experiences/types'
 
 export const emptyExperience: Experience = {
+  id: '',
   datetime: '',
   situationStory: '',
   situationEmotions: [],

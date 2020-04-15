@@ -1,7 +1,9 @@
 import { ExperiencesState } from '@/store/experiences/types'
+import {ThreadsState} from "@/store/threads/types";
 
 export interface RootState {
-  experiences: ExperiencesState
+  experiences?: ExperiencesState
+  threads?: ThreadsState
   emotions: Tag[]
   activities: Tag[]
 }

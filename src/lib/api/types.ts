@@ -14,3 +14,8 @@ export interface ServerExperience {
   solutionEmotions?: string[]
   solutionActivities?: string[]
 }
+
+export interface ServerThread {
+  startDatetime: string
+  endDatetime: string
+}
