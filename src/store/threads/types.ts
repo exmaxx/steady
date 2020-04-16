@@ -1,5 +1,5 @@
 export interface Thread {
-  id: string
+  id?: string
   startDatetime: string
   endDatetime: string
 }

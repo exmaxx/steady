@@ -9,7 +9,6 @@ import { Experience } from '@/store/experiences/types'
 import { Thread } from '@/store/threads/types'
 import { Tag } from '@/store/types'
 import DocumentReference = firebase.firestore.DocumentReference
-import DocumentData = firebase.firestore.DocumentData
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
@@ -110,7 +109,7 @@ function postActivity(activity: Tag): Promise<void> {
 
 function postExperience(
   experience: Experience
-): Promise<void | DocumentReference<DocumentData>> {
+): Promise<void | DocumentReference> {
   return userDoc()
     .collection(EXPERIENCES)
     .withConverter(experienceConverter)
@@ -120,21 +119,23 @@ function postExperience(
     })
 }
 
-const getThreads = () => {
+const getThreads = (): Promise<void | Thread[]>=> {
   return userDoc()
     .collection(THREADS)
     .withConverter(threadConverter)
     .get()
+    .then(qs => qs.docs.map(doc => doc.data()))
     .catch(error => {
       console.error('Error getting threads: ', error)
     })
 }
 
-const postThreads = (thread: Thread) => {
+const postThread = (thread: Thread): Promise<void | string> => {
   return userDoc()
     .collection(THREADS)
     .withConverter(threadConverter)
     .add(thread)
+    .then(doc => doc.id)
     .catch(error => {
       console.error('Error writing thread document: ', error)
     })
@@ -149,6 +150,7 @@ const Firebase = {
   getEmotions,
   postEmotion,
   getThreads,
+  postThread,
 }
 
 export default Firebase

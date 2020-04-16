@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Experiences from '@/views/ExperiencesView.vue'
+import ExperiencesView from '@/views/ExperiencesView.vue'
+import HomeView from "@/views/HomeView.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: { name: 'experiences' } },
+  { path: '/', name: 'home', component: HomeView },
   {
     path: '/experiences',
     name: 'experiences',
-    component: Experiences,
+    component: ExperiencesView,
   },
   {
     path: '/experiences/add',

@@ -22,6 +22,14 @@ Firebase.init()
 // Config Vue
 Vue.config.productionTip = false
 
+// Add Vue filters
+
+// TODO: Show nicer format (needs additonal translations first).
+// Vue.filter('formatDate', (datetime: string) => dayjs(datetime).calendar())
+Vue.filter('formatDate', (datetime: string) => dayjs(datetime).format('LLL'))
+Vue.filter('asIntervalDate', (datetime: string) => dayjs(datetime).fromNow())
+Vue.filter('dayInWeek', (datetime: string) => dayjs(datetime).format('dddd'))
+
 // Config dayjs
 dayjs.extend(Calendar)
 dayjs.extend(relativeTime)

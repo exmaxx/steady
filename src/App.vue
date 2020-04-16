@@ -12,6 +12,7 @@ export default Vue.extend({
     this.$store.dispatch('fetchEmotions')
     this.$store.dispatch('fetchActivities')
     this.$store.dispatch('fetchExperiences')
+    this.$store.dispatch('fetchThreads')
   },
 })
 </script>
