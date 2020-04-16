@@ -1,6 +1,42 @@
 <template>
   <div id="app">
-    <router-view />
+    <nav class="pure-menu custom-restricted-width">
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'home' }" class="pure-menu-link">
+            Home
+          </router-link>
+        </li>
+
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'threads' }" class="pure-menu-link">
+            Threads
+          </router-link>
+        </li>
+
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'experiences' }" class="pure-menu-link">
+            Experiences
+          </router-link>
+        </li>
+
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'activities' }" class="pure-menu-link">
+            Activities
+          </router-link>
+        </li>
+
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'emotions' }" class="pure-menu-link">
+            Emotions
+          </router-link>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -18,16 +54,32 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-#nav {
+nav {
+  position: fixed;
   padding: 30px;
+
+  &.custom-restricted-width {
+    /* To limit the menu width to the content of the menu: */
+    display: inline-block;
+    /* Or set the width explicitly: */
+    /* width: 10em;*/
+  }
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #acacac;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #0078e7;
     }
   }
+
+  ul {
+    list-style: none;
+  }
+}
+
+.content {
+  margin-left: 8em;
 }
 </style>

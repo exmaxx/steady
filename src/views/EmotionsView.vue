@@ -1,12 +1,12 @@
 <template>
-  <div>This will be Experiences view.</div>
+  <div>This will be emotions view.</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'Experiences',
+  name: 'ThreadsView',
 })
 </script>
 

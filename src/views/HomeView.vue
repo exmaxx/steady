@@ -16,8 +16,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Experiences from '@/components/Experiences.vue'
 import { mapActions, mapGetters } from 'vuex'
+
+import Experiences from '@/components/Experiences.vue'
 
 export default Vue.extend({
   name: 'HomeView',

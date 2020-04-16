@@ -1,10 +1,9 @@
 import { ActionContext, ActionHandler } from 'vuex'
 
+import store from '@/store'
 import actions from '@/store/threads/actions'
 import { ThreadsState } from '@/store/threads/types'
 import { RootState } from '@/store/types'
-import Mock = jest.Mock
-import store from '@/store'
 
 describe('THREADS ACTIONS', () => {
   describe('endThread', () => {
@@ -29,7 +28,7 @@ describe('THREADS ACTIONS', () => {
 
       expect(actionContext.commit).toBeCalledTimes(1)
 
-      const mockCallArgs = (actionContext.commit as Mock).mock.calls[0]
+      const mockCallArgs = (actionContext.commit as jest.Mock).mock.calls[0]
 
       expect(mockCallArgs[0]).toEqual('modifyThread')
       expect(mockCallArgs[1]).toHaveProperty('id', 'testId')

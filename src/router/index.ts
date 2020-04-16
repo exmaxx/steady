@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import ExperiencesView from '@/views/ExperiencesView.vue'
-import HomeView from "@/views/HomeView.vue";
+import HomeView from '@/views/HomeView.vue'
 
 Vue.use(VueRouter)
 
@@ -11,7 +10,10 @@ const routes = [
   {
     path: '/experiences',
     name: 'experiences',
-    component: ExperiencesView,
+    component: () =>
+      import(
+        /* webpackChunkName: "experiences-view" */ '../views/ExperiencesView.vue'
+      ),
   },
   {
     path: '/experiences/add',
@@ -21,7 +23,29 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(
-        /* webpackChunkName: "add-experience" */ '../views/AddExperienceView.vue'
+        /* webpackChunkName: "add-experience-view" */ '../views/AddExperienceView.vue'
+      ),
+  },
+  {
+    path: '/threads',
+    name: 'threads',
+    component: () =>
+      import(/* webpackChunkName: "threads-view" */ '../views/ThreadsView.vue'),
+  },
+  {
+    path: '/activities',
+    name: 'activities',
+    component: () =>
+      import(
+        /* webpackChunkName: "activities-view" */ '../views/ActivitiesView.vue'
+      ),
+  },
+  {
+    path: '/emotions',
+    name: 'emotions',
+    component: () =>
+      import(
+        /* webpackChunkName: "emotions-view" */ '../views/EmotionsView.vue'
       ),
   },
 ]

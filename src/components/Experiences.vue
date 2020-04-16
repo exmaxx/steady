@@ -23,7 +23,7 @@
       <!-- TODO: Create Experience class with helper methods (datetime, hasSituation, hasSolution,...) -->
       <!-- TODO: Rename `solution` to `solutionStory` -->
 
-      <div class="content">
+      <div>
         <div
           v-if="
             experience.situationStory !== '' ||
@@ -83,7 +83,7 @@
         >
           <h3>Řešení</h3>
 
-          <div class="content">
+          <div>
             <div v-if="experience.solutionStory !== ''" class="story">
               {{ experience.solutionStory }}
             </div>
@@ -121,7 +121,6 @@
 </template>
 
 <script lang="ts">
-import dayjs from 'dayjs'
 import Vue from 'vue'
 import { mapState } from 'vuex'
 
@@ -132,23 +131,6 @@ export default Vue.extend({
     withAddButton: {
       type: Boolean,
       default: false,
-    },
-  },
-
-  filters: {
-    formatDate(datetime: string) {
-      // TODO: Show nicer format (needs additonal translations first).
-      // return dayjs(datetime).calendar()
-
-      return dayjs(datetime).format('LLL')
-    },
-
-    asIntervalDate(datetime: string) {
-      return dayjs(datetime).fromNow()
-    },
-
-    dayInWeek(datetime: string) {
-      return dayjs(datetime).format('dddd')
     },
   },
 
@@ -180,15 +162,6 @@ export default Vue.extend({
   border-radius: 0.5rem;
   padding: 1.5rem;
   overflow: hidden;
-}
-
-.content {
-}
-
-.situation {
-}
-
-.solution {
 }
 
 .story {

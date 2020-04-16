@@ -119,7 +119,7 @@ function postExperience(
     })
 }
 
-const getThreads = (): Promise<void | Thread[]>=> {
+const getThreads = (): Promise<void | Thread[]> => {
   return userDoc()
     .collection(THREADS)
     .withConverter(threadConverter)

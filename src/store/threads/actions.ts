@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
 import { ActionHandler } from 'vuex'
 
+import Firebase from '@/lib/api/firebase'
 import { Thread, ThreadsState } from '@/store/threads/types'
 import { RootState } from '@/store/types'
-import Firebase from '@/lib/api/firebase'
 
 export default {
   fetchThreads: (({ commit }) => {
