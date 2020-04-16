@@ -10,7 +10,9 @@
 
     <experiences v-if="isAnyThreadActive" with-add-button />
 
-    <div v-if="isAnyThreadActive">Started: {{ startDate | formatDate }}</div>
+    <div v-if="isAnyThreadActive">
+      Started: {{ startDate | formatDateAndTime }}
+    </div>
   </div>
 </template>
 

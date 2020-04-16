@@ -1,11 +1,17 @@
 @import 'node_modules/vue-select/src/scss/vue-select.scss';
 
+$default-font: 'Martel Sans', Avenir, Helvetica, Arial, sans-serif;
+
 html {
-  font-family: 'Martel Sans', Avenir, Helvetica, Arial, sans-serif;
+  font-family: $default-font;
   color: #2c3e50;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.pure-g [class*='pure-u'] {
+  font-family: $default-font;
 }
 
 h1,

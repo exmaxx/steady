@@ -122,6 +122,7 @@ function postExperience(
 const getThreads = (): Promise<void | Thread[]> => {
   return userDoc()
     .collection(THREADS)
+    .orderBy('startDatetime', 'desc')
     .withConverter(threadConverter)
     .get()
     .then(qs => qs.docs.map(doc => doc.data()))

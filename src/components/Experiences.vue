@@ -13,7 +13,7 @@
       :key="experience.datetime"
       class="experience"
     >
-      <h2>{{ experience.datetime | formatDate }}</h2>
+      <h2>{{ experience.datetime | formatDateAndTime }}</h2>
 
       <h5>
         {{ experience.datetime | dayInWeek }},
@@ -161,7 +161,6 @@ export default Vue.extend({
   box-sizing: border-box;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  overflow: hidden;
 }
 
 .story {
