@@ -10,13 +10,19 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.pure-g [class*='pure-u'] {
-  font-family: $default-font;
-}
-
 h1,
 h2,
 h3,
 h4 {
   font-family: 'Raleway', sans-serif;
+}
+
+.pure-g [class*='pure-u'] {
+  font-family: $default-font;
+}
+
+.flex-centered-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

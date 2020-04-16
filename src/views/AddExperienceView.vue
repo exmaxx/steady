@@ -1,38 +1,33 @@
 <template>
-  <div class="add-experience">
-    <form class="pure-form pure-form-aligned" @submit.prevent="submit">
+  <div class="add-experience flex-centered-column">
+    <form class="pure-form pure-form-stacked" @submit.prevent="submit">
       <fieldset>
-        <legend>Datum a čas</legend>
-
         <div class="pure-control-group">
-          <label for="date">Datum</label>
+          <label>
+            Datum a čas
+            <span style="display: block">
+              <input
+                id="date"
+                style="display:inline-block"
+                v-model="$v.date.$model"
+                type="date"
+                required
+              />
+              <input
+                id="time"
+                style="display:inline-block"
+                v-model="$v.time.$model"
+                type="time"
+                required
+              />
+            </span>
+          </label>
 
-          <input id="date" v-model="$v.date.$model" type="date" required />
-
-          <div class="errors">
-            <div
-              :style="{
-                visibility: $v.date.$error ? 'visible' : 'hidden',
-              }"
-              class="error "
-            >
-              This field is required.
-            </div>
-          </div>
-
-          <label for="time">Datum</label>
-
-          <input id="time" v-model="$v.time.$model" type="time" required />
-
-          <div class="errors">
-            <div
-              :style="{
-                visibility: $v.time.$error ? 'visible' : 'hidden',
-              }"
-              class="error "
-            >
-              This field is required.
-            </div>
+          <div
+            class="pure-form-message error"
+            v-if="$v.date.$error || $v.time.$error"
+          >
+            These fields are required.
           </div>
         </div>
       </fieldset>
@@ -45,7 +40,7 @@
 
           <v-select
             v-model="situationActivities"
-            class="pure-input-2-3"
+            class="pure-input-3-4"
             input-id="situation-activities"
             taggable
             multiple
@@ -60,7 +55,7 @@
 
           <v-select
             v-model="situationEmotions"
-            class="pure-input-2-3"
+            class="pure-input-3-4"
             input-id="situation-emotions"
             taggable
             multiple
@@ -75,8 +70,9 @@
 
           <textarea
             id="situation"
+            rows="5"
             v-model="situationStory"
-            class="pure-input-2-3"
+            class="pure-input-1"
             placeholder="popis situaci"
           ></textarea>
         </div>
@@ -90,7 +86,7 @@
 
           <v-select
             v-model="solutionActivities"
-            class="pure-input-2-3"
+            class="pure-input-3-4"
             input-id="solution-activity"
             taggable
             multiple
@@ -105,7 +101,7 @@
 
           <v-select
             v-model="solutionEmotions"
-            class="pure-input-2-3"
+            class="pure-input-3-4"
             input-id="solution-emotions"
             taggable
             multiple
@@ -120,8 +116,9 @@
 
           <textarea
             id="solution"
+            rows="5"
             v-model="solutionStory"
-            class="pure-input-2-3"
+            class="pure-input-1"
             placeholder="napis reseni"
           ></textarea>
         </div>
@@ -131,7 +128,7 @@
         Přidej
       </button>
 
-      <router-link class="pure-button" :to="{ name: 'experiences' }">
+      <router-link class="pure-button" :to="{ name: 'home' }">
         Zpět
       </router-link>
     </form>
@@ -231,21 +228,16 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .add-experience {
-  max-width: 40rem;
+  .pure-form {
+      width: 40rem;
+  }
 
   .v-select {
     display: inline-block;
   }
-}
 
-.pure-form-aligned {
-  .errors {
-    margin-left: 11em;
-
-    .error {
-      color: red;
-      font-size: 0.875em;
-    }
+  .error {
+    color: red;
   }
 }
 </style>

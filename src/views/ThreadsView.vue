@@ -1,5 +1,5 @@
 <template>
-  <div class="threads">
+  <div class="threads flex-centered-column">
     <div v-for="thread in threadsDetailed" class="thread">
       <div class="duration">
         {{ thread.duration }} dnů
@@ -65,10 +65,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .threads {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   > * {
     margin: 0.5em 0;
 

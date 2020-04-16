@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex-centered-column">
     <button
       v-if="!isAnyThreadActive"
       class="pure-button pure-button-primary"
@@ -11,7 +11,7 @@
     <experiences v-if="isAnyThreadActive" with-add-button />
 
     <div v-if="isAnyThreadActive">
-      Started: {{ startDate | formatDateAndTime }}
+      <h2>Started: {{ startDate | formatDateAndTime }}</h2>
     </div>
   </div>
 </template>
@@ -46,3 +46,5 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style lang="scss"></style>

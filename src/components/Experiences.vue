@@ -1,5 +1,5 @@
 <template>
-  <div class="experiences">
+  <div class="experiences flex-centered-column">
     <router-link
       v-if="withAddButton"
       :to="{ name: 'add-experience' }"
@@ -142,10 +142,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .experiences {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   > * {
     margin: 0.5em 0;
 
