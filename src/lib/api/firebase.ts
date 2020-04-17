@@ -52,6 +52,16 @@ const userDoc = () =>
     .collection(USERS)
     .doc(TEMPORARY_USER_ID)
 
+const experiencesCollection = () =>
+  userDoc()
+    .collection(EXPERIENCES)
+    .withConverter(experienceConverter)
+
+const threadsCollection = () =>
+  userDoc()
+    .collection(THREADS)
+    .withConverter(threadConverter)
+
 function getUser(): Promise<ServerUser> {
   return userDoc()
     .get()
@@ -77,12 +87,20 @@ const getActivities = (): Promise<Tag[]> =>
   getUser().then(user => user.activities)
 
 const getExperiences = (): Promise<Experience[]> => {
-  return userDoc()
-    .collection(EXPERIENCES)
+  return experiencesCollection()
     .orderBy('datetime', 'desc')
-    .withConverter(experienceConverter)
     .get()
     .then(qs => qs.docs.map(doc => doc.data() as Experience))
+}
+
+function postExperience(
+  experience: Experience
+): Promise<void | DocumentReference> {
+  return experiencesCollection()
+    .add(experience)
+    .catch(error => {
+      console.error('Error writing experience document: ', error)
+    })
 }
 
 function postEmotion(emotion: Tag): Promise<void> {
@@ -107,23 +125,9 @@ function postActivity(activity: Tag): Promise<void> {
     })
 }
 
-function postExperience(
-  experience: Experience
-): Promise<void | DocumentReference> {
-  return userDoc()
-    .collection(EXPERIENCES)
-    .withConverter(experienceConverter)
-    .add(experience)
-    .catch(error => {
-      console.error('Error writing experience document: ', error)
-    })
-}
-
 const getThreads = (): Promise<void | Thread[]> => {
-  return userDoc()
-    .collection(THREADS)
+  return threadsCollection()
     .orderBy('startDatetime', 'desc')
-    .withConverter(threadConverter)
     .get()
     .then(qs => qs.docs.map(doc => doc.data()))
     .catch(error => {
@@ -132,13 +136,25 @@ const getThreads = (): Promise<void | Thread[]> => {
 }
 
 const postThread = (thread: Thread): Promise<void | string> => {
-  return userDoc()
-    .collection(THREADS)
-    .withConverter(threadConverter)
+  return threadsCollection()
     .add(thread)
     .then(doc => doc.id)
     .catch(error => {
       console.error('Error writing thread document: ', error)
+    })
+}
+
+const putThread = (
+  id: string,
+  partialThread: Partial<Thread>
+): Promise<void | string> => {
+  if (!id) return Promise.reject('Missing thread id.')
+
+  return threadsCollection()
+    .doc(id)
+    .update(partialThread)
+    .catch(error => {
+      console.error('Error updating thread document: ', error)
     })
 }
 
@@ -152,6 +168,7 @@ const Firebase = {
   postEmotion,
   getThreads,
   postThread,
+  putThread,
 }
 
 export default Firebase

@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import { MutationTree } from 'vuex'
 
 import { Thread, ThreadsState } from '@/store/threads/types'
-import { MutationTree } from 'vuex'
 
 const mutations: MutationTree<ThreadsState> = {
   addThread: (state, thread: Thread) => state.push(thread),

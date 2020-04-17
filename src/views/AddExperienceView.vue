@@ -8,15 +8,15 @@
             <span style="display: block">
               <input
                 id="date"
-                style="display:inline-block"
                 v-model="$v.date.$model"
+                style="display:inline-block"
                 type="date"
                 required
               />
               <input
                 id="time"
-                style="display:inline-block"
                 v-model="$v.time.$model"
+                style="display:inline-block"
                 type="time"
                 required
               />
@@ -24,8 +24,8 @@
           </label>
 
           <div
-            class="pure-form-message error"
             v-if="$v.date.$error || $v.time.$error"
+            class="pure-form-message error"
           >
             These fields are required.
           </div>
@@ -70,8 +70,8 @@
 
           <textarea
             id="situation"
-            rows="5"
             v-model="situationStory"
+            rows="5"
             class="pure-input-1"
             placeholder="popis situaci"
           ></textarea>
@@ -116,11 +116,22 @@
 
           <textarea
             id="solution"
-            rows="5"
             v-model="solutionStory"
+            rows="5"
             class="pure-input-1"
             placeholder="napis reseni"
           ></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Ukončit vlákno</legend>
+
+        <div class="pure-control-group">
+          <label>
+            <input v-model="shouldEndThread" type="checkbox" />
+            Opravdu končit vlákno?
+          </label>
         </div>
       </fieldset>
 
@@ -160,6 +171,8 @@ export default Vue.extend({
       solutionActivities: [] as Tag[],
       solutionEmotions: [] as Tag[],
       solutionGroupValid: null as boolean | null,
+
+      shouldEndThread: false,
     }
   },
 
@@ -169,7 +182,12 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(['addExperience']),
-    ...mapActions(['createEmotion', 'createActivity', 'createExperience']),
+    ...mapActions([
+      'createEmotion',
+      'createActivity',
+      'createExperience',
+      'endActiveThread',
+    ]),
 
     submit() {
       const {
@@ -210,7 +228,11 @@ export default Vue.extend({
           situationEmotions,
         })
 
-        this.$router.push({ name: 'experiences' })
+        if (this.shouldEndThread) {
+          this.endActiveThread()
+        }
+
+        this.$router.push({ name: 'home' })
       }
     },
   },
@@ -228,8 +250,10 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .add-experience {
+  padding-bottom: 2rem;
+
   .pure-form {
-      width: 40rem;
+    width: 40rem;
   }
 
   .v-select {

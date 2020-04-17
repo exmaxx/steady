@@ -12,10 +12,16 @@ const actions: ActionTree<ThreadsState, RootState> = {
     })
   },
 
-  endThread: ({ commit }, id: string) => {
+  endThread: async ({ commit }, id: string) => {
+    const endDatetime = dayjs().toISOString()
+
+    await Firebase.putThread(id, {
+      endDatetime,
+    })
+
     commit('modifyThread', {
       id,
-      partialThread: { endDatetime: dayjs().toISOString() },
+      partialThread: { endDatetime },
     })
   },
 
