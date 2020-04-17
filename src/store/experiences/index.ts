@@ -10,6 +10,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
   mutations: {
     addExperience: (state, experience: Experience) => {
       state.push(experience)
+      state.sort((exA, exB) => exB.datetime.localeCompare(exA.datetime))
     },
   },
 

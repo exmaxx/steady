@@ -4,7 +4,10 @@ import { MutationTree } from 'vuex'
 import { Thread, ThreadsState } from '@/store/threads/types'
 
 const mutations: MutationTree<ThreadsState> = {
-  addThread: (state, thread: Thread) => state.push(thread),
+  addThread: (state, thread: Thread) => {
+    state.push(thread)
+    state.sort((thrA, thrB) => thrB.startDatetime.localeCompare(thrA.startDatetime))
+  },
 
   modifyThread: (
     state,

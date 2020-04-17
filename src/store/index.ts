@@ -15,8 +15,15 @@ export default new Vuex.Store<RootState>({
   },
 
   mutations: {
-    addEmotion: (state, emotion) => state.emotions.push(emotion),
-    addActivity: (state, activity) => state.activities.push(activity),
+    addEmotion: (state, emotion) => {
+      state.emotions.push(emotion)
+      state.emotions.sort((emA, emB) => emA.localeCompare(emB))
+    },
+
+    addActivity: (state, activity) => {
+      state.activities.push(activity)
+      state.activities.sort((actA, actB) => actA.localeCompare(actB))
+    },
   },
 
   actions: {
