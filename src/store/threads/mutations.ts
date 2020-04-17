@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 import { Thread, ThreadsState } from '@/store/threads/types'
 
 export default {
@@ -11,10 +13,9 @@ export default {
 
     if (index < 0) return
 
-    // TODO: Is this reactive or do we need Vue.set()?
-    state[index] = {
+    Vue.set(state, index, {
       ...state[index],
       ...payload.partialThread,
-    }
+    })
   },
 }

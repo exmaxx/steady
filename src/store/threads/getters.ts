@@ -1,6 +1,6 @@
 import { Thread, ThreadsState } from '@/store/threads/types'
 
 export default {
-  getActiveThread: (state: ThreadsState): Thread | null =>
+  activeThread: (state: ThreadsState): Thread | null =>
     state.find(thread => thread.endDatetime === '') || null,
 }

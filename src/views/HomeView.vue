@@ -30,14 +30,14 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['getActiveThread']),
+    ...mapGetters(['activeThread']),
 
     isAnyThreadActive(): boolean {
-      return this.getActiveThread
+      return this.activeThread
     },
 
     startDate(): string {
-      return this.getActiveThread?.startDatetime || ''
+      return this.activeThread?.startDatetime || ''
     },
   },
 

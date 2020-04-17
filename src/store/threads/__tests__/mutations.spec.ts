@@ -1,22 +1,16 @@
 import dayjs from 'dayjs'
 
+import { createSampleThread } from './helpers'
+
 import mutations from '@/store/threads/mutations'
 import { Thread, ThreadsState } from '@/store/threads/types'
-
-const createNewThread = (id: string): Thread => ({
-  id,
-  startDatetime: dayjs().toISOString(),
-  endDatetime: dayjs()
-    .add(1, 'day')
-    .toISOString(),
-})
 
 describe('THREADS MUTATIONS', () => {
   describe('addThread', () => {
     it('add thread to state', () => {
       const state: ThreadsState = []
 
-      const newThread = createNewThread('testId')
+      const newThread = createSampleThread('testId')
 
       mutations.addThread(state, newThread)
 
@@ -30,7 +24,7 @@ describe('THREADS MUTATIONS', () => {
     let newStartDatetime: string
 
     beforeEach(() => {
-      origThread = createNewThread('testId')
+      origThread = createSampleThread('testId')
       state = [origThread]
       newStartDatetime = dayjs()
         .add(1, 'minute')

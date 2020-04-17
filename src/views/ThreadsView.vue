@@ -1,6 +1,6 @@
 <template>
   <div class="threads flex-centered-column">
-    <div v-for="thread in threadsDetailed" class="thread">
+    <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
       <div class="duration">
         {{ thread.duration }} dnů
         <span v-if="!thread.endDatetime"> (aktivní)</span>

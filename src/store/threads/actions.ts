@@ -13,7 +13,16 @@ export default {
   }) as ActionHandler<ThreadsState, RootState>,
 
   endThread: (({ commit }, id: string) => {
-    commit('modifyThread', { id, endDatetime: dayjs().toISOString() })
+    commit('modifyThread', {
+      id,
+      partialThread: { endDatetime: dayjs().toISOString() },
+    })
+  }) as ActionHandler<ThreadsState, RootState>,
+
+  endActiveThread: (({ dispatch, getters }) => {
+    if (!getters.activeThread) return
+
+    return dispatch('endThread', getters.activeThread.id)
   }) as ActionHandler<ThreadsState, RootState>,
 
   startThread: (async ({ commit }) => {
