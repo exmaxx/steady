@@ -1,12 +1,13 @@
 import Vue from 'vue'
 
 import { Thread, ThreadsState } from '@/store/threads/types'
+import { MutationTree } from 'vuex'
 
-export default {
-  addThread: (state: ThreadsState, thread: Thread) => state.push(thread),
+const mutations: MutationTree<ThreadsState> = {
+  addThread: (state, thread: Thread) => state.push(thread),
 
   modifyThread: (
-    state: ThreadsState,
+    state,
     payload: { id: string; partialThread: Partial<Thread> }
   ) => {
     const index = state.findIndex(thread => thread.id === payload.id)
@@ -19,3 +20,5 @@ export default {
     })
   },
 }
+
+export default mutations
