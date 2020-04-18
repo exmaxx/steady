@@ -122,20 +122,20 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'Experiences',
 
   props: {
+    experiences: {
+      type: Array,
+      required: true,
+    },
+
     withAddButton: {
       type: Boolean,
       default: false,
     },
-  },
-
-  computed: {
-    ...mapState(['experiences']),
   },
 })
 </script>

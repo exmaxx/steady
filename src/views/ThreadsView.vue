@@ -20,7 +20,7 @@
 <script lang="ts">
 import dayjs from 'dayjs'
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import { Thread } from '@/store/threads/types'
 
@@ -38,6 +38,7 @@ export default Vue.extend({
 
   computed: {
     ...mapState(['threads']),
+    ...mapGetters(['experiencesByThreads']),
 
     threadsDetailed(): ThreadDetailed[] {
       const calcThreadDetails = (thread: Thread): ThreadDetailed => {

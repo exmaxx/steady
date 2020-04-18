@@ -22,11 +22,11 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
     },
 
     createExperience: ({ commit }, experience: Experience) => {
-      Firebase.postExperience(experience).catch(error =>
-        console.error('Error in action createExperience.', error)
-      )
-
-      commit('addExperience', experience)
+      Firebase.postExperience(experience)
+        .catch(error =>
+          console.error('Error in action createExperience.', error)
+        )
+        .then(id => commit('addExperience', { ...experience, id }))
     },
   },
 }

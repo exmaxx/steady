@@ -8,7 +8,11 @@
       Start
     </button>
 
-    <experiences v-if="isAnyThreadActive" with-add-button />
+    <experiences
+      v-if="isAnyThreadActive"
+      :experiences="activeThreadExperiences"
+      with-add-button
+    />
 
     <div v-if="isAnyThreadActive">
       <h2>Started: {{ startDate | formatDateAndTime }}</h2>
@@ -30,7 +34,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['activeThread']),
+    ...mapGetters(['activeThread', 'activeThreadExperiences']),
 
     isAnyThreadActive(): boolean {
       return this.activeThread

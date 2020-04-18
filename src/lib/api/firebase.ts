@@ -8,7 +8,6 @@ import { ServerUser } from '@/lib/api/types'
 import { Experience } from '@/store/experiences/types'
 import { Thread } from '@/store/threads/types'
 import { Tag } from '@/store/types'
-import DocumentReference = firebase.firestore.DocumentReference
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
@@ -93,11 +92,10 @@ const getExperiences = (): Promise<Experience[]> => {
     .then(qs => qs.docs.map(doc => doc.data() as Experience))
 }
 
-function postExperience(
-  experience: Experience
-): Promise<void | DocumentReference> {
+function postExperience(experience: Experience): Promise<void | string> {
   return experiencesCollection()
     .add(experience)
+    .then(doc => doc.id)
     .catch(error => {
       console.error('Error writing experience document: ', error)
     })

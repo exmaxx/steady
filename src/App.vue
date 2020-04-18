@@ -45,6 +45,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   mounted(): void {
+    // TODO: Load only active thread and emotions connected to it.
     this.$store.dispatch('fetchEmotions')
     this.$store.dispatch('fetchActivities')
     this.$store.dispatch('fetchExperiences')
