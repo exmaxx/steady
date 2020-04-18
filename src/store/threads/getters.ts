@@ -1,12 +1,13 @@
+import dayjs from 'dayjs'
+import { GetterTree } from 'vuex'
+
+import { Experience } from '@/store/experiences/types'
 import {
   ExperiencesForThreads,
   Thread,
   ThreadsState,
 } from '@/store/threads/types'
-import { GetterTree } from 'vuex'
 import { RootState } from '@/store/types'
-import { Experience } from '@/store/experiences/types'
-import dayjs from 'dayjs'
 
 const getters: GetterTree<ThreadsState, RootState> = {
   activeThread: (state): Thread | null =>

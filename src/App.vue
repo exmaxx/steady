@@ -57,7 +57,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 nav {
   position: fixed;
-  padding: 30px;
+  padding: 2rem;
 
   &.custom-restricted-width {
     /* To limit the menu width to the content of the menu: */
@@ -81,6 +81,6 @@ nav {
 }
 
 .content {
-  margin-left: 8em;
+  margin-left: 12em;
 }
 </style>

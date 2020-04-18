@@ -10,7 +10,7 @@
 
     <div
       v-for="experience in experiences"
-      :key="experience.datetime"
+      :key="experience.id"
       class="experience"
     >
       <h2>{{ experience.datetime | formatDateAndTime }}</h2>
@@ -46,7 +46,7 @@
                 v-for="activity in experience.situationActivities"
                 :key="activity"
               >
-                {{ activity }}
+                <tag :title="activity" type="negative" />
               </li>
             </ul>
           </div>
@@ -59,7 +59,7 @@
                 v-for="emotion in experience.situationEmotions"
                 :key="emotion"
               >
-                {{ emotion }}
+                <tag :title="emotion" type="negative" />
               </li>
             </ul>
           </div>
@@ -96,7 +96,7 @@
                   v-for="activity in experience.solutionActivities"
                   :key="activity"
                 >
-                  {{ activity }}
+                  <tag :title="activity" type="positive" />
                 </li>
               </ul>
             </div>
@@ -109,7 +109,7 @@
                   v-for="emotion in experience.solutionEmotions"
                   :key="emotion"
                 >
-                  {{ emotion }}
+                  <tag :title="emotion" type="positive" />
                 </li>
               </ul>
             </div>
@@ -123,8 +123,14 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import Tag from '@/components/Tag.vue'
+
 export default Vue.extend({
   name: 'Experiences',
+
+  components: {
+    Tag,
+  },
 
   props: {
     experiences: {
@@ -167,7 +173,7 @@ export default Vue.extend({
 }
 
 .tags {
-  margin: 0.4em 0;
+  margin: 0.2em 0;
 }
 
 hr {
@@ -183,20 +189,6 @@ ul {
 
   li {
     display: inline-block;
-    margin-right: 0.2em;
-    padding: 0.3em 0.5em;
-    box-sizing: border-box;
-    border-radius: 0.5em;
-
-    .situation & {
-      color: white;
-      background-color: #ff5e5e;
-    }
-
-    .solution & {
-      color: white;
-      background-color: #77c452;
-    }
   }
 }
 

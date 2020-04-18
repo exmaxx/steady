@@ -1,10 +1,9 @@
 @import 'node_modules/vue-select/src/scss/vue-select.scss';
-
-$default-font: 'Martel Sans', Avenir, Helvetica, Arial, sans-serif;
+@import "constants";
 
 html {
   font-family: $default-font;
-  color: #2c3e50;
+  color: $default-color;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

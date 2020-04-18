@@ -1,13 +1,36 @@
 <template>
-  <div>This will be emotions view.</div>
+  <div class="emotions ">
+    <tag v-for="emotion in emotions" :key="emotion" :title="emotion" />
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapState } from 'vuex'
+
+import Tag from '@/components/Tag.vue'
 
 export default Vue.extend({
   name: 'ThreadsView',
+
+  components: {
+    Tag,
+  },
+
+  computed: {
+    ...mapState(['emotions']),
+  },
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.emotions {
+  width: 40rem;
+  padding: 1rem;
+  margin: auto;
+}
+
+.emotion {
+  margin: 0.5rem;
+}
+</style>
