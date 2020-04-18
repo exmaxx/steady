@@ -1,4 +1,4 @@
-# you-free
+# s-t-e-a-d-y
 
 ## Project setup
 ```
