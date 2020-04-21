@@ -18,14 +18,14 @@
         "
         class="situation"
       >
-        <h3>Situace</h3>
+        <h3>Trouble</h3>
 
         <div v-if="experience.situationStory !== ''" class="story">
           {{ experience.situationStory }}
         </div>
 
         <div v-if="experience.situationActivities.length > 0" class="tags">
-          <h4>Aktivity:</h4>
+          <h4>Activities:</h4>
 
           <ul>
             <li
@@ -38,7 +38,7 @@
         </div>
 
         <div v-if="experience.situationEmotions.length > 0" class="tags">
-          <h4>Emoce:</h4>
+          <h4>Emotions:</h4>
 
           <ul>
             <li v-for="emotion in experience.situationEmotions" :key="emotion">
@@ -64,7 +64,7 @@
         "
         class="solution"
       >
-        <h3>Řešení</h3>
+        <h3>Solution</h3>
 
         <div>
           <div v-if="experience.solutionStory !== ''" class="story">
@@ -72,7 +72,7 @@
           </div>
 
           <div v-if="experience.solutionActivities.length > 0" class="tags">
-            <h4>Aktivity:</h4>
+            <h4>Activities:</h4>
 
             <ul>
               <li
@@ -85,7 +85,7 @@
           </div>
 
           <div v-if="experience.solutionEmotions.length > 0" class="tags">
-            <h4>Emoce:</h4>
+            <h4>Emotions:</h4>
 
             <ul>
               <li v-for="emotion in experience.solutionEmotions" :key="emotion">

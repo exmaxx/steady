@@ -4,7 +4,7 @@
       <fieldset>
         <div class="pure-control-group">
           <label>
-            Datum a čas
+            Date and time
             <span style="display: block">
               <input
                 id="date"
@@ -33,10 +33,10 @@
       </fieldset>
 
       <fieldset>
-        <legend>Co se stalo?</legend>
+        <legend><strong>Trouble</strong></legend>
 
         <div class="pure-control-group">
-          <label :for="'situation-activities'">Aktivita?</label>
+          <label :for="'situation-activities'">Activities?</label>
 
           <v-select
             v-model="situationActivities"
@@ -51,7 +51,7 @@
         </div>
 
         <div class="pure-control-group">
-          <label :for="'situation-emotions'">Pocity / emoce?</label>
+          <label :for="'situation-emotions'">Feelings / emotions?</label>
 
           <v-select
             v-model="situationEmotions"
@@ -66,23 +66,23 @@
         </div>
 
         <div class="pure-control-group">
-          <label for="situation">Podrobnejsi popis</label>
+          <label for="situation">Details</label>
 
           <textarea
             id="situation"
             v-model="situationStory"
             rows="5"
             class="pure-input-1"
-            placeholder="popis situaci"
+            placeholder="Describe the situation..."
           ></textarea>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>Co ti pomohlo?</legend>
+        <legend><strong>What helped you to overcome trouble?</strong></legend>
 
         <div class="pure-control-group">
-          <label :for="'solution-activity'">Aktivita?</label>
+          <label :for="'solution-activity'">Activities?</label>
 
           <v-select
             v-model="solutionActivities"
@@ -97,7 +97,7 @@
         </div>
 
         <div class="pure-control-group">
-          <label :for="'solution-emotions'">Pocity / emoce?</label>
+          <label :for="'solution-emotions'">Feelings / emotions?</label>
 
           <v-select
             v-model="solutionEmotions"
@@ -112,35 +112,35 @@
         </div>
 
         <div class="pure-control-group">
-          <label for="solution">Popis</label>
+          <label for="solution">Details</label>
 
           <textarea
             id="solution"
             v-model="solutionStory"
             rows="5"
             class="pure-input-1"
-            placeholder="napis reseni"
+            placeholder="Describe the solution..."
           ></textarea>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>Ukončit vlákno</legend>
+        <legend><strong>End the thread</strong></legend>
 
         <div class="pure-control-group">
           <label>
             <input v-model="shouldEndThread" type="checkbox" />
-            Opravdu končit vlákno?
+            I want to end the thread
           </label>
         </div>
       </fieldset>
 
       <button class="pure-button pure-button-primary" type="submit">
-        Přidej
+        Add
       </button>
 
       <router-link class="pure-button" :to="{ name: 'home' }">
-        Zpět
+        Go back
       </router-link>
     </form>
   </div>
@@ -262,6 +262,10 @@ export default Vue.extend({
 
   .error {
     color: red;
+  }
+
+  button[type='submit'] {
+    margin-right: 0.5rem;
   }
 }
 </style>

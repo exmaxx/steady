@@ -5,7 +5,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import Vue from 'vue'
 import VueSelect from 'vue-select'
 import Vuelidate from 'vuelidate'
-import 'dayjs/locale/cs'
+
+// TODO: Add localization later.
+// import 'dayjs/locale/cs'
 
 import App from './App.vue'
 import router from './router'
@@ -37,7 +39,9 @@ Vue.filter('dayInWeek', (datetime: string) => dayjs(datetime).format('dddd'))
 dayjs.extend(Calendar)
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
-dayjs.locale('cs')
+
+// TODO: Add localization later.
+// dayjs.locale('cs')
 
 // Form Validation
 Vue.use(Vuelidate)

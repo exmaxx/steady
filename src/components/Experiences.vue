@@ -1,13 +1,5 @@
 <template>
   <div class="experiences flex-centered-column">
-    <router-link
-      v-if="withAddButton"
-      :to="{ name: 'add-experience' }"
-      class="pure-button pure-button-primary"
-    >
-      <i class="fas fa-plus"></i>
-    </router-link>
-
     <experience
       v-for="experience in experiences"
       :key="experience.id"
@@ -32,11 +24,6 @@ export default Vue.extend({
     experiences: {
       type: Array,
       required: true,
-    },
-
-    withAddButton: {
-      type: Boolean,
-      default: false,
     },
   },
 })

@@ -93,7 +93,7 @@ nav {
   }
 }
 
-.content {
-  margin-left: 12em;
+::v-deep .content {
+  padding: 3em;
 }
 </style>

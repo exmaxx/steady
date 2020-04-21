@@ -3,7 +3,7 @@
     <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
       <div class="duration">
         {{ thread.duration }} dnů
-        <span v-if="!thread.endDatetime"> (aktivní)</span>
+        <span v-if="!thread.endDatetime"> (active)</span>
       </div>
 
       <div>

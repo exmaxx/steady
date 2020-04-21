@@ -1,22 +1,37 @@
 <template>
   <div class="flex-centered-column">
-    <button
-      v-if="!isAnyThreadActive"
-      class="pure-button pure-button-primary"
-      @click="startThread"
-    >
-      Start
-    </button>
+    <template v-if="!isAnyThreadActive">
+      <button class="pure-button pure-button-primary" @click="startThread">
+        Start thread
+      </button>
 
-    <experiences
-      v-if="isAnyThreadActive"
-      :experiences="activeThreadExperiences"
-      with-add-button
-    />
+      <div class="info">
+        Every <strong>thread</strong> helps you track your progress and your
+        <strong>experiences</strong>. You track what helps you overcome
+        <strong>troubles</strong> and <strong>positive situations</strong> what
+        makes you relapse to and old habit.
+      </div>
+    </template>
 
-    <div v-if="isAnyThreadActive">
-      <h2>Started: {{ startDate | formatDateAndTime }}</h2>
-    </div>
+    <template>
+      <router-link
+        :to="{ name: 'add-experience' }"
+        class="pure-button pure-button-primary"
+      >
+        <i class="fas fa-plus"></i>
+        Add experience
+      </router-link>
+
+      <experiences
+        v-if="isAnyThreadActive"
+        :experiences="activeThreadExperiences"
+        with-add-button
+      />
+
+      <div v-if="isAnyThreadActive">
+        <h2>Started: {{ startDate | formatDateAndTime }}</h2>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -51,4 +66,13 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.info {
+  margin: 2rem;
+  width: 30rem;
+
+  & + .info {
+    margin-top: 0;
+  }
+}
+</style>
