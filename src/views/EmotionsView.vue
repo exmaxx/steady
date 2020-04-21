@@ -1,7 +1,9 @@
 <template>
-  <div class="emotions ">
-    <tag v-for="emotion in emotions" :key="emotion" :title="emotion" />
-  </div>
+  <with-menu-layout>
+    <div class="emotions ">
+      <tag v-for="emotion in emotions" :key="emotion" :title="emotion" />
+    </div>
+  </with-menu-layout>
 </template>
 
 <script lang="ts">

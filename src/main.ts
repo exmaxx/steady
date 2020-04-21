@@ -17,6 +17,8 @@ import Firebase from '@/lib/api/firebase'
 
 // Import global CSS
 import '@/main.scss'
+import WithMenuLayout from '@/layouts/WithMenuLayout.vue'
+import PlainLayout from '@/layouts/PlainLayout.vue'
 
 // Firebase
 Firebase.init()
@@ -47,6 +49,8 @@ dayjs.extend(localizedFormat)
 Vue.use(Vuelidate)
 
 // Register global components
+Vue.component('WithMenuLayout', WithMenuLayout)
+Vue.component('PlainLayout', PlainLayout)
 Vue.component('vSelect', VueSelect)
 
 // Render app

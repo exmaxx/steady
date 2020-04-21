@@ -1,7 +1,9 @@
 <template>
-  <div class="activities ">
-    <tag v-for="activity in activities" :key="activity" :title="activity" />
-  </div>
+  <with-menu-layout>
+    <div class="activities ">
+      <tag v-for="activity in activities" :key="activity" :title="activity" />
+    </div>
+  </with-menu-layout>
 </template>
 
 <script lang="ts">

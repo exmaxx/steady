@@ -1,20 +1,22 @@
 <template>
-  <div class="threads flex-centered-column">
-    <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
-      <div class="duration">
-        {{ thread.duration }} dnů
-        <span v-if="!thread.endDatetime"> (active)</span>
-      </div>
+  <with-menu-layout>
+    <div class="threads flex-centered-column">
+      <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
+        <div class="duration">
+          {{ thread.duration }} dnů
+          <span v-if="!thread.endDatetime"> (active)</span>
+        </div>
 
-      <div>
-        {{ thread.startDatetime | formatDate }} -
-        <span v-if="thread.endDatetime">{{
-          thread.endDatetime | formatDate
-        }}</span>
-        <span v-else>teď</span>
+        <div>
+          {{ thread.startDatetime | formatDate }} -
+          <span v-if="thread.endDatetime">{{
+            thread.endDatetime | formatDate
+          }}</span>
+          <span v-else>teď</span>
+        </div>
       </div>
     </div>
-  </div>
+  </with-menu-layout>
 </template>
 
 <script lang="ts">

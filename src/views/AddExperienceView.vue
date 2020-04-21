@@ -1,150 +1,152 @@
 <template>
-  <div class="add-experience flex-centered-column">
-    <form class="pure-form pure-form-stacked" @submit.prevent="submit">
-      <fieldset>
-        <div class="pure-control-group">
-          <label>
-            Date and time
-            <span style="display: block">
-              <input
-                id="date"
-                v-model="$v.date.$model"
-                style="display:inline-block"
-                type="date"
-                required
-              />
-              <input
-                id="time"
-                v-model="$v.time.$model"
-                style="display:inline-block"
-                type="time"
-                required
-              />
-            </span>
-          </label>
+  <plain-layout>
+    <div class="add-experience flex-centered-column">
+      <form class="pure-form pure-form-stacked" @submit.prevent="submit">
+        <fieldset>
+          <div class="pure-control-group">
+            <label>
+              Date and time
+              <span style="display: block">
+                <input
+                  id="date"
+                  v-model="$v.date.$model"
+                  style="display:inline-block"
+                  type="date"
+                  required
+                />
+                <input
+                  id="time"
+                  v-model="$v.time.$model"
+                  style="display:inline-block"
+                  type="time"
+                  required
+                />
+              </span>
+            </label>
 
-          <div
-            v-if="$v.date.$error || $v.time.$error"
-            class="pure-form-message error"
-          >
-            These fields are required.
+            <div
+              v-if="$v.date.$error || $v.time.$error"
+              class="pure-form-message error"
+            >
+              These fields are required.
+            </div>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
 
-      <fieldset>
-        <legend><strong>Trouble</strong></legend>
+        <fieldset>
+          <legend><strong>Trouble</strong></legend>
 
-        <div class="pure-control-group">
-          <label :for="'situation-activities'">Activities?</label>
+          <div class="pure-control-group">
+            <label :for="'situation-activities'">Activities?</label>
 
-          <v-select
-            v-model="situationActivities"
-            class="pure-input-3-4"
-            input-id="situation-activities"
-            taggable
-            multiple
-            push-tags
-            :options="activities"
-            @option:created="createActivity($event)"
-          />
-        </div>
+            <v-select
+              v-model="situationActivities"
+              class="pure-input-3-4"
+              input-id="situation-activities"
+              taggable
+              multiple
+              push-tags
+              :options="activities"
+              @option:created="createActivity($event)"
+            />
+          </div>
 
-        <div class="pure-control-group">
-          <label :for="'situation-emotions'">Feelings / emotions?</label>
+          <div class="pure-control-group">
+            <label :for="'situation-emotions'">Feelings / emotions?</label>
 
-          <v-select
-            v-model="situationEmotions"
-            class="pure-input-3-4"
-            input-id="situation-emotions"
-            taggable
-            multiple
-            push-tags
-            :options="emotions"
-            @option:created="createEmotion($event)"
-          />
-        </div>
+            <v-select
+              v-model="situationEmotions"
+              class="pure-input-3-4"
+              input-id="situation-emotions"
+              taggable
+              multiple
+              push-tags
+              :options="emotions"
+              @option:created="createEmotion($event)"
+            />
+          </div>
 
-        <div class="pure-control-group">
-          <label for="situation">Details</label>
+          <div class="pure-control-group">
+            <label for="situation">Details</label>
 
-          <textarea
-            id="situation"
-            v-model="situationStory"
-            rows="5"
-            class="pure-input-1"
-            placeholder="Describe the situation..."
-          ></textarea>
-        </div>
-      </fieldset>
+            <textarea
+              id="situation"
+              v-model="situationStory"
+              rows="5"
+              class="pure-input-1"
+              placeholder="Describe the situation..."
+            ></textarea>
+          </div>
+        </fieldset>
 
-      <fieldset>
-        <legend><strong>What helped you to overcome trouble?</strong></legend>
+        <fieldset>
+          <legend><strong>What helped you to overcome trouble?</strong></legend>
 
-        <div class="pure-control-group">
-          <label :for="'solution-activity'">Activities?</label>
+          <div class="pure-control-group">
+            <label :for="'solution-activity'">Activities?</label>
 
-          <v-select
-            v-model="solutionActivities"
-            class="pure-input-3-4"
-            input-id="solution-activity"
-            taggable
-            multiple
-            push-tags
-            :options="activities"
-            @option:created="createActivity($event)"
-          />
-        </div>
+            <v-select
+              v-model="solutionActivities"
+              class="pure-input-3-4"
+              input-id="solution-activity"
+              taggable
+              multiple
+              push-tags
+              :options="activities"
+              @option:created="createActivity($event)"
+            />
+          </div>
 
-        <div class="pure-control-group">
-          <label :for="'solution-emotions'">Feelings / emotions?</label>
+          <div class="pure-control-group">
+            <label :for="'solution-emotions'">Feelings / emotions?</label>
 
-          <v-select
-            v-model="solutionEmotions"
-            class="pure-input-3-4"
-            input-id="solution-emotions"
-            taggable
-            multiple
-            push-tags
-            :options="emotions"
-            @option:created="createEmotion($event)"
-          />
-        </div>
+            <v-select
+              v-model="solutionEmotions"
+              class="pure-input-3-4"
+              input-id="solution-emotions"
+              taggable
+              multiple
+              push-tags
+              :options="emotions"
+              @option:created="createEmotion($event)"
+            />
+          </div>
 
-        <div class="pure-control-group">
-          <label for="solution">Details</label>
+          <div class="pure-control-group">
+            <label for="solution">Details</label>
 
-          <textarea
-            id="solution"
-            v-model="solutionStory"
-            rows="5"
-            class="pure-input-1"
-            placeholder="Describe the solution..."
-          ></textarea>
-        </div>
-      </fieldset>
+            <textarea
+              id="solution"
+              v-model="solutionStory"
+              rows="5"
+              class="pure-input-1"
+              placeholder="Describe the solution..."
+            ></textarea>
+          </div>
+        </fieldset>
 
-      <fieldset>
-        <legend><strong>End the thread</strong></legend>
+        <fieldset>
+          <legend><strong>End the thread</strong></legend>
 
-        <div class="pure-control-group">
-          <label>
-            <input v-model="shouldEndThread" type="checkbox" />
-            I want to end the thread
-          </label>
-        </div>
-      </fieldset>
+          <div class="pure-control-group">
+            <label>
+              <input v-model="shouldEndThread" type="checkbox" />
+              I want to end the thread
+            </label>
+          </div>
+        </fieldset>
 
-      <button class="pure-button pure-button-primary" type="submit">
-        Add
-      </button>
+        <button class="pure-button pure-button-primary" type="submit">
+          Add
+        </button>
 
-      <router-link class="pure-button" :to="{ name: 'home' }">
-        Go back
-      </router-link>
-    </form>
-  </div>
-</template>
+        <router-link class="pure-button" :to="{ name: 'home' }">
+          Go back
+        </router-link>
+      </form>
+    </div>
+  </plain-layout></template
+>
 
 <script lang="ts">
 import dayjs from 'dayjs'

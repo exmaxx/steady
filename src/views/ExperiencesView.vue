@@ -1,5 +1,7 @@
 <template>
-  <experiences :experiences="experiences" />
+  <with-menu-layout>
+    <experiences :experiences="experiences" />
+  </with-menu-layout>
 </template>
 
 <script lang="ts">

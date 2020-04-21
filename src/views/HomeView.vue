@@ -1,38 +1,41 @@
 <template>
-  <div class="flex-centered-column">
-    <template v-if="!isAnyThreadActive">
-      <button class="pure-button pure-button-primary" @click="startThread">
-        Start thread
-      </button>
+  <with-menu-layout>
+    <div class="flex-centered-column">
+      <template v-if="!isAnyThreadActive">
+        <button class="pure-button pure-button-primary" @click="startThread">
+          Start thread
+        </button>
 
-      <div class="info">
-        Every <strong>thread</strong> helps you track your progress and your
-        <strong>experiences</strong>. You track what helps you overcome
-        <strong>troubles</strong> and <strong>positive situations</strong> what
-        makes you relapse to and old habit.
-      </div>
-    </template>
+        <div class="info">
+          Every <strong>thread</strong> helps you track your progress and your
+          <strong>experiences</strong>. You track what helps you overcome
+          <strong>troubles</strong> and
+          <strong>positive situations</strong> what makes you relapse to and old
+          habit.
+        </div>
+      </template>
 
-    <template>
-      <router-link
-        :to="{ name: 'add-experience' }"
-        class="pure-button pure-button-primary"
-      >
-        <i class="fas fa-plus"></i>
-        Add experience
-      </router-link>
+      <template>
+        <router-link
+          :to="{ name: 'add-experience' }"
+          class="pure-button pure-button-primary"
+        >
+          <i class="fas fa-plus"></i>
+          Add experience
+        </router-link>
 
-      <experiences
-        v-if="isAnyThreadActive"
-        :experiences="activeThreadExperiences"
-        with-add-button
-      />
+        <experiences
+          v-if="isAnyThreadActive"
+          :experiences="activeThreadExperiences"
+          with-add-button
+        />
 
-      <div v-if="isAnyThreadActive">
-        <h2>Started: {{ startDate | formatDateAndTime }}</h2>
-      </div>
-    </template>
-  </div>
+        <div v-if="isAnyThreadActive">
+          <h2>Started: {{ startDate | formatDateAndTime }}</h2>
+        </div>
+      </template>
+    </div>
+  </with-menu-layout>
 </template>
 
 <script lang="ts">
