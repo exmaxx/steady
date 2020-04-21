@@ -1,55 +1,68 @@
 <template>
   <div id="app">
-    <nav class="pure-menu custom-restricted-width">
-      <ul class="pure-menu-list">
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'home' }" class="pure-menu-link">
-            Home
-          </router-link>
-        </li>
+    <auth>
+      <nav class="pure-menu custom-restricted-width">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item">
+            <router-link :to="{ name: 'home' }" class="pure-menu-link">
+              Home
+            </router-link>
+          </li>
 
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'threads' }" class="pure-menu-link">
-            Threads
-          </router-link>
-        </li>
+          <li class="pure-menu-item">
+            <router-link :to="{ name: 'threads' }" class="pure-menu-link">
+              Threads
+            </router-link>
+          </li>
 
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'experiences' }" class="pure-menu-link">
-            Experiences
-          </router-link>
-        </li>
+          <li class="pure-menu-item">
+            <router-link :to="{ name: 'experiences' }" class="pure-menu-link">
+              Experiences
+            </router-link>
+          </li>
 
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'activities' }" class="pure-menu-link">
-            Activities
-          </router-link>
-        </li>
+          <li class="pure-menu-item">
+            <router-link :to="{ name: 'activities' }" class="pure-menu-link">
+              Activities
+            </router-link>
+          </li>
 
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'emotions' }" class="pure-menu-link">
-            Emotions
-          </router-link>
-        </li>
-      </ul>
-    </nav>
+          <li class="pure-menu-item">
+            <router-link :to="{ name: 'emotions' }" class="pure-menu-link">
+              Emotions
+            </router-link>
+          </li>
 
-    <div class="content">
-      <router-view />
-    </div>
+          <li class="pure-menu-separator"></li>
+
+          <li class="pure-menu-item">
+            <a href="#" class="pure-menu-link" @click.prevent="attemptLogout"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <div class="content">
+        <router-view />
+      </div>
+    </auth>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapActions } from 'vuex'
+
+import Auth from '@/components/Auth.vue'
 
 export default Vue.extend({
-  mounted(): void {
-    // TODO: Load only active thread and emotions connected to it.
-    this.$store.dispatch('fetchEmotions')
-    this.$store.dispatch('fetchActivities')
-    this.$store.dispatch('fetchExperiences')
-    this.$store.dispatch('fetchThreads')
+  components: {
+    Auth,
+  },
+
+  methods: {
+    ...mapActions(['attemptLogout']),
   },
 })
 </script>

@@ -3,15 +3,20 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { experienceConverter, threadConverter } from '@/lib/api/converters'
-import { ServerUser } from '@/lib/api/types'
+import {
+  experienceConverter,
+  threadConverter,
+  userConverter,
+} from '@/lib/api/converters'
+import { NO_USER_DATA_ERROR, NO_USER_DOC_ERROR } from '@/lib/constants'
+import store from '@/store'
+import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
 import { Thread } from '@/store/threads/types'
 import { Tag } from '@/store/types'
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
-const TEMPORARY_USER_ID = '7AAdTrXZFkWsD2e48GN3P56YZoR2'
 const USERS = 'users'
 const EXPERIENCES = 'experiences'
 const THREADS = 'threads'
@@ -44,12 +49,20 @@ function init() {
   }
 }
 
+const getUserId = (): string => {
+  const { state } = store
+
+  if (!state.auth || !state.auth.userId) throw new Error('No userId!')
+
+  return state.auth.userId
+}
+
 const db = () => firebase.firestore()
 
 const userDoc = () =>
   db()
     .collection(USERS)
-    .doc(TEMPORARY_USER_ID)
+    .doc(getUserId())
 
 const experiencesCollection = () =>
   userDoc()
@@ -61,22 +74,20 @@ const threadsCollection = () =>
     .collection(THREADS)
     .withConverter(threadConverter)
 
-function getUser(): Promise<ServerUser> {
+const postUser = () => userDoc().set({})
+
+function getUser(): Promise<User> {
   return userDoc()
+    .withConverter(userConverter)
     .get()
     .then(doc => {
-      if (!doc.exists) {
-        console.error(
-          'Firebase: getUser() error. User document does not exist.'
-        )
-        throw new Error('User document does not exist.')
-      }
+      if (!doc.exists) throw new Error(NO_USER_DOC_ERROR)
 
-      return doc.data() as ServerUser
-    })
-    .catch(error => {
-      console.error(`Firebase: getUser() error. Error: ${error}`)
-      throw new Error('User document does not exist.')
+      const user = doc.data()
+
+      if (!user) throw new Error(NO_USER_DATA_ERROR)
+
+      return user
     })
 }
 
@@ -158,6 +169,8 @@ const putThread = (
 
 const Firebase = {
   init,
+  getUser,
+  postUser,
   getExperiences,
   postExperience,
   getActivities,

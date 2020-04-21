@@ -1,8 +1,8 @@
 export type ServerTag = string
 
 export interface ServerUser {
-  emotions: string[]
-  activities: string[]
+  emotions?: ServerTag[]
+  activities?: ServerTag[]
 }
 
 export interface ServerExperience {
@@ -19,3 +19,5 @@ export interface ServerThread {
   startDatetime: string
   endDatetime: string
 }
+
+export type ApiStatus = 'idle' | 'queued' | 'working' | 'finished' | 'error'

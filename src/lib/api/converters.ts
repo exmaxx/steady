@@ -1,10 +1,27 @@
-import { ServerExperience, ServerThread } from '@/lib/api/types'
+import { firestore } from 'firebase'
+
+import { ServerExperience, ServerThread, ServerUser } from '@/lib/api/types'
 import { emptyExperience, removeEmptyFrom } from '@/lib/helpers'
+import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
-import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 import { Thread } from '@/store/threads/types'
 
-export const experienceConverter: FirestoreDataConverter<Experience> = {
+export const userConverter: firestore.FirestoreDataConverter<User> = {
+  toFirestore: (user: User): ServerUser => {
+    return user
+  },
+
+  fromFirestore: (snapshot, options): User => {
+    const serverUser = snapshot.data(options) as ServerUser
+
+    return {
+      emotions: serverUser.emotions || [],
+      activities: serverUser.activities || [],
+    }
+  },
+}
+
+export const experienceConverter: firestore.FirestoreDataConverter<Experience> = {
   toFirestore: (experience: Experience): ServerExperience => {
     const serverExperience = {
       ...experience,
@@ -28,7 +45,7 @@ export const experienceConverter: FirestoreDataConverter<Experience> = {
   },
 }
 
-export const threadConverter: FirestoreDataConverter<Thread> = {
+export const threadConverter: firestore.FirestoreDataConverter<Thread> = {
   toFirestore: (thread: Thread): ServerThread => {
     const serverThread = {
       ...thread,
