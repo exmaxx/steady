@@ -255,7 +255,7 @@ export default Vue.extend({
   padding-bottom: 2rem;
 
   .pure-form {
-    width: 40rem;
+    max-width: 40rem;
   }
 
   .v-select {
