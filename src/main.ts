@@ -13,12 +13,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import PlainLayout from '@/layouts/PlainLayout.vue'
+import WithMenuLayout from '@/layouts/WithMenuLayout.vue'
 import Firebase from '@/lib/api/firebase'
 
 // Import global CSS
 import '@/main.scss'
-import WithMenuLayout from '@/layouts/WithMenuLayout.vue'
-import PlainLayout from '@/layouts/PlainLayout.vue'
 
 // Firebase
 Firebase.init()
