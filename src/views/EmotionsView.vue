@@ -1,5 +1,7 @@
 <template>
   <with-menu-layout>
+    <h1>Emotions</h1>
+
     <div class="emotions ">
       <tag v-for="emotion in emotions" :key="emotion" :title="emotion" />
     </div>
@@ -27,7 +29,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .emotions {
-  width: 40rem;
+  max-width: 40rem;
   padding: 1rem;
   margin: auto;
 }

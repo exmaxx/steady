@@ -1,5 +1,7 @@
 <template>
   <with-menu-layout>
+    <h1>Threads</h1>
+
     <div class="threads flex-centered-column">
       <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
         <div class="duration">
@@ -81,7 +83,7 @@ export default Vue.extend({
     box-sizing: border-box;
     border-radius: 0.5rem;
     padding: 1.5rem;
-    width: 30rem;
+    max-width: 30rem;
 
     .duration {
       font-weight: bold;

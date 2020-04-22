@@ -1,5 +1,7 @@
 <template>
   <with-menu-layout>
+    <h1>Experiences</h1>
+
     <experiences :experiences="experiences" />
   </with-menu-layout>
 </template>

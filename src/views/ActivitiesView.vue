@@ -1,5 +1,7 @@
 <template>
   <with-menu-layout>
+    <h1>Activities</h1>
+
     <div class="activities ">
       <tag v-for="activity in activities" :key="activity" :title="activity" />
     </div>
@@ -27,7 +29,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .activities {
-  width: 40rem;
+  max-width: 40rem;
   padding: 1rem;
   margin: auto;
 }

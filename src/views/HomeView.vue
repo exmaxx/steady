@@ -1,5 +1,7 @@
 <template>
   <with-menu-layout>
+    <h1>Active Thread</h1>
+
     <div class="flex-centered-column">
       <template v-if="!isAnyThreadActive">
         <button class="pure-button pure-button-primary" @click="startThread">
