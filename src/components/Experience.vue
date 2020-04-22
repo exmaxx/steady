@@ -123,7 +123,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .experience {
-  width: 40rem;
+  max-width: 40rem;
   border: 1px solid #acacac;
   box-sizing: border-box;
   border-radius: 0.5rem;

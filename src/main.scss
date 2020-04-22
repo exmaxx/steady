@@ -1,5 +1,5 @@
 @import 'node_modules/vue-select/src/scss/vue-select.scss';
-@import "constants";
+@import 'constants';
 
 html {
   font-family: $default-font;
@@ -24,4 +24,12 @@ h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.content {
+  padding: 3rem;
+
+  @media only screen and (max-width: $small-screen) {
+    padding: 1rem;
+  }
 }

@@ -22,8 +22,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-::v-deep .content {
-  padding: 3em;
-}
-</style>
+<style lang="scss" scoped></style>

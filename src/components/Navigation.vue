@@ -68,6 +68,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'src/constants';
+
+#menu-button {
+  display: none;
+}
+
 #menu {
   position: fixed;
   padding: 2rem;
@@ -86,14 +92,10 @@ export default Vue.extend({
   }
 }
 
-#menu-button {
-  display: none;
-}
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: $small-screen) {
   #menu-button {
     display: block;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
   }
