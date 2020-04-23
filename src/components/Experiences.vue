@@ -1,5 +1,5 @@
 <template>
-  <div class="experiences flex-centered-column">
+  <div class="experiences">
     <experience
       v-for="experience in experiences"
       :key="experience.id"
@@ -30,7 +30,11 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'src/mixins';
+
 .experiences {
+  @include flex-centered-column;
+
   > * {
     margin: 0.5em 0;
 

@@ -2,7 +2,7 @@
   <with-menu-layout>
     <h1>Active Thread</h1>
 
-    <div class="flex-centered-column">
+    <div class="home">
       <template v-if="!isAnyThreadActive">
         <button class="pure-button pure-button-primary" @click="startThread">
           Start thread
@@ -72,6 +72,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'src/mixins';
+
+.home {
+  @include flex-centered-column;
+}
+
 .info {
   margin: 2rem;
   width: 30rem;

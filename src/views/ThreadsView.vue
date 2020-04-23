@@ -2,7 +2,7 @@
   <with-menu-layout>
     <h1>Threads</h1>
 
-    <div class="threads flex-centered-column">
+    <div class="threads">
       <div v-for="thread in threadsDetailed" :key="thread.id" class="thread">
         <div class="duration">
           {{ thread.duration }} dnů
@@ -69,7 +69,11 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'src/mixins';
+
 .threads {
+  @include flex-centered-column;
+
   > * {
     margin: 0.5em 0;
 

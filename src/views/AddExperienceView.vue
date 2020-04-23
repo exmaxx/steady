@@ -1,6 +1,6 @@
 <template>
   <plain-layout>
-    <div class="add-experience flex-centered-column">
+    <div class="add-experience">
       <form class="pure-form pure-form-stacked" @submit.prevent="submit">
         <fieldset>
           <div class="pure-control-group">
@@ -251,11 +251,29 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'src/constants';
+@import 'src/mixins';
+
 .add-experience {
+  @include flex-centered-column;
+
   padding-bottom: 2rem;
 
+  input + input {
+    margin-left: 0.5rem;
+  }
+
   .pure-form {
-    max-width: 40rem;
+    width: 35rem;
+
+    @media only screen and (max-width: $small-screen) {
+      width: auto;
+      max-width: 40rem;
+    }
+
+    button {
+      margin: 0;
+    }
   }
 
   .v-select {
@@ -266,8 +284,8 @@ export default Vue.extend({
     color: red;
   }
 
-  button[type='submit'] {
-    margin-right: 0.5rem;
+  button + a {
+    margin-left: 0.5rem;
   }
 }
 </style>
