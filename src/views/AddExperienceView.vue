@@ -141,7 +141,7 @@
 import dayjs from 'dayjs'
 import Vue from 'vue'
 import { required } from 'vuelidate/lib/validators'
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import { Tag } from '@/store/types'
 
@@ -170,7 +170,6 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapMutations(['addExperience']),
     ...mapActions(['createEmotion', 'createActivity', 'createExperience']),
 
     submit() {

@@ -8,7 +8,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
   state: [],
 
   mutations: {
-    addExperience: (state, experience: Experience) => {
+    ADD_EXPERIENCE: (state, experience: Experience) => {
       state.push(experience)
       state.sort((exA, exB) => exB.datetime.localeCompare(exA.datetime))
     },
@@ -17,7 +17,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
   actions: {
     fetchExperiences: ({ commit }) => {
       Firebase.getExperiences().then(experiences =>
-        experiences.map(experience => commit('addExperience', experience))
+        experiences.map(experience => commit('ADD_EXPERIENCE', experience))
       )
     },
 
@@ -26,7 +26,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
         .catch(error =>
           console.error('Error in action createExperience.', error)
         )
-        .then(id => commit('addExperience', { ...experience, id }))
+        .then(id => commit('ADD_EXPERIENCE', { ...experience, id }))
     },
   },
 }

@@ -14,11 +14,11 @@ const authModule: Module<AuthState, RootState> = {
   },
 
   mutations: {
-    login: (state, userId: string) => (state.userId = userId),
+    LOGIN: (state, userId: string) => (state.userId = userId),
 
-    logout: state => (state.userId = null),
+    LOGOUT: state => (state.userId = null),
 
-    updateLoginStatus: (state, status: ApiStatus) =>
+    UPDATE_LOGIN_STATUS: (state, status: ApiStatus) =>
       (state.loginStatus = status),
   },
 
@@ -28,9 +28,9 @@ const authModule: Module<AuthState, RootState> = {
      * @param commit
      */
     attemptLogin: ({ commit }) => {
-      commit('updateLoginStatus', 'working')
+      commit('UPDATE_LOGIN_STATUS', 'working')
 
-      return Auth.signIn().catch(() => commit('updateLoginStatus', 'error'))
+      return Auth.signIn().catch(() => commit('UPDATE_LOGIN_STATUS', 'error'))
     },
 
     /**
@@ -38,9 +38,9 @@ const authModule: Module<AuthState, RootState> = {
      * @param commit
      */
     attemptLogout: ({ commit }) => {
-      commit('updateLoginStatus', 'working')
+      commit('UPDATE_LOGIN_STATUS', 'working')
 
-      return Auth.signOut().catch(() => commit('updateLoginStatus', 'error'))
+      return Auth.signOut().catch(() => commit('UPDATE_LOGIN_STATUS', 'error'))
     },
 
     /**
@@ -52,11 +52,11 @@ const authModule: Module<AuthState, RootState> = {
     registerLoginHook: ({ commit, dispatch }) =>
       Auth.onStatusChange({
         onLogin: user => {
-          commit('login', user.uid)
+          commit('LOGIN', user.uid)
 
           Firebase.getUser()
             .then(() => {
-              commit('updateLoginStatus', 'idle')
+              commit('UPDATE_LOGIN_STATUS', 'idle')
 
               dispatch('fetchAll').then(() => {
                 // TODO: Update 'sync' status.
@@ -78,13 +78,13 @@ const authModule: Module<AuthState, RootState> = {
         },
 
         onLogout: () => {
-          commit('logout')
-          commit('updateLoginStatus', 'idle')
+          commit('LOGOUT')
+          commit('UPDATE_LOGIN_STATUS', 'idle')
         },
 
         onError: error => {
-          commit('logout')
-          commit('updateLoginStatus', 'error')
+          commit('LOGOUT')
+          commit('UPDATE_LOGIN_STATUS', 'error')
 
           console.error('Error while checking login status:', error)
         },

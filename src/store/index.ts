@@ -15,9 +15,9 @@ export default new Vuex.Store<RootState>({
   },
 
   mutations: {
-    addEmotion: (state, emotion) => state.emotions.add(emotion),
+    ADD_EMOTION: (state, emotion) => state.emotions.add(emotion),
 
-    addActivity: (state, activity) => state.activities.add(activity),
+    ADD_ACTIVITY: (state, activity) => state.activities.add(activity),
   },
 
   actions: {
@@ -30,22 +30,22 @@ export default new Vuex.Store<RootState>({
 
     fetchEmotions: ({ commit }) =>
       Firebase.getEmotions().then(emotions =>
-        emotions.forEach(emotion => commit('addEmotion', emotion))
+        emotions.forEach(emotion => commit('ADD_EMOTION', emotion))
       ),
 
     fetchActivities: ({ commit }) =>
       Firebase.getActivities().then(activities =>
-        activities.forEach(activity => commit('addActivity', activity))
+        activities.forEach(activity => commit('ADD_ACTIVITY', activity))
       ),
 
     createEmotion: ({ commit }, emotion) =>
       Firebase.postEmotion(emotion)
-        .then(() => commit('addEmotion', emotion))
+        .then(() => commit('ADD_EMOTION', emotion))
         .catch(error => console.error('Error in createEmotion action.', error)),
 
     createActivity: ({ commit }, activity) =>
       Firebase.postActivity(activity)
-        .then(() => commit('addActivity', activity))
+        .then(() => commit('ADD_ACTIVITY', activity))
         .catch(error =>
           console.error('Error in createActivity action.', error)
         ),
