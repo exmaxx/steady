@@ -29,8 +29,8 @@ export default Vue.extend({
 
 span {
   display: inline-block;
-  margin-right: 0.2rem;
-  margin-bottom: 0.2rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0.3rem;
   padding: 0.2rem 0.5rem;
   box-sizing: border-box;
   border-radius: 0.5rem;

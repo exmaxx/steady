@@ -122,60 +122,66 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'src/constants';
+
 .experience {
-  max-width: 40rem;
+  width: 40rem;
   border: 1px solid #acacac;
   box-sizing: border-box;
   border-radius: 0.5rem;
   padding: 1.5rem;
-}
 
-.story {
-  font-family: 'Martel', serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin: 1.5em 0.5em;
-}
-
-.tags {
-  margin: 0.2em 0;
-}
-
-hr {
-  margin: 1.3em 2em 1.1em 2em;
-}
-
-ul {
-  list-style: none;
-  display: inline;
-  margin: 0;
-  padding: 0;
-  font-size: 0.9em;
-
-  li {
-    display: inline-block;
+  @media only screen and (max-width: $small-screen) {
+    width: 100%;
   }
-}
 
-h2 {
-  font-size: 1.2em;
-  margin: 0;
-  font-weight: bolder;
-}
+  .story {
+    font-family: 'Martel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 1.5em 0.5em;
+  }
 
-h3 {
-  font-size: 1em;
-  margin: 0.3em 0;
-}
+  .tags {
+    margin: 0.2em 0;
+  }
 
-h4 {
-  display: inline;
-  font-size: 0.9em;
-  margin-right: 0.5em;
-}
+  hr {
+    margin: 1.3em 2em 1.1em 2em;
+  }
 
-h5 {
-  margin: 0.3em 0 1.5em 0;
-  color: #acacac;
+  ul {
+    list-style: none;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+
+    li {
+      display: inline-block;
+    }
+  }
+
+  h2 {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: bolder;
+  }
+
+  h3 {
+    font-size: 1em;
+    margin: 0.3em 0;
+  }
+
+  h4 {
+    display: inline;
+    font-size: 0.9em;
+    margin-right: 0.5em;
+  }
+
+  h5 {
+    margin: 0.3em 0 1.5em 0;
+    color: #acacac;
+  }
 }
 </style>

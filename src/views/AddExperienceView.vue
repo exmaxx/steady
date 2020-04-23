@@ -238,7 +238,7 @@ export default Vue.extend({
   padding-bottom: 2rem;
 
   input + input {
-    margin-left: 0.5rem;
+    margin-left: $default-margin;
   }
 
   .pure-form {
@@ -263,7 +263,7 @@ export default Vue.extend({
   }
 
   button + a {
-    margin-left: 0.5rem;
+    margin-left: $default-margin;
   }
 }
 </style>
