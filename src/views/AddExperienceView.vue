@@ -46,7 +46,7 @@
               taggable
               multiple
               push-tags
-              :options="activities"
+              :options="activities.size > 0 ? [...activities] : undefined"
               @option:created="createActivity($event)"
             />
           </div>
@@ -61,7 +61,7 @@
               taggable
               multiple
               push-tags
-              :options="emotions"
+              :options="emotions.size > 0 ? [...emotions] : undefined"
               @option:created="createEmotion($event)"
             />
           </div>
@@ -92,7 +92,7 @@
               taggable
               multiple
               push-tags
-              :options="activities"
+              :options="activities.size > 0 ? [...activities] : undefined"
               @option:created="createActivity($event)"
             />
           </div>
@@ -107,7 +107,7 @@
               taggable
               multiple
               push-tags
-              :options="emotions"
+              :options="emotions.size > 0 ? [...emotions] : undefined"
               @option:created="createEmotion($event)"
             />
           </div>
