@@ -49,6 +49,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'Navigation',
@@ -57,6 +58,10 @@ export default Vue.extend({
     return {
       isMenuVisible: false,
     }
+  },
+
+  methods: {
+    ...mapActions(['attemptLogout']),
   },
 })
 </script>
