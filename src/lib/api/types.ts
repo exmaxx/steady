@@ -15,9 +15,4 @@ export interface ServerExperience {
   solutionActivities?: string[]
 }
 
-export interface ServerThread {
-  startDatetime: string
-  endDatetime: string
-}
-
 export type ApiStatus = 'idle' | 'queued' | 'working' | 'finished' | 'error'

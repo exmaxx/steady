@@ -27,12 +27,6 @@ const routes = [
       ),
   },
   {
-    path: '/threads',
-    name: 'threads',
-    component: () =>
-      import(/* webpackChunkName: "threads-view" */ '../views/ThreadsView.vue'),
-  },
-  {
     path: '/activities',
     name: 'activities',
     component: () =>

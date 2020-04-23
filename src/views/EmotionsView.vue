@@ -15,7 +15,7 @@ import { mapState } from 'vuex'
 import Tag from '@/components/Tag.vue'
 
 export default Vue.extend({
-  name: 'ThreadsView',
+  name: 'EmotionsView',
 
   components: {
     Tag,
