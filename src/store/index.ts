@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 import Firebase from '@/lib/api/firebase'
 import authModule from '@/store/auth'
 import experiencesModule from '@/store/experiences'
-import threadsModule from '@/store/threads'
 import { RootState } from '@/store/types'
 
 Vue.use(Vuex)
@@ -30,7 +29,7 @@ export default new Vuex.Store<RootState>({
   actions: {
     fetchAll: ({ dispatch }) =>
       Promise.all([
-        dispatch('fetchThreads').then(() => dispatch('fetchExperiences')),
+        dispatch('fetchExperiences'),
         dispatch('fetchEmotions'),
         dispatch('fetchActivities'),
       ]),
@@ -60,7 +59,6 @@ export default new Vuex.Store<RootState>({
 
   modules: {
     experiences: experiencesModule,
-    threads: threadsModule,
     auth: authModule,
   },
 })

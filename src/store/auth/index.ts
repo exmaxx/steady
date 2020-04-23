@@ -58,7 +58,6 @@ const authModule: Module<AuthState, RootState> = {
             .then(() => {
               commit('updateLoginStatus', 'idle')
 
-              // TODO: Load only active thread and emotions connected to it.
               dispatch('fetchAll').then(() => {
                 // TODO: Update 'sync' status.
                 console.log('All loaded ;)')
@@ -67,7 +66,6 @@ const authModule: Module<AuthState, RootState> = {
             .catch(error => {
               if (error.message === NO_USER_DOC_ERROR) {
                 Firebase.postUser().then(() =>
-                  // TODO: Load only active thread and emotions connected to it.
                   dispatch('fetchAll').then(() => {
                     // TODO: Update 'sync' status.
                     console.log('All loaded ;)')

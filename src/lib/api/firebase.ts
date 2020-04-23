@@ -3,23 +3,17 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
-import {
-  experienceConverter,
-  threadConverter,
-  userConverter,
-} from '@/lib/api/converters'
+import { experienceConverter, userConverter } from '@/lib/api/converters'
 import { NO_USER_DATA_ERROR, NO_USER_DOC_ERROR } from '@/lib/constants'
 import store from '@/store'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
-import { Thread } from '@/store/threads/types'
 import { Tag } from '@/store/types'
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
 const USERS = 'users'
 const EXPERIENCES = 'experiences'
-const THREADS = 'threads'
 
 /**
  * Initializes Firebase.
@@ -68,11 +62,6 @@ const experiencesCollection = () =>
   userDoc()
     .collection(EXPERIENCES)
     .withConverter(experienceConverter)
-
-const threadsCollection = () =>
-  userDoc()
-    .collection(THREADS)
-    .withConverter(threadConverter)
 
 const postUser = () => userDoc().set({})
 
@@ -134,39 +123,6 @@ function postActivity(activity: Tag): Promise<void> {
     })
 }
 
-const getThreads = (): Promise<void | Thread[]> => {
-  return threadsCollection()
-    .orderBy('startDatetime', 'desc')
-    .get()
-    .then(qs => qs.docs.map(doc => doc.data()))
-    .catch(error => {
-      console.error('Error getting threads: ', error)
-    })
-}
-
-const postThread = (thread: Thread): Promise<void | string> => {
-  return threadsCollection()
-    .add(thread)
-    .then(doc => doc.id)
-    .catch(error => {
-      console.error('Error writing thread document: ', error)
-    })
-}
-
-const putThread = (
-  id: string,
-  partialThread: Partial<Thread>
-): Promise<void | string> => {
-  if (!id) return Promise.reject('Missing thread id.')
-
-  return threadsCollection()
-    .doc(id)
-    .update(partialThread)
-    .catch(error => {
-      console.error('Error updating thread document: ', error)
-    })
-}
-
 const Firebase = {
   init,
   getUser,
@@ -177,9 +133,6 @@ const Firebase = {
   postActivity,
   getEmotions,
   postEmotion,
-  getThreads,
-  postThread,
-  putThread,
 }
 
 export default Firebase

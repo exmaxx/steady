@@ -9,12 +9,6 @@
         </li>
 
         <li class="pure-menu-item">
-          <router-link :to="{ name: 'threads' }" class="pure-menu-link">
-            Threads
-          </router-link>
-        </li>
-
-        <li class="pure-menu-item">
           <router-link :to="{ name: 'experiences' }" class="pure-menu-link">
             Experiences
           </router-link>
