@@ -1,22 +1,6 @@
 <template>
   <with-menu-layout>
-    <h1>Active Thread</h1>
-
     <div class="home">
-      <template v-if="!isAnyThreadActive">
-        <button class="pure-button pure-button-primary" @click="startThread">
-          Start thread
-        </button>
-
-        <div class="info">
-          Every <strong>thread</strong> helps you track your progress and your
-          <strong>experiences</strong>. You track what helps you overcome
-          <strong>troubles</strong> and
-          <strong>positive situations</strong> what makes you relapse to and old
-          habit.
-        </div>
-      </template>
-
       <template>
         <router-link
           :to="{ name: 'add-experience' }"
@@ -26,15 +10,7 @@
           Add experience
         </router-link>
 
-        <experiences
-          v-if="isAnyThreadActive"
-          :experiences="activeThreadExperiences"
-          with-add-button
-        />
-
-        <div v-if="isAnyThreadActive">
-          <h2>Started: {{ startDate | formatDateAndTime }}</h2>
-        </div>
+        <experiences :experiences="experiences" with-add-button />
       </template>
     </div>
   </with-menu-layout>
@@ -42,7 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 import Experiences from '@/components/Experiences.vue'
 
@@ -54,15 +30,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['activeThread', 'activeThreadExperiences']),
-
-    isAnyThreadActive(): boolean {
-      return this.activeThread
-    },
-
-    startDate(): string {
-      return this.activeThread?.startDatetime || ''
-    },
+    ...mapState(['experiences']),
   },
 
   methods: {

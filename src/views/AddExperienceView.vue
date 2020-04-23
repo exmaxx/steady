@@ -125,17 +125,6 @@
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend><strong>End the thread</strong></legend>
-
-          <div class="pure-control-group">
-            <label>
-              <input v-model="shouldEndThread" type="checkbox" />
-              I want to end the thread
-            </label>
-          </div>
-        </fieldset>
-
         <button class="pure-button pure-button-primary" type="submit">
           Add
         </button>
@@ -173,8 +162,6 @@ export default Vue.extend({
       solutionActivities: [] as Tag[],
       solutionEmotions: [] as Tag[],
       solutionGroupValid: null as boolean | null,
-
-      shouldEndThread: false,
     }
   },
 
@@ -184,12 +171,7 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(['addExperience']),
-    ...mapActions([
-      'createEmotion',
-      'createActivity',
-      'createExperience',
-      'endActiveThread',
-    ]),
+    ...mapActions(['createEmotion', 'createActivity', 'createExperience']),
 
     submit() {
       const {
@@ -229,10 +211,6 @@ export default Vue.extend({
           situationActivities,
           situationEmotions,
         })
-
-        if (this.shouldEndThread) {
-          this.endActiveThread()
-        }
 
         this.$router.push({ name: 'home' })
       }
