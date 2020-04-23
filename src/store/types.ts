@@ -4,8 +4,8 @@ import { ExperiencesState } from '@/store/experiences/types'
 export interface RootState {
   auth?: AuthState
   experiences?: ExperiencesState
-  emotions: Tag[]
-  activities: Tag[]
+  emotions: Set<Tag>
+  activities: Set<Tag>
 }
 
 export type Tag = string

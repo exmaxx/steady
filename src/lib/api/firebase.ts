@@ -80,10 +80,11 @@ function getUser(): Promise<User> {
     })
 }
 
-const getEmotions = (): Promise<Tag[]> => getUser().then(user => user.emotions)
+const getEmotions = (): Promise<Tag[]> =>
+  getUser().then(user => user.emotions.sort())
 
 const getActivities = (): Promise<Tag[]> =>
-  getUser().then(user => user.activities)
+  getUser().then(user => user.activities.sort())
 
 const getExperiences = (): Promise<Experience[]> => {
   return experiencesCollection()
