@@ -2,7 +2,7 @@
   <with-menu-layout>
     <h1>Activities</h1>
 
-    <div class="activities ">
+    <div class="activities">
       <tag v-for="activity in activities" :key="activity" :title="activity" />
     </div>
   </with-menu-layout>

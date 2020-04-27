@@ -33,7 +33,7 @@ export default Vue.extend({
   name: 'Auth',
 
   computed: {
-    ...mapState({ auth: state => (state as RootState).auth }),
+    ...mapState({ auth: (state) => (state as RootState).auth }),
 
     isLoggedIn(): boolean {
       return (this.auth && this.auth.userId !== null) || false

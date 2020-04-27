@@ -31,24 +31,26 @@ export default new Vuex.Store<RootState>({
       ]),
 
     fetchEmotions: ({ commit }) =>
-      Firebase.getEmotions().then(emotions =>
-        emotions.forEach(emotion => commit('ADD_EMOTION', emotion))
+      Firebase.getEmotions().then((emotions) =>
+        emotions.forEach((emotion) => commit('ADD_EMOTION', emotion))
       ),
 
     fetchActivities: ({ commit }) =>
-      Firebase.getActivities().then(activities =>
-        activities.forEach(activity => commit('ADD_ACTIVITY', activity))
+      Firebase.getActivities().then((activities) =>
+        activities.forEach((activity) => commit('ADD_ACTIVITY', activity))
       ),
 
     createEmotion: ({ commit }, emotion) =>
       Firebase.postEmotion(emotion)
         .then(() => commit('ADD_EMOTION', emotion))
-        .catch(error => console.error('Error in createEmotion action.', error)),
+        .catch((error) =>
+          console.error('Error in createEmotion action.', error)
+        ),
 
     createActivity: ({ commit }, activity) =>
       Firebase.postActivity(activity)
         .then(() => commit('ADD_ACTIVITY', activity))
-        .catch(error =>
+        .catch((error) =>
           console.error('Error in createActivity action.', error)
         ),
   },

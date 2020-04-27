@@ -7,15 +7,15 @@ function signIn() {
   return firebase
     .auth()
     .signInWithPopup(provider)
-    .then(userCredential => userCredential.user)
-    .catch(error => console.log('Login failed. Error:', error))
+    .then((userCredential) => userCredential.user)
+    .catch((error) => console.log('Login failed. Error:', error))
 }
 
 function signOut() {
   return firebase
     .auth()
     .signOut()
-    .catch(error => console.log('Logout failed. Error:', error))
+    .catch((error) => console.log('Logout failed. Error:', error))
 }
 
 interface LoginStatusHooks {
@@ -26,14 +26,14 @@ interface LoginStatusHooks {
 
 function onStatusChange(hooks: LoginStatusHooks) {
   firebase.auth().onAuthStateChanged(
-    user => {
+    (user) => {
       if (user) {
         hooks.onLogin(user)
       } else {
         hooks.onLogout()
       }
     },
-    error => {
+    (error) => {
       hooks.onError(error)
     }
   )

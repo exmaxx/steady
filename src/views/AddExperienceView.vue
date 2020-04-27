@@ -6,18 +6,18 @@
           <div class="pure-control-group">
             <label>
               Date and time
-              <span style="display: block">
+              <span style="display: block;">
                 <input
                   id="date"
                   v-model="$v.date.$model"
-                  style="display:inline-block"
+                  style="display: inline-block;"
                   type="date"
                   required
                 />
                 <input
                   id="time"
                   v-model="$v.time.$model"
-                  style="display:inline-block"
+                  style="display: inline-block;"
                   type="time"
                   required
                 />

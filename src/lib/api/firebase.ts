@@ -53,15 +53,10 @@ const getUserId = (): string => {
 
 const db = () => firebase.firestore()
 
-const userDoc = () =>
-  db()
-    .collection(USERS)
-    .doc(getUserId())
+const userDoc = () => db().collection(USERS).doc(getUserId())
 
 const experiencesCollection = () =>
-  userDoc()
-    .collection(EXPERIENCES)
-    .withConverter(experienceConverter)
+  userDoc().collection(EXPERIENCES).withConverter(experienceConverter)
 
 const postUser = () => userDoc().set({})
 
@@ -69,7 +64,7 @@ function getUser(): Promise<User> {
   return userDoc()
     .withConverter(userConverter)
     .get()
-    .then(doc => {
+    .then((doc) => {
       if (!doc.exists) throw new Error(NO_USER_DOC_ERROR)
 
       const user = doc.data()
@@ -81,23 +76,23 @@ function getUser(): Promise<User> {
 }
 
 const getEmotions = (): Promise<Tag[]> =>
-  getUser().then(user => user.emotions.sort())
+  getUser().then((user) => user.emotions.sort())
 
 const getActivities = (): Promise<Tag[]> =>
-  getUser().then(user => user.activities.sort())
+  getUser().then((user) => user.activities.sort())
 
 const getExperiences = (): Promise<Experience[]> => {
   return experiencesCollection()
     .orderBy('datetime', 'desc')
     .get()
-    .then(qs => qs.docs.map(doc => doc.data() as Experience))
+    .then((qs) => qs.docs.map((doc) => doc.data() as Experience))
 }
 
 function postExperience(experience: Experience): Promise<void | string> {
   return experiencesCollection()
     .add(experience)
-    .then(doc => doc.id)
-    .catch(error => {
+    .then((doc) => doc.id)
+    .catch((error) => {
       console.error('Error writing experience document: ', error)
     })
 }
@@ -108,7 +103,7 @@ function postEmotion(emotion: Tag): Promise<void> {
       { emotions: firebase.firestore.FieldValue.arrayUnion(emotion) }, // adds the item to array without overwriting it
       { merge: true }
     )
-    .catch(error => {
+    .catch((error) => {
       console.error('Error writing emotion document: ', error)
     })
 }
@@ -119,7 +114,7 @@ function postActivity(activity: Tag): Promise<void> {
       { activities: firebase.firestore.FieldValue.arrayUnion(activity) }, // adds the item to array without overwriting it
       { merge: true }
     )
-    .catch(error => {
+    .catch((error) => {
       console.error('Error writing activity document: ', error)
     })
 }

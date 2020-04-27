@@ -16,17 +16,17 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
 
   actions: {
     fetchExperiences: ({ commit }) => {
-      Firebase.getExperiences().then(experiences =>
-        experiences.map(experience => commit('ADD_EXPERIENCE', experience))
+      Firebase.getExperiences().then((experiences) =>
+        experiences.map((experience) => commit('ADD_EXPERIENCE', experience))
       )
     },
 
     createExperience: ({ commit }, experience: Experience) => {
       Firebase.postExperience(experience)
-        .catch(error =>
+        .catch((error) =>
           console.error('Error in action createExperience.', error)
         )
-        .then(id => commit('ADD_EXPERIENCE', { ...experience, id }))
+        .then((id) => commit('ADD_EXPERIENCE', { ...experience, id }))
     },
   },
 }

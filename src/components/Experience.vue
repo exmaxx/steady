@@ -13,8 +13,8 @@
       <div
         v-if="
           experience.situationStory !== '' ||
-            experience.situationActivities.length > 0 ||
-            experience.situationEmotions.length > 0
+          experience.situationActivities.length > 0 ||
+          experience.situationEmotions.length > 0
         "
         class="situation"
       >
@@ -51,16 +51,16 @@
       <hr
         v-if="
           experience.solutionStory !== '' ||
-            experience.solutionActivities.length > 0 ||
-            experience.solutionEmotions.length > 0
+          experience.solutionActivities.length > 0 ||
+          experience.solutionEmotions.length > 0
         "
       />
 
       <div
         v-if="
           experience.solutionStory !== '' ||
-            experience.solutionActivities.length > 0 ||
-            experience.solutionEmotions.length > 0
+          experience.solutionActivities.length > 0 ||
+          experience.solutionEmotions.length > 0
         "
         class="solution"
       >

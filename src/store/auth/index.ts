@@ -16,7 +16,7 @@ const authModule: Module<AuthState, RootState> = {
   mutations: {
     LOGIN: (state, userId: string) => (state.userId = userId),
 
-    LOGOUT: state => (state.userId = null),
+    LOGOUT: (state) => (state.userId = null),
 
     UPDATE_LOGIN_STATUS: (state, status: ApiStatus) =>
       (state.loginStatus = status),
@@ -51,7 +51,7 @@ const authModule: Module<AuthState, RootState> = {
      */
     registerLoginHook: ({ commit, dispatch }) =>
       Auth.onStatusChange({
-        onLogin: user => {
+        onLogin: (user) => {
           commit('LOGIN', user.uid)
 
           Firebase.getUser()
@@ -63,7 +63,7 @@ const authModule: Module<AuthState, RootState> = {
                 console.log('All loaded ;)')
               })
             })
-            .catch(error => {
+            .catch((error) => {
               if (error.message === NO_USER_DOC_ERROR) {
                 Firebase.postUser().then(() =>
                   dispatch('fetchAll').then(() => {
@@ -82,7 +82,7 @@ const authModule: Module<AuthState, RootState> = {
           commit('UPDATE_LOGIN_STATUS', 'idle')
         },
 
-        onError: error => {
+        onError: (error) => {
           commit('LOGOUT')
           commit('UPDATE_LOGIN_STATUS', 'error')
 

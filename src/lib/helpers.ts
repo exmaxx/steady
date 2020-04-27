@@ -20,5 +20,5 @@ export const isEmpty = (prop: unknown): boolean => {
 }
 
 export const removeEmptyFrom = (obj: { [key: string]: unknown }) => {
-  Object.keys(obj).forEach(key => isEmpty(obj[key]) && delete obj[key])
+  Object.keys(obj).forEach((key) => isEmpty(obj[key]) && delete obj[key])
 }
