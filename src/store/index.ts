@@ -15,9 +15,11 @@ export default new Vuex.Store<RootState>({
   },
 
   mutations: {
-    ADD_EMOTION: (state, emotion) => state.emotions.add(emotion),
+    ADD_EMOTION: (state, emotion) =>
+      (state.emotions = new Set([...state.emotions, emotion])),
 
-    ADD_ACTIVITY: (state, activity) => state.activities.add(activity),
+    ADD_ACTIVITY: (state, activity) =>
+      (state.activities = new Set([...state.activities, activity])),
   },
 
   actions: {

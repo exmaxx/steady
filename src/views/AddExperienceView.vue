@@ -46,7 +46,7 @@
               taggable
               multiple
               push-tags
-              :options="activities.size > 0 ? [...activities] : undefined"
+              :options="activities"
               @option:created="createActivity($event)"
             />
           </div>
@@ -61,7 +61,7 @@
               taggable
               multiple
               push-tags
-              :options="emotions.size > 0 ? [...emotions] : undefined"
+              :options="emotions"
               @option:created="createEmotion($event)"
             />
           </div>
@@ -92,7 +92,7 @@
               taggable
               multiple
               push-tags
-              :options="activities.size > 0 ? [...activities] : undefined"
+              :options="activities"
               @option:created="createActivity($event)"
             />
           </div>
@@ -107,7 +107,7 @@
               taggable
               multiple
               push-tags
-              :options="emotions.size > 0 ? [...emotions] : undefined"
+              :options="emotions"
               @option:created="createEmotion($event)"
             />
           </div>
@@ -143,7 +143,7 @@ import Vue from 'vue'
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapState } from 'vuex'
 
-import { Tag } from '@/store/types'
+import { RootState, Tag } from '@/store/types'
 
 export default Vue.extend({
   name: 'AddExperience',
@@ -166,7 +166,15 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(['emotions', 'activities']),
+    ...mapState({
+      activities(state: RootState): Tag[] {
+        return state.activities.size > 0 ? [...state.activities] : []
+      },
+
+      emotions(state: RootState): Tag[] {
+        return state.emotions.size > 0 ? [...state.emotions] : []
+      },
+    }),
   },
 
   methods: {
