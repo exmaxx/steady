@@ -49,27 +49,21 @@ const authModule: Module<AuthState, RootState> = {
      * @param commit
      * @param dispatch
      */
-    registerLoginHook: ({ commit, dispatch }) =>
+    registerLoginHook: ({ commit }) =>
       Auth.onStatusChange({
         onLogin: (user) => {
           commit('LOGIN', user.uid)
 
           Firebase.getUser()
             .then(() => {
-              commit('UPDATE_LOGIN_STATUS', 'idle')
-
-              dispatch('fetchAll').then(() => {
-                // TODO: Update 'sync' status.
-                console.log('All loaded ;)')
-              })
+              // TODO: Sync status to statuses module.
+              commit('UPDATE_LOGIN_STATUS', 'finished')
             })
             .catch((error) => {
               if (error.message === NO_USER_DOC_ERROR) {
                 Firebase.postUser().then(() =>
-                  dispatch('fetchAll').then(() => {
-                    // TODO: Update 'sync' status.
-                    console.log('All loaded ;)')
-                  })
+                  // TODO: Sync status to statuses module.
+                  commit('UPDATE_LOGIN_STATUS', 'finished')
                 )
               } else {
                 console.error(error)

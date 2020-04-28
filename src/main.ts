@@ -13,6 +13,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import Spinner from '@/components/Spinner.vue'
 import PlainLayout from '@/layouts/PlainLayout.vue'
 import WithMenuLayout from '@/layouts/WithMenuLayout.vue'
 import Firebase from '@/lib/api/firebase'
@@ -52,6 +53,7 @@ Vue.use(Vuelidate)
 Vue.component('WithMenuLayout', WithMenuLayout)
 Vue.component('PlainLayout', PlainLayout)
 Vue.component('vSelect', VueSelect)
+Vue.component('Spinner', Spinner)
 
 // Render app
 new Vue({

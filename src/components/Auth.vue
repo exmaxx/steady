@@ -20,7 +20,6 @@
 import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
 
-import Spinner from '@/components/Spinner.vue'
 import Welcome from '@/components/Welcome.vue'
 import { RootState } from '@/store/types'
 
@@ -29,7 +28,6 @@ export default Vue.extend({
 
   components: {
     Welcome,
-    Spinner,
   },
 
   computed: {
@@ -37,7 +35,9 @@ export default Vue.extend({
       isLoggedIn(state: RootState): boolean {
         if (!state.auth) return false
 
-        return state.auth.userId !== null
+        const { userId, loginStatus } = state.auth
+
+        return userId !== null && loginStatus === 'finished'
       },
 
       isAttemptingLogin(state: RootState): boolean {

@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import Firebase from '@/lib/api/firebase'
 import authModule from '@/store/auth'
 import experiencesModule from '@/store/experiences'
+import Tracker from '@/store/helpers/tracker'
+import statusesModule from '@/store/statuses'
 import { RootState } from '@/store/types'
 
 Vue.use(Vuex)
@@ -25,20 +27,30 @@ export default new Vuex.Store<RootState>({
   actions: {
     fetchAll: ({ dispatch }) =>
       Promise.all([
-        dispatch('fetchExperiences'),
         dispatch('fetchEmotions'),
         dispatch('fetchActivities'),
+        dispatch('fetchExperiences'),
       ]),
 
-    fetchEmotions: ({ commit }) =>
-      Firebase.getEmotions().then((emotions) =>
-        emotions.forEach((emotion) => commit('ADD_EMOTION', emotion))
-      ),
+    fetchEmotions: ({ commit }) => {
+      const tracker = new Tracker('emotions', commit)
 
-    fetchActivities: ({ commit }) =>
-      Firebase.getActivities().then((activities) =>
-        activities.forEach((activity) => commit('ADD_ACTIVITY', activity))
-      ),
+      tracker
+        .run(Firebase.getEmotions)
+        .then((emotions) =>
+          emotions.forEach((emotion) => commit('ADD_EMOTION', emotion))
+        )
+    },
+
+    fetchActivities: ({ commit }) => {
+      const tracker = new Tracker('activities', commit)
+
+      tracker
+        .run(Firebase.getActivities)
+        .then((activities) =>
+          activities.forEach((activity) => commit('ADD_ACTIVITY', activity))
+        )
+    },
 
     createEmotion: ({ commit }, emotion) =>
       Firebase.postEmotion(emotion)
@@ -58,5 +70,6 @@ export default new Vuex.Store<RootState>({
   modules: {
     experiences: experiencesModule,
     auth: authModule,
+    statuses: statusesModule,
   },
 })

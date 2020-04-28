@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <auth>
-      <router-view />
+      <fetcher>
+        <router-view />
+      </fetcher>
     </auth>
   </div>
 </template>
@@ -11,10 +13,12 @@ import Vue from 'vue'
 import { mapActions } from 'vuex'
 
 import Auth from '@/components/Auth.vue'
+import Fetcher from '@/components/Fetcher.vue'
 
 export default Vue.extend({
   components: {
     Auth,
+    Fetcher,
   },
 
   methods: {
