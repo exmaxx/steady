@@ -1,25 +1,18 @@
 <template>
   <div class="auth">
-    <slot v-if="isLoggedIn"></slot>
+    <welcome v-if="!isLoggedIn">
+      <spinner v-if="isAttemptingLogin" />
 
-    <div v-else class="not-logged-in">
-      <div class="welcome">Welcome to <strong>Steady</strong>.</div>
+      <button
+        v-else
+        class="pure-button pure-button-primary"
+        @click="attemptLogin"
+      >
+        Login
+      </button>
+    </welcome>
 
-      <div>
-        <i
-          v-if="isCheckingStatus"
-          class="fas fa-circle-notch fa-spin fa-2x"
-        ></i>
-
-        <button
-          v-else
-          class="pure-button pure-button-primary"
-          @click="attemptLogin"
-        >
-          Login
-        </button>
-      </div>
-    </div>
+    <slot v-else></slot>
   </div>
 </template>
 
@@ -27,21 +20,32 @@
 import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
 
+import Spinner from '@/components/Spinner.vue'
+import Welcome from '@/components/Welcome.vue'
 import { RootState } from '@/store/types'
 
 export default Vue.extend({
   name: 'Auth',
 
+  components: {
+    Welcome,
+    Spinner,
+  },
+
   computed: {
-    ...mapState({ auth: (state) => (state as RootState).auth }),
+    ...mapState({
+      isLoggedIn(state: RootState): boolean {
+        if (!state.auth) return false
 
-    isLoggedIn(): boolean {
-      return (this.auth && this.auth.userId !== null) || false
-    },
+        return state.auth.userId !== null
+      },
 
-    isCheckingStatus(): boolean {
-      return (this.auth && this.auth.loginStatus === 'working') || false
-    },
+      isAttemptingLogin(state: RootState): boolean {
+        if (!state.auth) return true
+
+        return state.auth.loginStatus === 'working'
+      },
+    }),
   },
 
   mounted(): void {
@@ -54,17 +58,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.not-logged-in {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding-top: 35vh;
-
-  .welcome {
-    margin: 0.7em;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
