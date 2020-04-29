@@ -1,7 +1,7 @@
 import { firestore } from 'firebase'
 
 import { ServerExperience, ServerUser } from '@/lib/api/types'
-import { emptyExperience, removeEmptyFrom } from '@/lib/helpers'
+import { createEmptyExperience, removeEmptyFrom } from '@/lib/helpers'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
 
@@ -37,7 +37,7 @@ export const experienceConverter: firestore.FirestoreDataConverter<Experience> =
     const data = snapshot.data(options) as ServerExperience
 
     return {
-      ...emptyExperience,
+      ...createEmptyExperience(),
       ...data,
       id: snapshot.id,
     } as Experience

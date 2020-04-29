@@ -61,7 +61,7 @@ const authModule: Module<AuthState, RootState> = {
             })
             .catch((error) => {
               if (error.message === NO_USER_DOC_ERROR) {
-                Firebase.postUser().then(() =>
+                Firebase.setUser().then(() =>
                   // TODO: Sync status to statuses module.
                   commit('UPDATE_LOGIN_STATUS', 'finished')
                 )

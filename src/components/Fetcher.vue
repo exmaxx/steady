@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <span v-if="isDataLoading" class="spinner"><spinner /></span>
-    <slot />
+    <slot v-else />
   </div>
 </template>
 

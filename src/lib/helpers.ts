@@ -1,15 +1,17 @@
+import dayjs from 'dayjs'
+
 import { Experience } from '@/store/experiences/types'
 
-export const emptyExperience: Experience = {
+export const createEmptyExperience = (): Experience => ({
   id: '',
-  datetime: '',
+  datetime: dayjs().toISOString(),
   situationStory: '',
   situationEmotions: [],
   situationActivities: [],
   solutionStory: '',
   solutionEmotions: [],
   solutionActivities: [],
-}
+})
 
 export const isEmpty = (prop: unknown): boolean => {
   if (!prop) return true
@@ -21,4 +23,17 @@ export const isEmpty = (prop: unknown): boolean => {
 
 export const removeEmptyFrom = (obj: { [key: string]: unknown }) => {
   Object.keys(obj).forEach((key) => isEmpty(obj[key]) && delete obj[key])
+}
+
+export const generateId = (length: number) => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  let id = ''
+
+  for (let i = 0; i < length; i++) {
+    id += characters.charAt(Math.floor(Math.random() * characters.length))
+  }
+
+  return id
 }

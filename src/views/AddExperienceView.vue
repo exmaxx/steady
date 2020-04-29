@@ -40,7 +40,7 @@
             <label :for="'situation-activities'">Activities?</label>
 
             <v-select
-              v-model="situationActivities"
+              v-model="form.situationActivities"
               class="pure-input-3-4"
               input-id="situation-activities"
               taggable
@@ -55,7 +55,7 @@
             <label :for="'situation-emotions'">Feelings / emotions?</label>
 
             <v-select
-              v-model="situationEmotions"
+              v-model="form.situationEmotions"
               class="pure-input-3-4"
               input-id="situation-emotions"
               taggable
@@ -71,7 +71,7 @@
 
             <textarea
               id="situation"
-              v-model="situationStory"
+              v-model="form.situationStory"
               rows="5"
               class="pure-input-1"
               placeholder="Describe the situation..."
@@ -86,7 +86,7 @@
             <label :for="'solution-activity'">Activities?</label>
 
             <v-select
-              v-model="solutionActivities"
+              v-model="form.solutionActivities"
               class="pure-input-3-4"
               input-id="solution-activity"
               taggable
@@ -101,7 +101,7 @@
             <label :for="'solution-emotions'">Feelings / emotions?</label>
 
             <v-select
-              v-model="solutionEmotions"
+              v-model="form.solutionEmotions"
               class="pure-input-3-4"
               input-id="solution-emotions"
               taggable
@@ -117,7 +117,7 @@
 
             <textarea
               id="solution"
-              v-model="solutionStory"
+              v-model="form.solutionStory"
               rows="5"
               class="pure-input-1"
               placeholder="Describe the solution..."
@@ -126,7 +126,8 @@
         </fieldset>
 
         <button class="pure-button pure-button-primary" type="submit">
-          Add
+          <span v-if="isUpdating">Update</span>
+          <span v-else>Add</span>
         </button>
 
         <router-link class="pure-button" :to="{ name: 'home' }">
@@ -143,6 +144,8 @@ import Vue from 'vue'
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapState } from 'vuex'
 
+import { createEmptyExperience } from '@/lib/helpers'
+import { Experience } from '@/store/experiences/types'
 import { RootState, Tag } from '@/store/types'
 
 export default Vue.extend({
@@ -153,20 +156,16 @@ export default Vue.extend({
       date: dayjs().format('YYYY-MM-DD'),
       time: dayjs().format('HH:mm'),
 
-      situationStory: '',
-      situationActivities: [] as Tag[],
-      situationEmotions: [] as Tag[],
-      situationGroupValid: null as boolean | null,
-
-      solutionStory: '',
-      solutionActivities: [] as Tag[],
-      solutionEmotions: [] as Tag[],
-      solutionGroupValid: null as boolean | null,
+      form: createEmptyExperience() as Experience,
     }
   },
 
   computed: {
     ...mapState({
+      experience(state: RootState, getters): Experience | null {
+        return getters.findExperienceById(this.$route.params.id)
+      },
+
       activities(state: RootState): Tag[] {
         return state.activities.size > 0 ? [...state.activities] : []
       },
@@ -175,49 +174,83 @@ export default Vue.extend({
         return state.emotions.size > 0 ? [...state.emotions] : []
       },
     }),
+
+    isUpdating(): boolean {
+      return !!this.$route.params.id
+    },
+  },
+
+  watch: {
+    date(newDate) {
+      this.form.datetime = dayjs(`${newDate} ${this.time}`).toISOString()
+    },
+    time(newTime) {
+      this.form.datetime = dayjs(`${this.date} ${newTime}`).toISOString()
+    },
+
+    // TODO: Use this in case you load experience with delay
+    //  (e.g. after refresh without Fetcher waiting before showing the content)
+    // experience(val) {
+    //   this.form = { ...val }
+    //
+    //   if (val.datetime) {
+    //     const datetime = dayjs(val.datetime)
+    //
+    //     this.date = datetime.format('YYYY-MM-DD')
+    //     this.time = datetime.format('HH:mm')
+    //   } else {
+    //     this.date = dayjs().format('YYYY-MM-DD')
+    //     this.time = dayjs().format('HH:mm')
+    //   }
+    // },
+  },
+
+  created() {
+    this.form = this.experience
+      ? { ...this.experience }
+      : createEmptyExperience()
+
+    const datetime = dayjs(this.form.datetime)
+
+    this.date = datetime.format('YYYY-MM-DD')
+    this.time = datetime.format('HH:mm')
   },
 
   methods: {
-    ...mapActions(['createEmotion', 'createActivity', 'createExperience']),
+    ...mapActions([
+      'createEmotion',
+      'createActivity',
+      'createExperience',
+      'overwriteExperience',
+    ]),
 
     submit() {
+      const { date, time, form } = this
       const {
-        situationActivities,
-        solutionStory,
         situationStory,
+        situationActivities,
         situationEmotions,
-        date,
-        time,
+        solutionStory,
         solutionActivities,
         solutionEmotions,
-      } = this
+      } = form
 
-      this.situationGroupValid = !(
+      const situationGroupValid = !(
         situationActivities.length === 0 &&
         situationEmotions.length === 0 &&
         situationStory === ''
       )
 
-      this.solutionGroupValid = !(
+      const solutionGroupValid = !(
         solutionActivities.length === 0 &&
         solutionEmotions.length === 0 &&
         solutionStory === ''
       )
 
-      if (
-        date &&
-        time &&
-        (this.situationGroupValid || this.solutionGroupValid)
-      ) {
-        this.createExperience({
-          datetime: dayjs(`${this.date} ${this.time}`).toISOString(),
-          solutionStory,
-          solutionActivities,
-          solutionEmotions,
-          situationStory,
-          situationActivities,
-          situationEmotions,
-        })
+      if (date && time && (situationGroupValid || solutionGroupValid)) {
+        this.isUpdating
+          ? this.overwriteExperience(form)
+          : this.createExperience(form)
 
         this.$router.push({ name: 'home' })
       }

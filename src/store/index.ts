@@ -53,14 +53,14 @@ export default new Vuex.Store<RootState>({
     },
 
     createEmotion: ({ commit }, emotion) =>
-      Firebase.postEmotion(emotion)
+      Firebase.setEmotion(emotion)
         .then(() => commit('ADD_EMOTION', emotion))
         .catch((error) =>
           console.error('Error in createEmotion action.', error)
         ),
 
     createActivity: ({ commit }, activity) =>
-      Firebase.postActivity(activity)
+      Firebase.setActivity(activity)
         .then(() => commit('ADD_ACTIVITY', activity))
         .catch((error) =>
           console.error('Error in createActivity action.', error)

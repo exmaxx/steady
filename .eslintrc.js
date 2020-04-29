@@ -30,9 +30,16 @@ module.exports = {
         ? ['warn', { allow: ['warn', 'error'] }]
         : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-unused-vars': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    'no-unused-vars': [
+      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      { argsIgnorePattern: '^_.*' },
+    ],
     'no-unused-labels':
       process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+    '@typescript-eslint/no-unused-vars': [
+      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      { argsIgnorePattern: '^_.*' },
+    ],
   },
   settings: {
     'import/parsers': {

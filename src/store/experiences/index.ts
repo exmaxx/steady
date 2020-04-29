@@ -13,6 +13,16 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
       state.push(experience)
       state.sort((exA, exB) => exB.datetime.localeCompare(exA.datetime))
     },
+
+    REMOVE_EXPERIENCE: (state, id: string) => {
+      const index = state.findIndex((exp) => exp.id === id)
+      state.splice(index, 1)
+    },
+
+    UPDATE_EXPERIENCE: (state, experienceWithId: Experience) => {
+      const index = state.findIndex((exp) => exp.id === experienceWithId.id)
+      state.splice(index, 1, experienceWithId)
+    },
   },
 
   actions: {
@@ -27,12 +37,25 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
     },
 
     createExperience: ({ commit }, experience: Experience) => {
-      Firebase.postExperience(experience)
+      Firebase.setExperience(experience)
         .catch((error) =>
-          console.error('Error in action createExperience.', error)
+          console.error('Error in action createOrOverwriteExperience.', error)
         )
         .then((id) => commit('ADD_EXPERIENCE', { ...experience, id }))
     },
+
+    overwriteExperience: ({ commit }, experienceWithId: Experience) => {
+      Firebase.setExperience(experienceWithId)
+        .catch((error) =>
+          console.error('Error in action createOrOverwriteExperience.', error)
+        )
+        .then((_id) => commit('UPDATE_EXPERIENCE', { ...experienceWithId }))
+    },
+  },
+
+  getters: {
+    findExperienceById: (state) => (id: string): Experience | null =>
+      state.find((experience) => experience.id === id) || null,
   },
 }
 

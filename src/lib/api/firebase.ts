@@ -4,7 +4,12 @@ import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
 import { experienceConverter, userConverter } from '@/lib/api/converters'
-import { NO_USER_DATA_ERROR, NO_USER_DOC_ERROR } from '@/lib/constants'
+import {
+  ID_LENGTH,
+  NO_USER_DATA_ERROR,
+  NO_USER_DOC_ERROR,
+} from '@/lib/constants'
+import { generateId } from '@/lib/helpers'
 import store from '@/store'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
@@ -58,7 +63,7 @@ const userDoc = () => db().collection(USERS).doc(getUserId())
 const experiencesCollection = () =>
   userDoc().collection(EXPERIENCES).withConverter(experienceConverter)
 
-const postUser = () => userDoc().set({})
+const setUser = () => userDoc().set({})
 
 function getUser(): Promise<User> {
   return userDoc()
@@ -88,16 +93,23 @@ const getExperiences = (): Promise<Experience[]> => {
     .then((qs) => qs.docs.map((doc) => doc.data() as Experience))
 }
 
-function postExperience(experience: Experience): Promise<void | string> {
+/**
+ * Create or overwrite experience.
+ * @param experience
+ */
+function setExperience(experience: Experience): Promise<string | void> {
+  const id = experience.id || generateId(ID_LENGTH)
+
   return experiencesCollection()
-    .add(experience)
-    .then((doc) => doc.id)
+    .doc(id)
+    .set(experience)
+    .then(() => id)
     .catch((error) => {
       console.error('Error writing experience document: ', error)
     })
 }
 
-function postEmotion(emotion: Tag): Promise<void> {
+function setEmotion(emotion: Tag): Promise<void> {
   return userDoc()
     .set(
       { emotions: firebase.firestore.FieldValue.arrayUnion(emotion) }, // adds the item to array without overwriting it
@@ -108,7 +120,7 @@ function postEmotion(emotion: Tag): Promise<void> {
     })
 }
 
-function postActivity(activity: Tag): Promise<void> {
+function setActivity(activity: Tag): Promise<void> {
   return userDoc()
     .set(
       { activities: firebase.firestore.FieldValue.arrayUnion(activity) }, // adds the item to array without overwriting it
@@ -122,13 +134,13 @@ function postActivity(activity: Tag): Promise<void> {
 const Firebase = {
   init,
   getUser,
-  postUser,
+  setUser,
   getExperiences,
-  postExperience,
+  setExperience,
   getActivities,
-  postActivity,
+  setActivity,
   getEmotions,
-  postEmotion,
+  setEmotion,
 }
 
 export default Firebase
