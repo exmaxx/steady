@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import Firebase from '@/lib/api/firebase'
 import authModule from '@/store/auth'
 import experiencesModule from '@/store/experiences'
-import Tracker from '@/store/helpers/tracker'
+import WithTracker from '@/store/helpers/with-tracker'
 import statusesModule from '@/store/statuses'
 import { RootState } from '@/store/types'
 
@@ -33,23 +33,23 @@ export default new Vuex.Store<RootState>({
       ]),
 
     fetchEmotions: ({ commit }) => {
-      const tracker = new Tracker('emotions', commit)
+      const withTracker = new WithTracker('emotions', commit)
 
-      tracker
-        .run(Firebase.getEmotions)
-        .then((emotions) =>
-          emotions.forEach((emotion) => commit('ADD_EMOTION', emotion))
-        )
+      const promise = Firebase.getEmotions().then((emotions) =>
+        emotions.forEach((emotion) => commit('ADD_EMOTION', emotion))
+      )
+
+      return withTracker.runPromise(promise)
     },
 
     fetchActivities: ({ commit }) => {
-      const tracker = new Tracker('activities', commit)
+      const withTracker = new WithTracker('activities', commit)
 
-      tracker
-        .run(Firebase.getActivities)
-        .then((activities) =>
-          activities.forEach((activity) => commit('ADD_ACTIVITY', activity))
-        )
+      const promise = Firebase.getActivities().then((activities) =>
+        activities.forEach((activity) => commit('ADD_ACTIVITY', activity))
+      )
+
+      return withTracker.runPromise(promise)
     },
 
     createEmotion: ({ commit }, emotion) =>

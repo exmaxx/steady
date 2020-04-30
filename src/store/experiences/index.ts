@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 
 import Firebase from '@/lib/api/firebase'
 import { ExperiencesState, Experience } from '@/store/experiences/types'
-import Tracker from '@/store/helpers/tracker'
+import WithTracker from '@/store/helpers/with-tracker'
 import { RootState } from '@/store/types'
 
 const experiencesModule: Module<ExperiencesState, RootState> = {
@@ -27,13 +27,15 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
 
   actions: {
     fetchExperiences: ({ commit }) => {
-      const tracker = new Tracker('experiences', commit)
+      const withTracker = new WithTracker('experiences', commit)
 
-      tracker
-        .run(Firebase.getExperiences)
+      const promise = Firebase.getExperiences()
         .then((experiences) =>
-          experiences.map((experience) => commit('ADD_EXPERIENCE', experience))
+          experiences.forEach((experience) => commit('ADD_EXPERIENCE', experience))
         )
+
+      withTracker
+        .runPromise(promise)
     },
 
     createExperience: ({ commit }, experience: Experience) => {
