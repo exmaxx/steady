@@ -29,19 +29,19 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
     fetchExperiences: ({ commit }) => {
       const withTracker = new WithTracker('experiences', commit)
 
-      const promise = Firebase.getExperiences()
-        .then((experiences) =>
-          experiences.forEach((experience) => commit('ADD_EXPERIENCE', experience))
+      const promise = Firebase.getExperiences().then((experiences) =>
+        experiences.forEach((experience) =>
+          commit('ADD_EXPERIENCE', experience)
         )
+      )
 
-      withTracker
-        .runPromise(promise)
+      withTracker.runPromise(promise)
     },
 
     createExperience: ({ commit }, experience: Experience) => {
       Firebase.setExperience(experience)
         .catch((error) =>
-          console.error('Error in action createOrOverwriteExperience.', error)
+          console.error('Error in action createExperience.', error)
         )
         .then((id) => commit('ADD_EXPERIENCE', { ...experience, id }))
     },

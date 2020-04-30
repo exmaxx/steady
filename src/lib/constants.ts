@@ -1,6 +1,6 @@
 // Constants
 
-export const ID_LENGTH = 16
+export const ID_LENGTH = 20
 
 // Errors
 

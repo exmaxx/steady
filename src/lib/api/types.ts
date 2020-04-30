@@ -1,3 +1,5 @@
+// Resources
+
 export type ServerTag = string
 
 export interface ServerUser {
@@ -14,5 +16,12 @@ export interface ServerExperience {
   solutionEmotions?: string[]
   solutionActivities?: string[]
 }
+
+export interface ServerHabit {
+  id: string
+  name: string
+}
+
+// Types
 
 export type ApiStatus = 'idle' | 'queued' | 'working' | 'finished' | 'error'

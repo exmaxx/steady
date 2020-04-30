@@ -3,7 +3,11 @@ import firebase from 'firebase'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { experienceConverter, userConverter } from '@/lib/api/converters'
+import {
+  experienceConverter,
+  habitsConverter,
+  userConverter,
+} from '@/lib/api/converters'
 import {
   ID_LENGTH,
   NO_USER_DATA_ERROR,
@@ -13,12 +17,18 @@ import { generateId } from '@/lib/helpers'
 import store from '@/store'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
+import { Habit, Habits } from '@/store/habits/types'
 import { Tag } from '@/store/types'
 
 // import 'firebase/functions'  // TODO: Add when functions needed
 
 const USERS = 'users'
 const EXPERIENCES = 'experiences'
+const HABITS = 'habits'
+
+/**
+ * INITIALIZATION
+ */
 
 /**
  * Initializes Firebase.
@@ -48,6 +58,13 @@ function init() {
   }
 }
 
+/**
+ * AUTH
+ */
+
+/**
+ * Get user id from Vuex store (from auth module).
+ */
 const getUserId = (): string => {
   const { state } = store
 
@@ -56,15 +73,44 @@ const getUserId = (): string => {
   return state.auth.userId
 }
 
+/**
+ * DB HELPERS
+ */
+
+/**
+ * Get db object. You must call `init()` first.
+ */
 const db = () => firebase.firestore()
 
+/**
+ * Get user doc reference.
+ */
 const userDoc = () => db().collection(USERS).doc(getUserId())
 
+/**
+ * Get experience collection reference.
+ */
 const experiencesCollection = () =>
   userDoc().collection(EXPERIENCES).withConverter(experienceConverter)
 
+/**
+ * Get habits collection reference.
+ */
+const habitsCollection = () =>
+  userDoc().collection(HABITS).withConverter(habitsConverter)
+
+/**
+ * DB CALLS
+ */
+
+/**
+ * Creates an empty user data object.
+ */
 const setUser = () => userDoc().set({})
 
+/**
+ * Get user data.
+ */
 function getUser(): Promise<User> {
   return userDoc()
     .withConverter(userConverter)
@@ -80,12 +126,53 @@ function getUser(): Promise<User> {
     })
 }
 
+/**
+ * Get emotions data.
+ */
 const getEmotions = (): Promise<Tag[]> =>
   getUser().then((user) => user.emotions.sort())
 
+/**
+ * Get activities data.
+ */
 const getActivities = (): Promise<Tag[]> =>
   getUser().then((user) => user.activities.sort())
 
+/**
+ * Get habits data.
+ */
+const getHabits = (): Promise<Habits> => {
+  return habitsCollection()
+    .orderBy('name', 'desc')
+    .get()
+    .then((qs) =>
+      qs.docs.reduce((habits: Habits, doc): Habits => {
+        const habit = doc.data()
+        habits[habit.id] = habit
+        return habits
+      }, {})
+    )
+}
+
+/**
+ * Create or overwrite experience.
+ * @param habit
+ */
+const setHabit = (habit: Habit): Promise<string | void> => {
+  const id = habit.id || generateId(ID_LENGTH)
+
+  return habitsCollection()
+    .doc(id)
+    .set(habit)
+    .then(() => id)
+    .catch((error) => {
+      console.error('Error writing habit document: ', error)
+    })
+}
+
+/**
+ * Get experiences data.
+ */
 const getExperiences = (): Promise<Experience[]> => {
   return experiencesCollection()
     .orderBy('datetime', 'desc')
@@ -97,7 +184,7 @@ const getExperiences = (): Promise<Experience[]> => {
  * Create or overwrite experience.
  * @param experience
  */
-function setExperience(experience: Experience): Promise<string | void> {
+const setExperience = (experience: Experience): Promise<string | void> => {
   const id = experience.id || generateId(ID_LENGTH)
 
   return experiencesCollection()
@@ -131,10 +218,15 @@ function setActivity(activity: Tag): Promise<void> {
     })
 }
 
+/**
+ * Export out happy object.
+ */
 const Firebase = {
   init,
   getUser,
   setUser,
+  getHabits,
+  setHabit,
   getExperiences,
   setExperience,
   getActivities,
