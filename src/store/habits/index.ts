@@ -29,11 +29,16 @@ const habitsModule: Module<HabitsState, RootState> = {
     },
 
     createHabit: ({ commit }, habit: Habit) =>
-      Firebase.setHabit(habit).then(() => commit('ADD_HABIT', habit)),
+      Firebase.setHabit(habit).then((id) => {
+        commit('ADD_HABIT', { ...habit, id })
+        return id
+      }),
   },
 
   getters: {
-    sortedHabitIdsByName: (state) => sortBy(state, ['id']),
+    sortedHabitsByName: (state) => sortBy(state, ['id']),
+
+    findHabitById: (state) => (id: string): Habit | null => state[id] || null,
   },
 }
 

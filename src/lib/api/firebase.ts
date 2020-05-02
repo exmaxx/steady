@@ -160,10 +160,14 @@ const getHabits = (): Promise<Habits> => {
  */
 const setHabit = (habit: Habit): Promise<string | void> => {
   const id = habit.id || generateId(ID_LENGTH)
+  const newHabit = {
+    ...habit,
+    id,
+  }
 
   return habitsCollection()
     .doc(id)
-    .set(habit)
+    .set(newHabit)
     .then(() => id)
     .catch((error) => {
       console.error('Error writing habit document: ', error)
@@ -186,10 +190,14 @@ const getExperiences = (): Promise<Experience[]> => {
  */
 const setExperience = (experience: Experience): Promise<string | void> => {
   const id = experience.id || generateId(ID_LENGTH)
+  const newEperience = {
+    ...experience,
+    id,
+  }
 
   return experiencesCollection()
     .doc(id)
-    .set(experience)
+    .set(newEperience)
     .then(() => id)
     .catch((error) => {
       console.error('Error writing experience document: ', error)

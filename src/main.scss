@@ -16,12 +16,12 @@ h4 {
   font-family: 'Raleway', sans-serif;
 }
 
-h1 {
+h1.mobile-only {
   display: none;
 }
 
 @media only screen and (max-width: $small-screen) {
-  h1 {
+  h1.mobile-only {
     display: block;
     text-align: center;
   }

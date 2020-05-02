@@ -1,6 +1,6 @@
 <template>
   <with-menu-layout>
-    <h1>Emotions</h1>
+    <h1 class="mobile-only">Emotions</h1>
 
     <div class="emotions">
       <spinner v-if="areEmotionsLoading" />

@@ -2,15 +2,31 @@
   <div>
     <nav id="menu" :class="['pure-menu', { active: isMenuVisible }]">
       <ul class="pure-menu-list">
-        <li class="pure-menu-item">
-          <router-link :to="{ name: 'home' }" class="pure-menu-link">
-            Home
+        <li
+          v-for="habit in sortedHabitsByName"
+          :key="habit.id"
+          class="pure-menu-item"
+        >
+          <router-link
+            :to="{ name: 'habit', params: { id: habit.id } }"
+            class="pure-menu-link"
+          >
+            {{ habit.name }}
           </router-link>
         </li>
 
         <li class="pure-menu-item">
-          <router-link :to="{ name: 'experiences' }" class="pure-menu-link">
-            Experiences
+          <router-link :to="{ name: 'habit-add' }" class="pure-menu-link">
+            <i class="fas fa-plus"></i>
+            Add Habit
+          </router-link>
+        </li>
+
+        <li class="pure-menu-separator"></li>
+
+        <li class="pure-menu-item">
+          <router-link :to="{ name: 'home' }" class="pure-menu-link">
+            Home
           </router-link>
         </li>
 
@@ -49,7 +65,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'Navigation',
@@ -58,6 +74,10 @@ export default Vue.extend({
     return {
       isMenuVisible: false,
     }
+  },
+
+  computed: {
+    ...mapGetters(['sortedHabitsByName']),
   },
 
   methods: {

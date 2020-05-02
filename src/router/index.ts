@@ -8,6 +8,22 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/', name: 'home', component: HomeView },
   {
+    path: '/habits/add',
+    name: 'habit-add',
+    component: () =>
+      import(
+        /* webpackChunkName: "experiences-view" */ '../views/AddHabitView.vue'
+      ),
+  },
+  {
+    path: '/habits/:id',
+    name: 'habits',
+    component: () =>
+      import(
+        /* webpackChunkName: "experiences-view" */ '../views/HabitView.vue'
+      ),
+  },
+  {
     path: '/experiences',
     name: 'experiences',
     component: () =>

@@ -1,6 +1,6 @@
 <template>
   <with-menu-layout>
-    <h1>Experiences</h1>
+    <h1 class="mobile-only">Experiences</h1>
 
     <experiences :experiences="experiences" />
   </with-menu-layout>

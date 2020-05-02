@@ -1,6 +1,10 @@
 <template>
   <with-menu-layout>
-    <div class="home">
+    <div class="habit">
+      <!-- TODO: Two headers? Come on... -->
+      <h1 class="mobile-only">Habit: {{ habit.name }}</h1>
+      <h2>Habit: {{ habit.name }}</h2>
+
       <router-link
         :to="{ name: 'add-experience' }"
         class="pure-button pure-button-primary"
@@ -9,43 +13,40 @@
         Add experience
       </router-link>
 
-      <experiences :experiences="experiences" with-add-button />
+      <!-- TODO: Select by habit. -->
+      <experiences :experiences="experiences" />
     </div>
   </with-menu-layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import Experiences from '@/components/Experiences.vue'
 
 export default Vue.extend({
-  name: 'HomeView',
+  name: 'ExperiencesView',
 
   components: {
     Experiences,
   },
 
   computed: {
+    ...mapGetters(['findHabitById']),
     ...mapState(['experiences']),
+
+    habit() {
+      return this.findHabitById(this.$route.params.id)
+    },
   },
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/mixins';
 
-.home {
+.habit {
   @include flex-centered-column;
-}
-
-.info {
-  margin: 2rem;
-  width: 30rem;
-
-  & + .info {
-    margin-top: 0;
-  }
 }
 </style>
