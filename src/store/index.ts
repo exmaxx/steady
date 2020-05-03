@@ -11,7 +11,7 @@ import { RootState } from '@/store/types'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store<RootState>({
+const store = new Vuex.Store<RootState>({
   state: {
     emotions: new Set(),
     activities: new Set(),
@@ -76,3 +76,5 @@ export default new Vuex.Store<RootState>({
     statuses: statusesModule,
   },
 })
+
+export default store

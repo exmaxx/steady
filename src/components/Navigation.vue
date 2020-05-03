@@ -8,7 +8,7 @@
           class="pure-menu-item"
         >
           <router-link
-            :to="{ name: 'habit', params: { id: habit.id } }"
+            :to="{ name: 'habits', params: { id: habit.id } }"
             class="pure-menu-link"
           >
             {{ habit.name }}
@@ -16,7 +16,7 @@
         </li>
 
         <li class="pure-menu-item">
-          <router-link :to="{ name: 'habit-add' }" class="pure-menu-link">
+          <router-link :to="{ name: 'habits-add' }" class="pure-menu-link">
             <i class="fas fa-plus"></i>
             Add Habit
           </router-link>

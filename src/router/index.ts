@@ -9,7 +9,7 @@ const routes = [
   { path: '/', name: 'home', component: HomeView },
   {
     path: '/habits/add',
-    name: 'habit-add',
+    name: 'habits-add',
     component: () =>
       import(
         /* webpackChunkName: "experiences-view" */ '../views/AddHabitView.vue'
@@ -68,6 +68,17 @@ const routes = [
       import(
         /* webpackChunkName: "emotions-view" */ '../views/EmotionsView.vue'
       ),
+  },
+  {
+    path: '/not-found',
+    name: 'not-found',
+    component: () =>
+      import(/* webpackChunkName: "emotions-view" */ '../views/NotFound.vue'),
+  },
+  {
+    path: '*',
+    component: () =>
+      import(/* webpackChunkName: "emotions-view" */ '../views/NotFound.vue'),
   },
 ]
 

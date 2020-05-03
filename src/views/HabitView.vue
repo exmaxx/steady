@@ -1,5 +1,5 @@
 <template>
-  <with-menu-layout>
+  <with-menu-layout v-if="habit">
     <div class="habit">
       <!-- TODO: Two headers? Come on... -->
       <h1 class="mobile-only">Habit: {{ habit.name }}</h1>
@@ -39,6 +39,14 @@ export default Vue.extend({
     habit() {
       return this.findHabitById(this.$route.params.id)
     },
+  },
+
+  beforeCreate() {
+    const { $store, $route, $router } = this
+
+    if (!$store.getters.findHabitById($route.params.id)) {
+      $router.replace({ name: 'not-found' })
+    }
   },
 })
 </script>
