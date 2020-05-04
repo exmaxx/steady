@@ -20,6 +20,7 @@ export interface ServerExperience {
 export interface ServerHabit {
   id: string
   name: string
+  experienceIds: string[]
 }
 
 // Types

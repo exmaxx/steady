@@ -8,14 +8,14 @@ function signIn() {
     .auth()
     .signInWithPopup(provider)
     .then((userCredential) => userCredential.user)
-    .catch((error) => console.log('Login failed. Error:', error))
+    .catch((error) => console.error('Login failed. Error:', error))
 }
 
 function signOut() {
   return firebase
     .auth()
     .signOut()
-    .catch((error) => console.log('Logout failed. Error:', error))
+    .catch((error) => console.error('Logout failed. Error:', error))
 }
 
 interface LoginStatusHooks {

@@ -98,7 +98,7 @@
     </div>
 
     <router-link
-      :to="{ name: 'edit-experience', params: { id: experience.id } }"
+      :to="{ name: 'edit-experience', params: { experienceId: experience.id } }"
       class="pure-button"
     >
       Edit

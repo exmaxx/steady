@@ -3,12 +3,12 @@
     <nav id="menu" :class="['pure-menu', { active: isMenuVisible }]">
       <ul class="pure-menu-list">
         <li
-          v-for="habit in sortedHabitsByName"
+          v-for="habit in habitsSortedByName"
           :key="habit.id"
           class="pure-menu-item"
         >
           <router-link
-            :to="{ name: 'habits', params: { id: habit.id } }"
+            :to="{ name: 'habit', params: { habitId: habit.id } }"
             class="pure-menu-link"
           >
             {{ habit.name }}
@@ -16,7 +16,7 @@
         </li>
 
         <li class="pure-menu-item">
-          <router-link :to="{ name: 'habits-add' }" class="pure-menu-link">
+          <router-link :to="{ name: 'add-habit' }" class="pure-menu-link">
             <i class="fas fa-plus"></i>
             Add Habit
           </router-link>
@@ -77,7 +77,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['sortedHabitsByName']),
+    ...mapGetters(['habitsSortedByName']),
   },
 
   methods: {

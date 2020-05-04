@@ -35,23 +35,37 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
         )
       )
 
-      withTracker.runPromise(promise)
+      return withTracker.runPromise(promise)
     },
 
-    createExperience: ({ commit }, experience: Experience) => {
+    createExperience: (
+      { commit },
+      experience: Experience
+    ): Promise<string | void> =>
       Firebase.setExperience(experience)
         .catch((error) =>
           console.error('Error in action createExperience.', error)
         )
-        .then((id) => commit('ADD_EXPERIENCE', { ...experience, id }))
-    },
+        .then((id) => {
+          commit('ADD_EXPERIENCE', { ...experience, id })
+          return id
+        }),
 
-    overwriteExperience: ({ commit }, experienceWithId: Experience) => {
-      Firebase.setExperience(experienceWithId)
+    overwriteExperience: (
+      { commit },
+      experience: Experience
+    ): Promise<string | void> => {
+      if (!experience.id)
+        throw new Error('Experience must have an id when updating.')
+
+      return Firebase.setExperience(experience)
         .catch((error) =>
           console.error('Error in action createOrOverwriteExperience.', error)
         )
-        .then((_id) => commit('UPDATE_EXPERIENCE', { ...experienceWithId }))
+        .then((id) => {
+          commit('UPDATE_EXPERIENCE', { ...experience })
+          return id
+        })
     },
   },
 

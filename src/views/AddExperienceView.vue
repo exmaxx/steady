@@ -146,6 +146,7 @@ import { mapActions, mapState } from 'vuex'
 
 import { createEmptyExperience } from '@/lib/helpers'
 import { Experience } from '@/store/experiences/types'
+import { Habit } from '@/store/habits/types'
 import { RootState, Tag } from '@/store/types'
 
 export default Vue.extend({
@@ -163,7 +164,13 @@ export default Vue.extend({
   computed: {
     ...mapState({
       experience(state: RootState, getters): Experience | null {
-        return getters.findExperienceById(this.$route.params.id)
+        return getters.findExperienceById(this.$route.params.experienceId)
+      },
+    }),
+
+    ...mapState({
+      habit(state: RootState, getters): Habit | null {
+        return getters.findHabitById(this.$route.params.habitId)
       },
 
       activities(state: RootState): Tag[] {
@@ -205,6 +212,7 @@ export default Vue.extend({
     // },
   },
 
+  // TODO: Change to beforeCreated?
   created() {
     this.form = this.experience
       ? { ...this.experience }
@@ -222,10 +230,12 @@ export default Vue.extend({
       'createActivity',
       'createExperience',
       'overwriteExperience',
+      'overwriteHabit',
     ]),
 
     submit() {
-      const { date, time, form } = this
+      const { date, time, form, habit } = this
+      const newExperience: Experience = form
       const {
         situationStory,
         situationActivities,
@@ -233,7 +243,7 @@ export default Vue.extend({
         solutionStory,
         solutionActivities,
         solutionEmotions,
-      } = form
+      } = newExperience
 
       const situationGroupValid = !(
         situationActivities.length === 0 &&
@@ -248,9 +258,24 @@ export default Vue.extend({
       )
 
       if (date && time && (situationGroupValid || solutionGroupValid)) {
-        this.isUpdating
-          ? this.overwriteExperience(form)
-          : this.createExperience(form)
+        if (!habit) {
+          console.error('The habit was not found!')
+          return
+        }
+
+        const setExperience = this.isUpdating
+          ? this.overwriteExperience
+          : this.createExperience
+
+        setExperience(newExperience).then((id) => {
+          // TODO: Maybe this all should happen is store.
+          const updatedHabit: Habit = {
+            ...habit,
+            experienceIds: [...habit.experienceIds, id],
+          }
+
+          this.overwriteHabit(updatedHabit)
+        })
 
         this.$router.push({ name: 'home' })
       }

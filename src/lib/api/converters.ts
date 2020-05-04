@@ -1,7 +1,11 @@
 import { firestore } from 'firebase'
 
 import { ServerExperience, ServerHabit, ServerUser } from '@/lib/api/types'
-import { createEmptyExperience, removeEmptyFrom } from '@/lib/helpers'
+import {
+  createEmptyExperience,
+  createEmptyHabit,
+  removeEmptyFrom,
+} from '@/lib/helpers'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
 import { Habit } from '@/store/habits/types'
@@ -35,11 +39,11 @@ export const experienceConverter: firestore.FirestoreDataConverter<Experience> =
   },
 
   fromFirestore: (snapshot, options): Experience => {
-    const data = snapshot.data(options) as ServerExperience
+    const serverExperience = snapshot.data(options) as ServerExperience
 
     return {
       ...createEmptyExperience(),
-      ...data,
+      ...serverExperience,
       id: snapshot.id,
     } as Experience
   },
@@ -47,5 +51,13 @@ export const experienceConverter: firestore.FirestoreDataConverter<Experience> =
 
 export const habitsConverter: firestore.FirestoreDataConverter<Habit> = {
   toFirestore: (habit: Habit): ServerHabit => habit,
-  fromFirestore: (snapshot, options): Habit => snapshot.data(options) as Habit,
+  fromFirestore: (snapshot, options): Habit => {
+    const serverHabit = snapshot.data(options) as ServerHabit
+
+    return {
+      ...createEmptyHabit(),
+      ...serverHabit,
+      experienceIds: serverHabit.experienceIds || [],
+    }
+  },
 }

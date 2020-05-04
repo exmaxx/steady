@@ -1,9 +1,7 @@
-import { Experience } from '@/store/experiences/types'
-
 export interface Habit {
   id: string
   name: string
-  experiences?: Experience[]
+  experienceIds: string[]
 }
 
 export interface Habits {

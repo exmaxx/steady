@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 
 import { Experience } from '@/store/experiences/types'
+import { Habit } from '@/store/habits/types'
 
 export const createEmptyExperience = (): Experience => ({
   id: '',
@@ -13,9 +14,16 @@ export const createEmptyExperience = (): Experience => ({
   solutionActivities: [],
 })
 
+export const createEmptyHabit = (): Habit => ({
+  id: '',
+  name: '',
+  experienceIds: [],
+})
+
+// TODO: Maybe use lodash's `isEmpty`?
 export const isEmpty = (prop: unknown): boolean => {
   if (!prop) return true
-  if (prop === {}) return true
+  if (prop === {}) return true // FIXME: This is not working!
   if (Array.isArray(prop)) return prop.length <= 0
 
   return false

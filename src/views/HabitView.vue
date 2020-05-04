@@ -6,7 +6,10 @@
       <h2>Habit: {{ habit.name }}</h2>
 
       <router-link
-        :to="{ name: 'add-experience' }"
+        :to="{
+          name: 'add-experience',
+          params: { habitId: $route.params.habitId },
+        }"
         class="pure-button pure-button-primary"
       >
         <i class="fas fa-plus"></i>
@@ -21,9 +24,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import Experiences from '@/components/Experiences.vue'
+import { Experience } from '@/store/experiences/types'
+import { Habit } from '@/store/habits/types'
 
 export default Vue.extend({
   name: 'ExperiencesView',
@@ -33,18 +38,21 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(['findHabitById']),
-    ...mapState(['experiences']),
+    ...mapGetters(['findHabitById', 'findExperienceById']),
 
-    habit() {
-      return this.findHabitById(this.$route.params.id)
+    habit(): Habit {
+      return this.findHabitById(this.$route.params.habitId)
+    },
+
+    experiences(): Experience[] {
+      return this.habit.experienceIds.map((id) => this.findExperienceById(id))
     },
   },
 
   beforeCreate() {
     const { $store, $route, $router } = this
 
-    if (!$store.getters.findHabitById($route.params.id)) {
+    if (!$store.getters.findHabitById($route.params.habitId)) {
       $router.replace({ name: 'not-found' })
     }
   },

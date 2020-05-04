@@ -13,7 +13,7 @@ import {
   NO_USER_DATA_ERROR,
   NO_USER_DOC_ERROR,
 } from '@/lib/constants'
-import { generateId } from '@/lib/helpers'
+import { createEmptyHabit, generateId } from '@/lib/helpers'
 import store from '@/store'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
@@ -158,9 +158,11 @@ const getHabits = (): Promise<Habits> => {
  * Create or overwrite experience.
  * @param habit
  */
-const setHabit = (habit: Habit): Promise<string | void> => {
+const setHabit = (habit: Habit): Promise<Habit | void> => {
   const id = habit.id || generateId(ID_LENGTH)
+
   const newHabit = {
+    ...createEmptyHabit(),
     ...habit,
     id,
   }
@@ -168,7 +170,7 @@ const setHabit = (habit: Habit): Promise<string | void> => {
   return habitsCollection()
     .doc(id)
     .set(newHabit)
-    .then(() => id)
+    .then(() => newHabit)
     .catch((error) => {
       console.error('Error writing habit document: ', error)
     })

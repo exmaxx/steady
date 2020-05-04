@@ -9,30 +9,20 @@ const routes = [
   { path: '/', name: 'home', component: HomeView },
   {
     path: '/habits/add',
-    name: 'habits-add',
+    name: 'add-habit',
     component: () =>
       import(
-        /* webpackChunkName: "experiences-view" */ '../views/AddHabitView.vue'
+        /* webpackChunkName: "add-habit-view" */ '../views/AddHabitView.vue'
       ),
   },
   {
-    path: '/habits/:id',
-    name: 'habits',
+    path: '/habits/:habitId',
+    name: 'habit',
     component: () =>
-      import(
-        /* webpackChunkName: "experiences-view" */ '../views/HabitView.vue'
-      ),
+      import(/* webpackChunkName: "habit-view" */ '../views/HabitView.vue'),
   },
   {
-    path: '/experiences',
-    name: 'experiences',
-    component: () =>
-      import(
-        /* webpackChunkName: "experiences-view" */ '../views/ExperiencesView.vue'
-      ),
-  },
-  {
-    path: '/experiences/add',
+    path: '/habits/:habitId/experiences/add',
     name: 'add-experience',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -43,7 +33,7 @@ const routes = [
       ),
   },
   {
-    path: '/experiences/:id',
+    path: '/habits/:habitId/experiences/:experienceId',
     name: 'edit-experience',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -73,12 +63,12 @@ const routes = [
     path: '/not-found',
     name: 'not-found',
     component: () =>
-      import(/* webpackChunkName: "emotions-view" */ '../views/NotFound.vue'),
+      import(/* webpackChunkName: "not-found-view" */ '../views/NotFound.vue'),
   },
   {
     path: '*',
     component: () =>
-      import(/* webpackChunkName: "emotions-view" */ '../views/NotFound.vue'),
+      import(/* webpackChunkName: "not-found-view" */ '../views/NotFound.vue'),
   },
 ]
 

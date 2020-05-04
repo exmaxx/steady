@@ -34,11 +34,11 @@ export default Vue.extend({
     ...mapActions(['createHabit']),
 
     submit() {
-      console.log('submit')
-
       this.createHabit({
         name: this.name,
-      }).then((id) => this.$router.push({ name: 'habits', params: { id } }))
+      }).then((habit) =>
+        this.$router.push({ name: 'habit', params: { habitId: habit.id } })
+      )
     },
   },
 })
