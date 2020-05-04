@@ -183,7 +183,7 @@ export default Vue.extend({
     }),
 
     isUpdating(): boolean {
-      return !!this.$route.params.id
+      return !!this.$route.params.experienceId
     },
   },
 
@@ -233,31 +233,39 @@ export default Vue.extend({
       'overwriteHabit',
     ]),
 
-    submit() {
-      const { date, time, form, habit } = this
-      const newExperience: Experience = form
+    isSituationGroupValid(): boolean {
       const {
         situationStory,
         situationActivities,
         situationEmotions,
-        solutionStory,
-        solutionActivities,
-        solutionEmotions,
-      } = newExperience
+      } = this.form
 
-      const situationGroupValid = !(
+      return !(
         situationActivities.length === 0 &&
         situationEmotions.length === 0 &&
         situationStory === ''
       )
+    },
 
-      const solutionGroupValid = !(
+    isSolutionGroupValid(): boolean {
+      const { solutionStory, solutionActivities, solutionEmotions } = this.form
+
+      return !(
         solutionActivities.length === 0 &&
         solutionEmotions.length === 0 &&
         solutionStory === ''
       )
+    },
 
-      if (date && time && (situationGroupValid || solutionGroupValid)) {
+    submit() {
+      const { date, time, form, habit } = this
+      const newExperience: Experience = form
+
+      if (
+        date &&
+        time &&
+        (this.isSituationGroupValid() || this.isSolutionGroupValid())
+      ) {
         if (!habit) {
           console.error('The habit was not found!')
           return
@@ -269,15 +277,22 @@ export default Vue.extend({
 
         setExperience(newExperience).then((id) => {
           // TODO: Maybe this all should happen is store.
+          const newIds = habit.experienceIds.includes(id)
+            ? habit.experienceIds
+            : [...habit.experienceIds, id]
+
           const updatedHabit: Habit = {
             ...habit,
-            experienceIds: [...habit.experienceIds, id],
+            experienceIds: newIds,
           }
 
           this.overwriteHabit(updatedHabit)
         })
 
-        this.$router.push({ name: 'home' })
+        this.$router.push({
+          name: 'habit',
+          params: { habitId: this.$route.params.habitId },
+        })
       }
     },
   },
