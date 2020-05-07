@@ -45,7 +45,9 @@ export default Vue.extend({
     },
 
     experiences(): Experience[] {
-      return this.habit.experienceIds.map((id) => this.findExperienceById(id))
+      return this.habit.experienceIds
+        .map((id): Experience => this.findExperienceById(id))
+        .sort((expA, expB) => (expA.datetime > expB.datetime ? -1 : 1))
     },
   },
 

@@ -25,12 +25,6 @@
         <li class="pure-menu-separator"></li>
 
         <li class="pure-menu-item">
-          <router-link :to="{ name: 'home' }" class="pure-menu-link">
-            Home
-          </router-link>
-        </li>
-
-        <li class="pure-menu-item">
           <router-link :to="{ name: 'activities' }" class="pure-menu-link">
             Activities
           </router-link>

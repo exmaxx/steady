@@ -27,4 +27,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#app {
+  height: 100vh;
+}
+</style>

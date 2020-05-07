@@ -130,9 +130,9 @@
           <span v-else>Add</span>
         </button>
 
-        <router-link class="pure-button" :to="{ name: 'home' }">
+        <button class="pure-button" @click="$router.back()">
           Go back
-        </router-link>
+        </button>
       </form>
     </div>
   </plain-layout></template
@@ -332,18 +332,18 @@ export default Vue.extend({
     button {
       margin: 0;
     }
-  }
 
-  .v-select {
-    display: inline-block;
-  }
+    .v-select {
+      display: inline-block;
+    }
 
-  .error {
-    color: red;
-  }
+    .error {
+      color: red;
+    }
 
-  button + a {
-    margin-left: $default-margin;
+    button + button {
+      margin-left: $default-margin;
+    }
   }
 }
 </style>

@@ -12,22 +12,38 @@
       <span>Add</span>
     </button>
 
-    <button class="pure-button" @click="$router.back()">
+    <button
+      v-if="!isFirstScreen"
+      class="pure-button"
+      @click.prevent="$router.back()"
+    >
       Go back
     </button>
   </form>
 </template>
 
 <script lang="ts">
+import { isEmpty } from 'lodash'
 import Vue from 'vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+
+import { RootState } from '@/store/types'
 
 export default Vue.extend({
   name: 'AddHabitView',
+
   data() {
     return {
       name: '',
     }
+  },
+
+  computed: {
+    ...mapState({
+      isFirstScreen(state: RootState): boolean {
+        return isEmpty(state.habits)
+      },
+    }),
   },
 
   methods: {
@@ -48,7 +64,7 @@ export default Vue.extend({
 @import 'src/constants';
 @import 'src/mixins';
 
-form {
+form.pure-form {
   margin: auto;
   width: 35rem;
 
@@ -59,6 +75,11 @@ form {
 
   input {
     width: 100%;
+  }
+
+  /* Suppresses original pure-button margin */
+  button {
+    margin: 0;
   }
 
   button + button {
