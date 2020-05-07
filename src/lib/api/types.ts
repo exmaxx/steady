@@ -12,9 +12,9 @@ export interface ServerExperience {
   situationStory?: string
   situationEmotions?: string[]
   situationActivities?: string[]
-  solutionStory?: string
-  solutionEmotions?: string[]
-  solutionActivities?: string[]
+  reactionStory?: string
+  reactionEmotions?: string[]
+  reactionActivities?: string[]
 }
 
 export interface ServerHabit {

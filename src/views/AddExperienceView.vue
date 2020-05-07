@@ -86,7 +86,7 @@
             <div>
               <input
                 id="positive"
-                v-model="form.solutionAspect"
+                v-model="form.reactionAspect"
                 type="radio"
                 value="1"
               />
@@ -99,7 +99,7 @@
             <div>
               <input
                 id="neutral"
-                v-model="form.solutionAspect"
+                v-model="form.reactionAspect"
                 type="radio"
                 value="0"
               />
@@ -112,7 +112,7 @@
             <div>
               <input
                 id="negative"
-                v-model="form.solutionAspect"
+                v-model="form.reactionAspect"
                 type="radio"
                 value="-1"
               />
@@ -125,12 +125,12 @@
           </div>
 
           <div class="pure-control-group">
-            <label :for="'solution-activity'">Activities?</label>
+            <label :for="'reaction-activity'">Activities?</label>
 
             <v-select
-              v-model="form.solutionActivities"
+              v-model="form.reactionActivities"
               class="pure-input-3-4"
-              input-id="solution-activity"
+              input-id="reaction-activity"
               taggable
               multiple
               push-tags
@@ -140,12 +140,12 @@
           </div>
 
           <div class="pure-control-group">
-            <label :for="'solution-emotions'">Feelings / emotions?</label>
+            <label :for="'reaction-emotions'">Feelings / emotions?</label>
 
             <v-select
-              v-model="form.solutionEmotions"
+              v-model="form.reactionEmotions"
               class="pure-input-3-4"
-              input-id="solution-emotions"
+              input-id="reaction-emotions"
               taggable
               multiple
               push-tags
@@ -155,14 +155,14 @@
           </div>
 
           <div class="pure-control-group">
-            <label for="solution">Details</label>
+            <label for="reaction">Details</label>
 
             <textarea
-              id="solution"
-              v-model="form.solutionStory"
+              id="reaction"
+              v-model="form.reactionStory"
               rows="5"
               class="pure-input-1"
-              placeholder="Describe the solution..."
+              placeholder="Describe the reaction..."
             ></textarea>
           </div>
         </fieldset>
@@ -289,13 +289,13 @@ export default Vue.extend({
       )
     },
 
-    isSolutionGroupValid(): boolean {
-      const { solutionStory, solutionActivities, solutionEmotions } = this.form
+    isReactionGroupValid(): boolean {
+      const { reactionStory, reactionActivities, reactionEmotions } = this.form
 
       return !(
-        solutionActivities.length === 0 &&
-        solutionEmotions.length === 0 &&
-        solutionStory === ''
+        reactionActivities.length === 0 &&
+        reactionEmotions.length === 0 &&
+        reactionStory === ''
       )
     },
 
@@ -306,7 +306,7 @@ export default Vue.extend({
       if (
         date &&
         time &&
-        (this.isSituationGroupValid() || this.isSolutionGroupValid())
+        (this.isSituationGroupValid() || this.isReactionGroupValid())
       ) {
         if (!habit) {
           console.error('The habit was not found!')

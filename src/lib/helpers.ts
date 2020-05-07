@@ -9,10 +9,10 @@ export const createEmptyExperience = (): Experience => ({
   situationStory: '',
   situationEmotions: [],
   situationActivities: [],
-  solutionStory: '',
-  solutionEmotions: [],
-  solutionActivities: [],
-  solutionAspect: 1,
+  reactionStory: '',
+  reactionEmotions: [],
+  reactionActivities: [],
+  reactionAspect: 1,
 })
 
 export const createEmptyHabit = (): Habit => ({

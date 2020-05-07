@@ -7,7 +7,7 @@
       {{ experience.datetime | asIntervalDate }}
     </h5>
 
-    <!-- TODO: Create Experience class with helper methods (datetime, hasSituation, hasSolution,...) -->
+    <!-- TODO: Create Experience class with helper methods (datetime, hasSituation, hasReaction,...) -->
 
     <div>
       <div
@@ -50,37 +50,37 @@
 
       <hr
         v-if="
-          experience.solutionStory !== '' ||
-          experience.solutionActivities.length > 0 ||
-          experience.solutionEmotions.length > 0
+          experience.reactionStory !== '' ||
+          experience.reactionActivities.length > 0 ||
+          experience.reactionEmotions.length > 0
         "
       />
 
       <div
         v-if="
-          experience.solutionStory !== '' ||
-          experience.solutionActivities.length > 0 ||
-          experience.solutionEmotions.length > 0
+          experience.reactionStory !== '' ||
+          experience.reactionActivities.length > 0 ||
+          experience.reactionEmotions.length > 0
         "
-        class="solution"
+        class="reaction"
       >
         <h3>Reaction</h3>
 
-        <h5 :class="experience.solutionAspect | aspectAsClass">
-          {{ experience.solutionAspect | aspectInWords }}
+        <h5 :class="experience.reactionAspect | aspectAsClass">
+          {{ experience.reactionAspect | aspectInWords }}
         </h5>
 
         <div>
-          <div v-if="experience.solutionStory !== ''" class="story">
-            {{ experience.solutionStory }}
+          <div v-if="experience.reactionStory !== ''" class="story">
+            {{ experience.reactionStory }}
           </div>
 
-          <div v-if="experience.solutionActivities.length > 0" class="tags">
+          <div v-if="experience.reactionActivities.length > 0" class="tags">
             <h4>Activities:</h4>
 
             <ul>
               <li
-                v-for="activity in experience.solutionActivities"
+                v-for="activity in experience.reactionActivities"
                 :key="activity"
               >
                 <tag :title="activity" type="positive" />
@@ -88,11 +88,11 @@
             </ul>
           </div>
 
-          <div v-if="experience.solutionEmotions.length > 0" class="tags">
+          <div v-if="experience.reactionEmotions.length > 0" class="tags">
             <h4>Emotions:</h4>
 
             <ul>
-              <li v-for="emotion in experience.solutionEmotions" :key="emotion">
+              <li v-for="emotion in experience.reactionEmotions" :key="emotion">
                 <tag :title="emotion" type="positive" />
               </li>
             </ul>

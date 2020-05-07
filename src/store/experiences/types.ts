@@ -4,12 +4,12 @@ export interface Experience {
   situationStory: string
   situationEmotions: string[]
   situationActivities: string[]
-  solutionStory: string
-  solutionEmotions: string[]
-  solutionActivities: string[]
+  reactionStory: string
+  reactionEmotions: string[]
+  reactionActivities: string[]
 
   /** 1: positive, 0: neutral, -1: negative  */
-  solutionAspect: number
+  reactionAspect: number
 }
 
 export type ExperiencesState = Experience[]
