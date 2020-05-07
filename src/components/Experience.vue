@@ -2,7 +2,7 @@
   <div :key="experience.id" class="experience">
     <h2>{{ experience.datetime | formatDateAndTime }}</h2>
 
-    <h5>
+    <h5 class="shadow">
       {{ experience.datetime | dayInWeek }},
       {{ experience.datetime | asIntervalDate }}
     </h5>
@@ -64,7 +64,11 @@
         "
         class="solution"
       >
-        <h3>Solution</h3>
+        <h3>Reaction</h3>
+
+        <h5 :class="experience.solutionAspect | aspectAsClass">
+          {{ experience.solutionAspect | aspectInWords }}
+        </h5>
 
         <div>
           <div v-if="experience.solutionStory !== ''" class="story">
@@ -119,6 +123,34 @@ export default Vue.extend({
     Tag,
   },
 
+  filters: {
+    aspectAsClass: (aspect: string) => {
+      switch (Number(aspect)) {
+        case 1:
+          return 'positive'
+        case 0:
+          return 'mixed'
+        case -1:
+          return 'negative'
+        default:
+          return ''
+      }
+    },
+
+    aspectInWords: (aspect: string) => {
+      switch (Number(aspect)) {
+        case 1:
+          return 'Positive'
+        case 0:
+          return 'Mixed'
+        case -1:
+          return 'Negative'
+        default:
+          return '(Incorrect value)'
+      }
+    },
+  },
+
   props: {
     experience: {
       type: Object as PropType<Experience>,
@@ -144,7 +176,7 @@ export default Vue.extend({
 
   .story {
     font-family: 'Martel', serif;
-    font-size: 0.85rem;
+    font-size: 85%;
     font-weight: 600;
     margin: 1.5em 0.5em;
   }
@@ -188,7 +220,6 @@ export default Vue.extend({
 
   h5 {
     margin: 0.3em 0 1.5em 0;
-    color: #acacac;
   }
 }
 </style>

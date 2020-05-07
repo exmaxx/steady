@@ -3,7 +3,7 @@
     <div class="habit">
       <!-- TODO: Two headers? Come on... -->
       <h1 class="mobile-only">Habit: {{ habit.name }}</h1>
-      <h2>Habit: {{ habit.name }}</h2>
+      <h2>{{ habit.name }}</h2>
 
       <router-link
         :to="{

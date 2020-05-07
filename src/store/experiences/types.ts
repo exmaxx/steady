@@ -7,6 +7,9 @@ export interface Experience {
   solutionStory: string
   solutionEmotions: string[]
   solutionActivities: string[]
+
+  /** 1: positive, 0: neutral, -1: negative  */
+  solutionAspect: number
 }
 
 export type ExperiencesState = Experience[]

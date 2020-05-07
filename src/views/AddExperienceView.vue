@@ -5,7 +5,7 @@
         <fieldset>
           <div class="pure-control-group">
             <label>
-              Date and time
+              <strong>Date and time</strong>
               <span style="display: block;">
                 <input
                   id="date"
@@ -80,7 +80,49 @@
         </fieldset>
 
         <fieldset>
-          <legend><strong>What helped you to overcome trouble?</strong></legend>
+          <legend><strong>Reaction</strong></legend>
+
+          <div class="pure-control-group">
+            <div>
+              <input
+                id="positive"
+                v-model="form.solutionAspect"
+                type="radio"
+                value="1"
+              />
+              <label for="positive" class="pure-radio positive">Positive</label>
+              <span class="pure-form-message-inline">
+                (reaction strengthened the habit)
+              </span>
+            </div>
+
+            <div>
+              <input
+                id="neutral"
+                v-model="form.solutionAspect"
+                type="radio"
+                value="0"
+              />
+              <label for="neutral" class="pure-radio mixed">Mixed</label>
+              <span class="pure-form-message-inline">
+                (partial helped, partially didn't)
+              </span>
+            </div>
+
+            <div>
+              <input
+                id="negative"
+                v-model="form.solutionAspect"
+                type="radio"
+                value="-1"
+              />
+              <label for="negative" class="pure-radio negative">Negative</label>
+              <span class="pure-form-message-inline">
+                (reaction was against the habit / it supported retraction to bad
+                habit)
+              </span>
+            </div>
+          </div>
 
           <div class="pure-control-group">
             <label :for="'solution-activity'">Activities?</label>
@@ -329,8 +371,14 @@ export default Vue.extend({
       max-width: 40rem;
     }
 
-    button {
-      margin: 0;
+    .pure-radio {
+      display: inline;
+      margin: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .pure-control-group {
+      margin-top: 1rem;
     }
 
     .v-select {
@@ -339,6 +387,14 @@ export default Vue.extend({
 
     .error {
       color: red;
+    }
+
+    legend {
+      font-size: 125%;
+    }
+
+    button {
+      margin: 0;
     }
 
     button + button {
