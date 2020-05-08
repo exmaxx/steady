@@ -13,13 +13,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'Welcome',
-
-  props: {
-    showSpinner: {
-      type: Boolean,
-      default: true,
-    },
-  },
 })
 </script>
 
