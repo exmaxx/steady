@@ -45,7 +45,6 @@
               input-id="situation-activities"
               taggable
               multiple
-              push-tags
               :options="activities"
               @option:created="createActivity($event)"
             />
@@ -60,7 +59,6 @@
               input-id="situation-emotions"
               taggable
               multiple
-              push-tags
               :options="emotions"
               @option:created="createEmotion($event)"
             />
@@ -133,7 +131,6 @@
               input-id="reaction-activity"
               taggable
               multiple
-              push-tags
               :options="activities"
               @option:created="createActivity($event)"
             />
@@ -148,7 +145,6 @@
               input-id="reaction-emotions"
               taggable
               multiple
-              push-tags
               :options="emotions"
               @option:created="createEmotion($event)"
             />
