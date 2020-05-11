@@ -2,6 +2,7 @@ import { WrapperArray } from '@vue/test-utils'
 import Vue from 'vue'
 
 import { RootState } from '@/store/types'
+import MockInstance = jest.MockInstance
 
 /**
  * Sub-state of RootState suitable for providing just a part of the whole root state.
@@ -28,4 +29,24 @@ export function withTextFilter(wrapperArray: WrapperArray<Vue>) {
     includesText: (str: string) =>
       wrapperArray.filter((i) => i.text().includes(String(str).trim())),
   }
+}
+
+/**
+ * Local spy for console.error
+ */
+let spyConsoleError: MockInstance<void, unknown[]>
+
+/**
+ * Disable console.error() output.
+ */
+export function disableConsoleErrors() {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  spyConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
+}
+
+/**
+ * Enable console.error() output.
+ */
+export function enableConsoleErrors() {
+  spyConsoleError.mockRestore()
 }
