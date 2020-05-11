@@ -1,6 +1,6 @@
 <template>
   <div class="with-menu-layout">
-    <navigation />
+    <navigation-view />
 
     <div class="content">
       <slot></slot>
@@ -11,13 +11,13 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import Navigation from '@/components/Navigation.vue'
+import NavigationView from '@/views/NavigationView.vue'
 
 export default Vue.extend({
   name: 'WithMenuLayout',
 
   components: {
-    Navigation,
+    NavigationView,
   },
 })
 </script>

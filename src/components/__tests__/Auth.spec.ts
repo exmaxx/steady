@@ -4,9 +4,7 @@ import Vuex, { ActionTree, Store } from 'vuex'
 import Auth from '@/components/Auth.vue'
 import Spinner from '@/components/Spinner.vue'
 import Welcome from '@/components/Welcome.vue'
-import { RootState } from '@/store/types'
-
-type LocalState = Partial<RootState>
+import { LocalState } from '@/lib/test-helpers'
 
 const localVue = createLocalVue()
 

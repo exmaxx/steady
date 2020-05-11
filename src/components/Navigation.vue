@@ -2,11 +2,7 @@
   <div>
     <nav id="menu" :class="['pure-menu', { active: isMenuVisible }]">
       <ul class="pure-menu-list">
-        <li
-          v-for="habit in habitsSortedByName"
-          :key="habit.id"
-          class="pure-menu-item"
-        >
+        <li v-for="habit in habits" :key="habit.id" class="pure-menu-item">
           <router-link
             :to="{ name: 'habit', params: { habitId: habit.id } }"
             class="pure-menu-link"
@@ -39,7 +35,10 @@
         <li class="pure-menu-separator"></li>
 
         <li class="pure-menu-item">
-          <a href="#" class="pure-menu-link" @click.prevent="attemptLogout"
+          <a
+            href="#"
+            class="pure-menu-link"
+            @click.prevent="$emit('logout-click')"
             >Logout</a
           >
         </li>
@@ -59,29 +58,30 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions, mapGetters } from 'vuex'
+import { PropType } from 'vue/types/options'
+
+import { Habit } from '@/store/habits/types'
 
 export default Vue.extend({
   name: 'Navigation',
+
+  props: {
+    habits: {
+      type: Array as PropType<Habit[]>,
+      required: true,
+    },
+  },
 
   data() {
     return {
       isMenuVisible: false,
     }
   },
-
-  computed: {
-    ...mapGetters(['habitsSortedByName']),
-  },
-
-  methods: {
-    ...mapActions(['attemptLogout']),
-  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import 'src/constants';
+@import '../constants';
 
 #menu-button {
   display: none;

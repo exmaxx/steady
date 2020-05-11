@@ -40,7 +40,7 @@ const habitsModule: Module<HabitsState, RootState> = {
   },
 
   getters: {
-    habitsSortedByName: (state) => sortBy(state, ['name']),
+    habitsSortedByName: (state): Habit[] => sortBy(state, ['name']),
 
     findHabitById: (state) => (id: string): Habit | null => state[id] || null,
   },
