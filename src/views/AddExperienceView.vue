@@ -37,7 +37,9 @@
           <legend><strong>Trouble</strong></legend>
 
           <div class="pure-control-group">
-            <label :for="'situation-activities'">Activities?</label>
+            <label :for="'situation-activities'">
+              Activities / situation / environment?
+            </label>
 
             <v-select
               v-model="form.situationActivities"
@@ -123,7 +125,9 @@
           </div>
 
           <div class="pure-control-group">
-            <label :for="'reaction-activity'">Activities?</label>
+            <label :for="'reaction-activity'">
+              Activities / situation / environment?
+            </label>
 
             <v-select
               v-model="form.reactionActivities"
