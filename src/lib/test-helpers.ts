@@ -1,7 +1,9 @@
 import { WrapperArray } from '@vue/test-utils'
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
+import { DefaultProps, RecordPropsDefinition } from 'vue/types/options'
 
 import { RootState } from '@/store/types'
+
 import MockInstance = jest.MockInstance
 
 /**
@@ -49,4 +51,31 @@ export function disableConsoleErrors() {
  */
 export function enableConsoleErrors() {
   spyConsoleError.mockRestore()
+}
+
+/**
+ * Get props of the component.
+ *
+ * Note: Easier way would be to have definition of options as a separate exported variable
+ * but that would be only for tests and I am avoiding that when possible.
+ *
+ * This way I need to create the component and extract the prop from its options. However,
+ * when not initialized fully (with all props) it generates console errors. I do not want
+ * to initialize the component fully when just examining props definitions. Therefore I suppress
+ * the conosole errors.
+ *
+ * @param Component component to be tested
+ */
+export function getPropsDef(
+  Component: VueConstructor
+): RecordPropsDefinition<DefaultProps> {
+  disableConsoleErrors()
+
+  const props = new Component().$options.props as RecordPropsDefinition<
+    DefaultProps
+  >
+
+  enableConsoleErrors()
+
+  return props
 }

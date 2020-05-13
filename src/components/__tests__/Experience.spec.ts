@@ -7,27 +7,17 @@ import {
   registerDayjsExtensions,
   registerVueFilters,
 } from '@/lib/initialization'
-import { disableConsoleErrors, enableConsoleErrors } from '@/lib/test-helpers'
+import { getPropsDef } from '@/lib/test-helpers'
 
 registerVueFilters()
 registerDayjsExtensions()
 
 describe('Experience', function () {
-  it('has experience prop', function () {
-    expect.assertions(2)
+  it('has required prop "experience"', function () {
+    const props = getPropsDef(Experience)
 
-    disableConsoleErrors()
-    expect(() => shallowMount(Experience)).toThrow()
-    enableConsoleErrors()
-
-    expect(() =>
-      shallowMount(Experience, {
-        propsData: {
-          experience: createEmptyExperience(),
-        },
-        stubs: ['router-link'],
-      })
-    ).not.toThrow()
+    expect(props).toHaveProperty('experience')
+    expect(props['experience']).toHaveProperty('required', true)
   })
 
   it('renders situation details when present', function () {

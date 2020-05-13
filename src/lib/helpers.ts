@@ -1,14 +1,32 @@
 import dayjs from 'dayjs'
 import { isEmpty } from 'lodash'
 
+import { ID_LENGTH } from '@/lib/constants'
 import { Experience } from '@/store/experiences/types'
 import { Habit } from '@/store/habits/types'
+
+/**
+ * Generates id of specified length. Used for unique resource ids.
+ * @param length
+ */
+export const generateId = (length: number) => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  let id = ''
+
+  for (let i = 0; i < length; i++) {
+    id += characters.charAt(Math.floor(Math.random() * characters.length))
+  }
+
+  return id
+}
 
 /**
  * Create an empty experience. Serves as a template for new experience.
  */
 export const createEmptyExperience = (): Experience => ({
-  id: '',
+  id: generateId(ID_LENGTH),
   datetime: dayjs().toISOString(),
   situationStory: '',
   situationEmotions: [],
@@ -52,20 +70,3 @@ export const removeEmptyFrom = (obj: { [key: string]: unknown }) =>
   Object.keys(obj).forEach((key): void => {
     isEmptyProperty(obj[key]) && delete obj[key]
   })
-
-/**
- * Generates id of specified length. Used for unique resource ids.
- * @param length
- */
-export const generateId = (length: number) => {
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-  let id = ''
-
-  for (let i = 0; i < length; i++) {
-    id += characters.charAt(Math.floor(Math.random() * characters.length))
-  }
-
-  return id
-}
