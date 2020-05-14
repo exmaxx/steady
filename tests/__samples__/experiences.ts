@@ -4,8 +4,10 @@ import { HAPPY, SAD } from './emotions'
 import { ServerExperience } from '@/lib/api/types'
 import { Experience } from '@/store/experiences/types'
 
+export const SAMPLE_EXPERIENCE_ID = 'sAmPLeId'
+
 export const sampleExperience: Experience = {
-  id: 'sAmPleId',
+  id: SAMPLE_EXPERIENCE_ID,
   datetime: '2020-05-13T17:53:01.494Z',
   situationStory: 'On a computer, working.',
   situationActivities: [USING_COMPUTER, THINKING],
@@ -17,7 +19,7 @@ export const sampleExperience: Experience = {
 }
 
 export const sampleServerExperience: ServerExperience = {
-  id: 'sAmPleSerVerId',
+  id: SAMPLE_EXPERIENCE_ID,
   datetime: '2019-04-14T14:53:02.443Z',
   situationStory: 'Thinking about a problem.',
   situationActivities: [USING_COMPUTER, THINKING],

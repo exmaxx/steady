@@ -7,6 +7,8 @@ export default class WithTracker {
   commit: Commit
 
   /**
+   * WithTracker wrapper changes status in Vuex store before and after running the wrapped function.
+   *
    * @param resource Name that must be a root state "sub state" (property of root state).
    * @param commit Commit interface from Vuex.
    */

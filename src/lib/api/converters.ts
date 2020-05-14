@@ -38,11 +38,20 @@ export const experienceToServer = (
 }
 
 export const experienceToClient = (
-  serverExperience: ServerExperience
-): Experience => ({
-  ...createEmptyExperience(),
-  ...serverExperience,
-})
+  serverExperience: ServerExperience,
+  backupId?: string
+): Experience => {
+  const experience = {
+    ...createEmptyExperience(),
+    ...serverExperience,
+  }
+
+  if (!serverExperience.id && backupId) {
+    experience.id = backupId
+  }
+
+  return withAssertedId(experience)
+}
 
 export const experienceConverter: firestore.FirestoreDataConverter<Experience> = {
   toFirestore: experienceToServer,
@@ -50,7 +59,7 @@ export const experienceConverter: firestore.FirestoreDataConverter<Experience> =
   fromFirestore: (snapshot, options) => {
     const serverExperience = snapshot.data(options) as ServerExperience
 
-    return experienceToClient(serverExperience)
+    return experienceToClient(serverExperience, snapshot.id)
   },
 }
 

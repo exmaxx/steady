@@ -41,12 +41,27 @@ export default Vue.extend({
     ...mapGetters(['findHabitById', 'findExperienceById']),
 
     habit(): Habit {
+      console.log('this.$route.params:', this.$route.params)
+      console.log(
+        'this.findHabitById(this.$route.params.habitId):',
+        this.findHabitById(this.$route.params.habitId)
+      )
+
       return this.findHabitById(this.$route.params.habitId)
     },
 
     experiences(): Experience[] {
       return this.habit.experienceIds
-        .map((id): Experience => this.findExperienceById(id))
+        .map(
+          (id): Experience => {
+            console.log(id)
+            console.log(
+              'this.findExperienceById(id):',
+              this.findExperienceById(id)
+            )
+            return this.findExperienceById(id)
+          }
+        )
         .sort((expA, expB) => (expA.datetime > expB.datetime ? -1 : 1))
     },
   },

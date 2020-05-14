@@ -1,6 +1,6 @@
 // Resources
 
-import { Experience } from '@/store/experiences/types'
+import { AspectType } from '@/store/experiences/types'
 
 export type ServerTag = string
 
@@ -9,7 +9,17 @@ export interface ServerUser {
   activities?: ServerTag[]
 }
 
-export type ServerExperience = Experience
+export interface ServerExperience {
+  id?: string
+  datetime: string
+  situationStory?: string
+  situationEmotions?: string[]
+  situationActivities?: string[]
+  reactionStory?: string
+  reactionEmotions?: string[]
+  reactionActivities?: string[]
+  reactionAspect?: AspectType
+}
 
 export interface ServerHabit {
   id: string

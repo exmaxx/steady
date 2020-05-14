@@ -7,13 +7,13 @@ export enum AspectType {
 export interface Experience {
   id: string
   datetime: string
-  situationStory?: string
-  situationEmotions?: string[]
-  situationActivities?: string[]
-  reactionStory?: string
-  reactionEmotions?: string[]
-  reactionActivities?: string[]
-  reactionAspect?: AspectType
+  situationStory: string
+  situationEmotions: string[]
+  situationActivities: string[]
+  reactionStory: string
+  reactionEmotions: string[]
+  reactionActivities: string[]
+  reactionAspect: AspectType
 }
 
 export type ExperiencesState = Experience[]

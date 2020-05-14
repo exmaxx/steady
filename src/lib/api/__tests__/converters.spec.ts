@@ -102,16 +102,16 @@ describe('converters', () => {
     })
 
     describe('to client', () => {
+      it('keeps id', () => {
+        const clientObj = experienceToClient(sampleServerExperience)
+
+        expect(clientObj).toHaveProperty('id', sampleServerExperience.id)
+      })
+
       it('keeps all fields', () => {
         const clientObj = experienceToClient(sampleServerExperience)
 
         expect(clientObj).toEqual(sampleServerExperience)
-      })
-
-      it('has id', () => {
-        const clientObj = experienceToClient(sampleServerExperience)
-
-        expect(clientObj).toHaveProperty('id', sampleServerExperience.id)
       })
 
       it('creates missing fields', () => {
@@ -128,6 +128,36 @@ describe('converters', () => {
         expect(clientObj).toHaveProperty('reactionStory', '')
         expect(clientObj).toHaveProperty('reactionAspect', 0)
       })
+
+      describe('when server object comes with no id', () => {
+        const sampleServerExperienceWithoutId =  { ...sampleServerExperience, id: '' }
+        const backupId = 'idFromAnotherSource'
+
+        it('allows backup id when server object has no id', () => {
+          const clientObj = experienceToClient(
+            sampleServerExperienceWithoutId,
+            backupId
+          )
+
+          expect(clientObj).toHaveProperty('id', backupId)
+        })
+
+        it('keeps id when provided in server object even if backup is also provided', () => {
+          const clientObj = experienceToClient(
+            sampleServerExperience,
+            backupId
+          )
+
+          expect(clientObj).toHaveProperty('id', sampleServerExperience.id)
+        })
+
+        it('throws exception when no backup id provided', () => {
+          expect.assertions(1)
+          expect(() =>
+            experienceToClient(sampleServerExperienceWithoutId)
+          ).toThrowError('No id specified.')
+        })
+      });
     })
   })
 
@@ -154,7 +184,7 @@ describe('converters', () => {
       })
     })
 
-    describe('from server', () => {
+    describe('to client', () => {
       it('creates empty fields', () => {
         const serverObj = { ...sampleServerHabit }
 

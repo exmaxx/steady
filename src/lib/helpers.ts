@@ -30,10 +30,15 @@ export const generateId = (length: number) => {
  *
  * @param obj
  */
-export const withAssertedId = <T extends { id: string }>(obj: T): T => {
-  if (isEmpty(obj.id)) throw new Error('No id specified.')
+export const withAssertedId = <
+  T extends { id?: string },
+  U extends T & { id: string }
+>(
+  obj: T
+): U => {
+  if (!obj.id || isEmpty(obj.id)) throw new Error('No id specified.')
 
-  return obj
+  return obj as U
 }
 
 /**

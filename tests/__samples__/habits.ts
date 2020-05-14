@@ -1,4 +1,7 @@
-import { sampleExperience, sampleServerExperience } from './experiences'
+import {
+  SAMPLE_EXPERIENCE_ID,
+  sampleExperience,
+} from './experiences'
 
 import { Habit } from '@/store/habits/types'
 
@@ -11,5 +14,5 @@ export const sampleHabit: Habit = {
 export const sampleServerHabit: Habit = {
   id: 'sampleHabit',
   name: 'I will start naming my habits more creatively',
-  experienceIds: [sampleServerExperience.id],
+  experienceIds: [SAMPLE_EXPERIENCE_ID],
 }
