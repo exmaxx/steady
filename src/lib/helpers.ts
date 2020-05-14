@@ -34,7 +34,7 @@ export const createEmptyExperience = (): Experience => ({
   reactionStory: '',
   reactionEmotions: [],
   reactionActivities: [],
-  reactionAspect: 1,
+  reactionAspect: 0,
 })
 
 /**

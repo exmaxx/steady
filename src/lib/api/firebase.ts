@@ -192,14 +192,14 @@ const getExperiences = (): Promise<Experience[]> => {
  */
 const setExperience = (experience: Experience): Promise<string | void> => {
   const id = experience.id || generateId(ID_LENGTH)
-  const newEperience = {
+  const newExperience = {
     ...experience,
     id,
   }
 
   return experiencesCollection()
     .doc(id)
-    .set(newEperience)
+    .set(newExperience)
     .then(() => id)
     .catch((error) => {
       console.error('Error writing experience document: ', error)

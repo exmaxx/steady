@@ -1,4 +1,5 @@
 import { firestore } from 'firebase'
+import { isEmpty } from 'lodash'
 
 import { ServerExperience, ServerHabit, ServerUser } from '@/lib/api/types'
 import {
@@ -10,42 +11,50 @@ import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
 import { Habit } from '@/store/habits/types'
 
+export const userToServer = (user: User): ServerUser => user
+
+export const userToClient = (serverUser: ServerUser): User => ({
+  emotions: serverUser.emotions || [],
+  activities: serverUser.activities || [],
+})
+
 export const userConverter: firestore.FirestoreDataConverter<User> = {
-  toFirestore: (user: User): ServerUser => {
-    return user
-  },
+  toFirestore: userToServer,
 
   fromFirestore: (snapshot, options): User => {
     const serverUser = snapshot.data(options) as ServerUser
-
-    return {
-      emotions: serverUser.emotions || [],
-      activities: serverUser.activities || [],
-    }
+    return userToClient(serverUser)
   },
 }
 
+export const experienceToServer = (
+  experience: Experience
+): ServerExperience => {
+  if (isEmpty(experience.id)) throw new Error('No id specified.')
+
+  const serverExperience = {
+    ...experience,
+  }
+
+  removeEmptyFrom(serverExperience)
+
+  return serverExperience
+}
+
+export const experienceToClient = (
+  serverExperience: ServerExperience
+): Experience => ({
+  ...createEmptyExperience(),
+  ...serverExperience,
+})
+
 export const experienceConverter: firestore.FirestoreDataConverter<Experience> = {
-  toFirestore: (experience: Experience): ServerExperience => {
-    const serverExperience = {
-      ...experience,
-    }
-
-    removeEmptyFrom(serverExperience)
-
-    delete serverExperience.id
-
-    return serverExperience
-  },
+  toFirestore: experienceToServer,
 
   fromFirestore: (snapshot, options): Experience => {
     const serverExperience = snapshot.data(options) as ServerExperience
 
-    return {
-      ...createEmptyExperience(),
-      ...serverExperience,
-      id: snapshot.id,
-    } as Experience
+    return experienceToClient(serverExperience)
   },
 }
 
