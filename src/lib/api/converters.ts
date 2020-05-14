@@ -1,11 +1,11 @@
 import { firestore } from 'firebase'
-import { isEmpty } from 'lodash'
 
 import { ServerExperience, ServerHabit, ServerUser } from '@/lib/api/types'
 import {
   createEmptyExperience,
   createEmptyHabit,
-  removeEmptyFrom,
+  withoutEmptyFields,
+  withAssertedId,
 } from '@/lib/helpers'
 import { User } from '@/store/auth/types'
 import { Experience } from '@/store/experiences/types'
@@ -21,7 +21,7 @@ export const userToClient = (serverUser: ServerUser): User => ({
 export const userConverter: firestore.FirestoreDataConverter<User> = {
   toFirestore: userToServer,
 
-  fromFirestore: (snapshot, options): User => {
+  fromFirestore: (snapshot, options) => {
     const serverUser = snapshot.data(options) as ServerUser
     return userToClient(serverUser)
   },
@@ -30,15 +30,11 @@ export const userConverter: firestore.FirestoreDataConverter<User> = {
 export const experienceToServer = (
   experience: Experience
 ): ServerExperience => {
-  if (isEmpty(experience.id)) throw new Error('No id specified.')
-
   const serverExperience = {
     ...experience,
   }
 
-  removeEmptyFrom(serverExperience)
-
-  return serverExperience
+  return withAssertedId(withoutEmptyFields(serverExperience))
 }
 
 export const experienceToClient = (
@@ -51,22 +47,25 @@ export const experienceToClient = (
 export const experienceConverter: firestore.FirestoreDataConverter<Experience> = {
   toFirestore: experienceToServer,
 
-  fromFirestore: (snapshot, options): Experience => {
+  fromFirestore: (snapshot, options) => {
     const serverExperience = snapshot.data(options) as ServerExperience
 
     return experienceToClient(serverExperience)
   },
 }
 
+export const habitToServer = (habit: Habit): ServerHabit =>
+  withAssertedId(habit)
+
+export const habitToClient = (serverHabit: ServerHabit): Habit => {
+  return { ...createEmptyHabit(), ...serverHabit }
+}
+
 export const habitsConverter: firestore.FirestoreDataConverter<Habit> = {
-  toFirestore: (habit: Habit): ServerHabit => habit,
-  fromFirestore: (snapshot, options): Habit => {
+  toFirestore: habitToServer,
+  fromFirestore: (snapshot, options) => {
     const serverHabit = snapshot.data(options) as ServerHabit
 
-    return {
-      ...createEmptyHabit(),
-      ...serverHabit,
-      experienceIds: serverHabit.experienceIds || [],
-    }
+    return habitToClient(serverHabit)
   },
 }

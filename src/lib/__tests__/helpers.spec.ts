@@ -1,4 +1,4 @@
-import { generateId, isEmptyProperty, removeEmptyFrom } from '@/lib/helpers'
+import { generateId, isEmptyProperty, withoutEmptyFields } from '@/lib/helpers'
 
 describe('HELPERS', () => {
   describe('isEmptyProperty', () => {
@@ -21,6 +21,18 @@ describe('HELPERS', () => {
   })
 
   describe('removeEmptyFrom', () => {
+    it('does not modify the original object', () => {
+      const obj = {
+        emptyString: '',
+        emptyObject: {},
+        emptyArray: [],
+        nullValue: null,
+        undefinedValue: undefined,
+      }
+
+      expect(withoutEmptyFields(obj)).not.toBe(obj)
+    })
+
     it('removes different kinds of empty values', () => {
       const obj = {
         emptyString: '',
@@ -30,9 +42,7 @@ describe('HELPERS', () => {
         undefinedValue: undefined,
       }
 
-      removeEmptyFrom(obj)
-
-      expect(obj).toEqual({})
+      expect(withoutEmptyFields(obj)).toEqual({})
     })
 
     it('leaves non-empty values', () => {
@@ -49,10 +59,8 @@ describe('HELPERS', () => {
         ...template,
       }
 
-      removeEmptyFrom(obj)
-
-      expect(obj).not.toBe(template)
-      expect(obj).toEqual(template)
+      expect(withoutEmptyFields(obj)).not.toBe(template)
+      expect(withoutEmptyFields(obj)).toEqual(template)
     })
   })
 

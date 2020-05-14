@@ -14,7 +14,7 @@ export type ServerExperience = Experience
 export interface ServerHabit {
   id: string
   name: string
-  experienceIds: string[]
+  experienceIds?: string[]
 }
 
 // Types

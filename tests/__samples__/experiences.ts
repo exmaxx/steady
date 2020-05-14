@@ -4,7 +4,7 @@ import { HAPPY, SAD } from './emotions'
 import { ServerExperience } from '@/lib/api/types'
 import { Experience } from '@/store/experiences/types'
 
-export const experienceSample: Experience = {
+export const sampleExperience: Experience = {
   id: 'sAmPleId',
   datetime: '2020-05-13T17:53:01.494Z',
   situationStory: 'On a computer, working.',
@@ -16,7 +16,7 @@ export const experienceSample: Experience = {
   reactionAspect: 1,
 }
 
-export const serverExperienceSample: ServerExperience = {
+export const sampleServerExperience: ServerExperience = {
   id: 'sAmPleSerVerId',
   datetime: '2019-04-14T14:53:02.443Z',
   situationStory: 'Thinking about a problem.',

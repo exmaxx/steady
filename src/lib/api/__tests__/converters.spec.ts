@@ -1,13 +1,19 @@
 import activities from '../../../../tests/__samples__/activities'
 import emotions from '../../../../tests/__samples__/emotions'
 import {
-  experienceSample,
-  serverExperienceSample,
+  sampleExperience,
+  sampleServerExperience,
 } from '../../../../tests/__samples__/experiences'
+import {
+  sampleHabit,
+  sampleServerHabit,
+} from '../../../../tests/__samples__/habits'
 
 import {
   experienceToClient,
   experienceToServer,
+  habitToClient,
+  habitToServer,
   userToClient,
   userToServer,
 } from '@/lib/api/converters'
@@ -56,28 +62,28 @@ describe('converters', () => {
 
   describe('experience converters', () => {
     describe('to server', () => {
-      it('creates a copy', () => {
-        const serverObj = experienceToServer(experienceSample)
+      it('keeps the format', () => {
+        const serverObj = experienceToServer(sampleExperience)
 
-        expect(serverObj).not.toBe(experienceSample)
+        expect(serverObj).toEqual(sampleExperience)
       })
 
       it('throws when no id', () => {
         expect.assertions(1)
         expect(() =>
-          experienceToServer({ ...experienceSample, id: '' })
+          experienceToServer({ ...sampleExperience, id: '' })
         ).toThrowError('No id specified.')
       })
 
       it('keeps id', () => {
-        const serverObj = experienceToServer(experienceSample)
+        const serverObj = experienceToServer(sampleExperience)
 
-        expect(serverObj).toHaveProperty('id', experienceSample.id)
+        expect(serverObj).toHaveProperty('id', sampleExperience.id)
       })
 
       it('deletes empty fields', () => {
         const serverObj = experienceToServer({
-          ...experienceSample,
+          ...sampleExperience,
           reactionStory: '',
           reactionEmotions: [],
           reactionAspect: 0,
@@ -89,33 +95,27 @@ describe('converters', () => {
       })
 
       it('keeps non-empty fields', () => {
-        const serverObj = experienceToServer(experienceSample)
+        const serverObj = experienceToServer(sampleExperience)
 
-        expect(serverObj).toEqual(experienceSample)
+        expect(serverObj).toEqual(sampleExperience)
       })
     })
 
     describe('to client', () => {
-      it('creates a copy', () => {
-        const clientObj = experienceToClient(serverExperienceSample)
-
-        expect(clientObj).not.toBe(serverExperienceSample)
-      })
-
       it('keeps all fields', () => {
-        const clientObj = experienceToClient(serverExperienceSample)
+        const clientObj = experienceToClient(sampleServerExperience)
 
-        expect(clientObj).toEqual(serverExperienceSample)
+        expect(clientObj).toEqual(sampleServerExperience)
       })
 
       it('has id', () => {
-        const clientObj = experienceToClient(serverExperienceSample)
+        const clientObj = experienceToClient(sampleServerExperience)
 
-        expect(clientObj).toHaveProperty('id', serverExperienceSample.id)
+        expect(clientObj).toHaveProperty('id', sampleServerExperience.id)
       })
 
       it('creates missing fields', () => {
-        const serverObj = serverExperienceSample
+        const serverObj = { ...sampleServerExperience }
 
         delete serverObj.situationEmotions
         delete serverObj.reactionStory
@@ -127,6 +127,49 @@ describe('converters', () => {
         expect(clientObj).toHaveProperty('situationEmotions', [])
         expect(clientObj).toHaveProperty('reactionStory', '')
         expect(clientObj).toHaveProperty('reactionAspect', 0)
+      })
+    })
+  })
+
+  describe('experience converters', () => {
+    describe('to server', () => {
+      it('keeps the format', () => {
+        const serverObj = habitToServer(sampleHabit)
+
+        expect(serverObj).toEqual(sampleHabit)
+      })
+
+      it('throws when no id', () => {
+        expect.assertions(1)
+
+        expect(() => habitToServer({ ...sampleHabit, id: '' })).toThrowError(
+          'No id specified.'
+        )
+      })
+
+      it('keeps id', () => {
+        const serverObj = habitToServer(sampleHabit)
+
+        expect(serverObj).toHaveProperty('id', sampleHabit.id)
+      })
+    })
+
+    describe('from server', () => {
+      it('creates empty fields', () => {
+        const serverObj = { ...sampleServerHabit }
+
+        delete serverObj.experienceIds
+
+        const clientObj = habitToClient(serverObj)
+
+        expect(clientObj).not.toEqual(serverObj)
+        expect(clientObj).toHaveProperty('experienceIds', [])
+      })
+
+      it('keeps the format', () => {
+        const clientObj = habitToClient(sampleServerHabit)
+
+        expect(clientObj).toEqual(sampleServerHabit)
       })
     })
   })

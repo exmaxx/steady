@@ -23,6 +23,20 @@ export const generateId = (length: number) => {
 }
 
 /**
+ * Confirm that the object really has an 'id'. And that the id is not empty string.
+ *
+ * Note: Typescript ensures that the id is there in compile time. This ensures
+ * that it is there also in run time.
+ *
+ * @param obj
+ */
+export const withAssertedId = <T extends { id: string }>(obj: T): T => {
+  if (isEmpty(obj.id)) throw new Error('No id specified.')
+
+  return obj
+}
+
+/**
  * Create an empty experience. Serves as a template for new experience.
  */
 export const createEmptyExperience = (): Experience => ({
@@ -66,7 +80,15 @@ export const isEmptyProperty = (prop: unknown): boolean => {
  * Removes empty keys from and object.
  * @param obj Object will be modified.
  */
-export const removeEmptyFrom = (obj: { [key: string]: unknown }) =>
-  Object.keys(obj).forEach((key): void => {
-    isEmptyProperty(obj[key]) && delete obj[key]
+export const withoutEmptyFields = <T extends { [key: string]: unknown }>(
+  obj: T
+): T => {
+  const shallowCopyWithoutEmpty = { ...obj }
+
+  Object.keys(shallowCopyWithoutEmpty).forEach((key): void => {
+    isEmptyProperty(shallowCopyWithoutEmpty[key]) &&
+      delete shallowCopyWithoutEmpty[key]
   })
+
+  return shallowCopyWithoutEmpty
+}
