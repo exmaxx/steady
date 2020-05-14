@@ -131,7 +131,7 @@ describe('converters', () => {
     })
   })
 
-  describe('experience converters', () => {
+  describe('habit converters', () => {
     describe('to server', () => {
       it('keeps the format', () => {
         const serverObj = habitToServer(sampleHabit)
