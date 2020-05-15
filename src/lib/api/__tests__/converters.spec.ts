@@ -130,7 +130,10 @@ describe('converters', () => {
       })
 
       describe('when server object comes with no id', () => {
-        const sampleServerExperienceWithoutId =  { ...sampleServerExperience, id: '' }
+        const sampleServerExperienceWithoutId = {
+          ...sampleServerExperience,
+          id: '',
+        }
         const backupId = 'idFromAnotherSource'
 
         it('allows backup id when server object has no id', () => {
@@ -143,10 +146,7 @@ describe('converters', () => {
         })
 
         it('keeps id when provided in server object even if backup is also provided', () => {
-          const clientObj = experienceToClient(
-            sampleServerExperience,
-            backupId
-          )
+          const clientObj = experienceToClient(sampleServerExperience, backupId)
 
           expect(clientObj).toHaveProperty('id', sampleServerExperience.id)
         })
@@ -157,7 +157,7 @@ describe('converters', () => {
             experienceToClient(sampleServerExperienceWithoutId)
           ).toThrowError('No id specified.')
         })
-      });
+      })
     })
   })
 

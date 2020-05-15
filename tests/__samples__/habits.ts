@@ -1,7 +1,4 @@
-import {
-  SAMPLE_EXPERIENCE_ID,
-  sampleExperience,
-} from './experiences'
+import { SAMPLE_EXPERIENCE_ID, sampleExperience } from './experiences'
 
 import { Habit } from '@/store/habits/types'
 
