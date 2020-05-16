@@ -79,3 +79,12 @@ export function getPropsDef(
 
   return props
 }
+
+/**
+ * Type guard that returns true when argument is a function.
+ * @param arg
+ */
+export function isFunction(arg: any): arg is Function {
+  return typeof arg === 'function'
+}
+
