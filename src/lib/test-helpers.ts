@@ -42,8 +42,7 @@ let spyConsoleError: MockInstance<void, unknown[]>
  * Disable console.error() output.
  */
 export function disableConsoleErrors() {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  spyConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
+  spyConsoleError = jest.spyOn(console, 'error').mockImplementation(() => null)
 }
 
 /**
@@ -62,7 +61,10 @@ export function enableConsoleErrors() {
  * This way I need to create the component and extract the prop from its options. However,
  * when not initialized fully (with all props) it generates console errors. I do not want
  * to initialize the component fully when just examining props definitions. Therefore I suppress
- * the conosole errors.
+ * the console errors.
+ *
+ * Note: This is because I am using Typescript. The component need to be wrapperd by Vue.extend() and
+ * therefore it is not possible to access data directly.
  *
  * @param Component component to be tested
  */
@@ -84,7 +86,6 @@ export function getPropsDef(
  * Type guard that returns true when argument is a function.
  * @param arg
  */
-export function isFunction(arg: any): arg is Function {
+export function isFunction(arg: unknown): arg is Function {
   return typeof arg === 'function'
 }
-

@@ -38,7 +38,7 @@ describe('Helpers for tests', () => {
 
   describe('isFunction', () => {
     it('detects function (and only function)', () => {
-      expect(isFunction(() => {})).toBe(true)
+      expect(isFunction(() => null)).toBe(true)
       expect(isFunction({})).toBe(false)
       expect(isFunction('hi')).toBe(false)
       expect(isFunction(3)).toBe(false)

@@ -106,12 +106,12 @@ const habitsCollection = () =>
 /**
  * Creates an empty user data object.
  */
-const setUser = () => userDoc().set({})
+const setUserData = (): Promise<void> => userDoc().set({})
 
 /**
  * Get user data.
  */
-function getUser(): Promise<User> {
+function getUserData(): Promise<User> {
   return userDoc()
     .withConverter(userConverter)
     .get()
@@ -130,13 +130,13 @@ function getUser(): Promise<User> {
  * Get emotions data.
  */
 const getEmotions = (): Promise<Tag[]> =>
-  getUser().then((user) => user.emotions.sort())
+  getUserData().then((user) => user.emotions.sort())
 
 /**
  * Get activities data.
  */
 const getActivities = (): Promise<Tag[]> =>
-  getUser().then((user) => user.activities.sort())
+  getUserData().then((user) => user.activities.sort())
 
 /**
  * Get habits data.
@@ -233,8 +233,8 @@ function setActivity(activity: Tag): Promise<void> {
  */
 const Firebase = {
   init,
-  getUser,
-  setUser,
+  getUserData,
+  setUserData,
   getHabits,
   setHabit,
   getExperiences,

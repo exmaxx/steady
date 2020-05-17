@@ -1,5 +1,7 @@
 import firebase from 'firebase'
 
+export type AuthError = firebase.auth.Error
+
 function signIn() {
   const provider = new firebase.auth.GoogleAuthProvider()
 
