@@ -1,19 +1,17 @@
 import sortBy from 'lodash/sortBy'
-import Vue from 'vue'
 import { Module } from 'vuex'
 // TODO: Check whether the whole lodash is loaded. (If so, try to use lodash-es.)
 
 import Firebase from '@/lib/api/firebase'
+import mutations from '@/store/habits/mutations'
+import state from '@/store/habits/state'
 import { Habit, HabitsState } from '@/store/habits/types'
 import WithTracker from '@/store/helpers/with-tracker'
 import { RootState } from '@/store/types'
 
 const habitsModule: Module<HabitsState, RootState> = {
-  state: {},
-
-  mutations: {
-    SET_HABIT: (state, habit: Habit) => Vue.set(state, habit.id, habit),
-  },
+  state,
+  mutations,
 
   actions: {
     fetchHabits: ({ commit }) => {
