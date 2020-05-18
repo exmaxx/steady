@@ -1,29 +1,15 @@
 import { Module } from 'vuex'
 
 import Firebase from '@/lib/api/firebase'
+import mutations, {ADD_EXPERIENCE, UPDATE_EXPERIENCE} from '@/store/experiences/mutations'
+import state from '@/store/experiences/state'
 import { ExperiencesState, Experience } from '@/store/experiences/types'
 import WithTracker from '@/store/helpers/with-tracker'
 import { RootState } from '@/store/types'
 
 const experiencesModule: Module<ExperiencesState, RootState> = {
-  state: [],
-
-  mutations: {
-    ADD_EXPERIENCE: (state, experience: Experience) => {
-      state.push(experience)
-      state.sort((exA, exB) => exB.datetime.localeCompare(exA.datetime))
-    },
-
-    REMOVE_EXPERIENCE: (state, id: string) => {
-      const index = state.findIndex((exp) => exp.id === id)
-      state.splice(index, 1)
-    },
-
-    UPDATE_EXPERIENCE: (state, experienceWithId: Experience) => {
-      const index = state.findIndex((exp) => exp.id === experienceWithId.id)
-      state.splice(index, 1, experienceWithId)
-    },
-  },
+  state,
+  mutations,
 
   actions: {
     fetchExperiences: ({ commit }) => {
@@ -31,7 +17,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
 
       const promise = Firebase.getExperiences().then((experiences) =>
         experiences.forEach((experience) =>
-          commit('ADD_EXPERIENCE', experience)
+          commit(ADD_EXPERIENCE, experience)
         )
       )
 
@@ -47,7 +33,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
           console.error('Error in action createExperience.', error)
         )
         .then((id) => {
-          commit('ADD_EXPERIENCE', { ...experience, id })
+          commit(ADD_EXPERIENCE, { ...experience, id })
           return id
         }),
 
@@ -63,7 +49,7 @@ const experiencesModule: Module<ExperiencesState, RootState> = {
           console.error('Error in action createOrOverwriteExperience.', error)
         )
         .then((id) => {
-          commit('UPDATE_EXPERIENCE', { ...experience })
+          commit(UPDATE_EXPERIENCE, { ...experience })
           return id
         })
     },
