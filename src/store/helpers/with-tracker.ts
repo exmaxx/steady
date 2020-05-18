@@ -1,10 +1,10 @@
 import { Commit } from 'vuex'
 
-import { Resource } from '@/store/types'
 import {
   SET_STATUS_FINISHED,
   SET_STATUS_WORKING,
 } from '@/store/statuses/mutations'
+import { Resource } from '@/store/types'
 
 export default class WithTracker {
   resource: Resource
