@@ -25,26 +25,26 @@ describe('Habits module - mutations', () => {
     })
 
     it('updates habit', () => {
-      const habit: Habit = {
+      const originalHabit: Habit = {
         id: 'NeWhaBit',
         name: 'Life Changer',
         experienceIds: [],
       }
 
       state = {
-        [habit.id]: { ...habit },
+        [originalHabit.id]: { ...originalHabit },
       }
 
-      const updatedHabit = { ...habit, name: 'different name' }
+      const updatedHabit = { ...originalHabit, name: 'different name' }
 
       mutations[SET_HABIT](state, updatedHabit)
 
       expect(state).toEqual({
-        [habit.id]: { ...habit, name: updatedHabit.name },
+        [originalHabit.id]: { ...originalHabit, name: updatedHabit.name },
       })
 
       expect(state).not.toEqual({
-        [habit.id]: { ...habit },
+        [originalHabit.id]: { ...originalHabit },
       })
     })
   })
