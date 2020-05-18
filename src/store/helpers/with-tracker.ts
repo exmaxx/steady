@@ -13,7 +13,7 @@ export default class WithTracker {
   /**
    * WithTracker wrapper changes status in Vuex store before and after running the wrapped function.
    *
-   * @param resource Name that must be a root state "sub state" (property of root state).
+   * @param resource Name that must be a RootState's "sub state" (property of RootState).
    * @param commit Commit interface from Vuex.
    */
   constructor(resource: Resource, commit: Commit) {
@@ -36,10 +36,10 @@ export default class WithTracker {
   }
 
   /**
-   * Run function and track its start and end. If you want to use promise, use `runPromise`.
+   * Runs a function and tracks its start and end. If you want to use promise, use `runPromise`.
    * @param fn
    */
-  async runAsync<T>(fn: () => Promise<T>): Promise<T> {
+  async runAsync<T>(fn: () => T): Promise<T> {
     this.start()
     const result = await fn()
     this.end()
@@ -48,7 +48,7 @@ export default class WithTracker {
   }
 
   /**
-   * Wrap a promise and trigger tracker before and after the promise is resolved.
+   * Wraps a promise and trigger tracker before and after the promise is resolved.
    * @param promise
    */
   runPromise<T>(promise: Promise<T>): Promise<T> {
