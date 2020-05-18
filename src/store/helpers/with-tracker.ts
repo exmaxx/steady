@@ -1,6 +1,10 @@
 import { Commit } from 'vuex'
 
 import { Resource } from '@/store/types'
+import {
+  SET_STATUS_FINISHED,
+  SET_STATUS_WORKING,
+} from '@/store/statuses/mutations'
 
 export default class WithTracker {
   resource: Resource
@@ -21,14 +25,14 @@ export default class WithTracker {
    * Logs process start.
    */
   protected start() {
-    this.commit('SET_STATUS_WORKING', this.resource)
+    this.commit(SET_STATUS_WORKING, this.resource)
   }
 
   /**
    * Logs process end.
    */
   protected end() {
-    this.commit('SET_STATUS_FINISHED', this.resource)
+    this.commit(SET_STATUS_FINISHED, this.resource)
   }
 
   /**
