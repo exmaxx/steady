@@ -20,10 +20,6 @@
       >
         <h3>Trouble</h3>
 
-        <div v-if="experience.situationStory !== ''" class="story">
-          {{ experience.situationStory }}
-        </div>
-
         <div v-if="experience.situationActivities.length > 0" class="tags">
           <h4>Activities:</h4>
 
@@ -45,6 +41,10 @@
               <tag :title="emotion" type="neutral" />
             </li>
           </ul>
+        </div>
+
+        <div v-if="experience.situationStory !== ''" class="story">
+          {{ experience.situationStory }}
         </div>
       </div>
 
@@ -71,10 +71,6 @@
         </h5>
 
         <div>
-          <div v-if="experience.reactionStory !== ''" class="story">
-            {{ experience.reactionStory }}
-          </div>
-
           <div v-if="experience.reactionActivities.length > 0" class="tags">
             <h4>Activities:</h4>
 
@@ -102,6 +98,10 @@
                 />
               </li>
             </ul>
+          </div>
+
+          <div v-if="experience.reactionStory !== ''" class="story">
+            {{ experience.reactionStory }}
           </div>
         </div>
       </div>
