@@ -98,12 +98,12 @@
 
             <div>
               <input
-                id="neutral"
+                id="mixed"
                 v-model="form.reactionAspect"
                 type="radio"
                 value="0"
               />
-              <label for="neutral" class="pure-radio mixed">Mixed</label>
+              <label for="mixed" class="pure-radio mixed">Mixed</label>
               <span class="pure-form-message-inline">
                 (partial helped, partially didn't)
               </span>

@@ -1,13 +1,18 @@
 import { shallowMount } from '@vue/test-utils'
 import dayjs from 'dayjs'
 
+import activities from '../../../tests/__samples__/activities'
+import emotions from '../../../tests/__samples__/emotions'
+
 import Experience from '@/components/Experience.vue'
+import Tag from '@/components/Tag.vue'
 import { createEmptyExperience } from '@/lib/helpers'
 import {
   registerDayjsExtensions,
   registerVueFilters,
 } from '@/lib/initialization'
 import { getPropsDef } from '@/lib/test-helpers'
+import { AspectType } from '@/store/experiences/types'
 
 registerVueFilters()
 registerDayjsExtensions()
@@ -72,6 +77,32 @@ describe('Experience', function () {
     expect(tagGroups.length).toEqual(2)
     expect(tagGroups.at(0).findAll('li').length).toEqual(activities.length)
     expect(tagGroups.at(1).findAll('li').length).toEqual(emotions.length)
+  })
+
+  it('renders reaction tags with styles based on aspect', () => {
+    const sampleAspect: AspectType = -1
+    const sampleAspectClass = 'negative'
+
+    const wrapper = shallowMount(Experience, {
+      propsData: {
+        experience: {
+          ...createEmptyExperience(),
+          datetime: dayjs().toISOString(),
+          reactionEmotions: emotions,
+          reactionActivities: activities,
+          reactionAspect: sampleAspect,
+        },
+      },
+      stubs: ['router-link'],
+    })
+
+    const tagsWithCorrectType = wrapper
+      .findAllComponents(Tag)
+      .filter((tag) => tag.props()['type'] === sampleAspectClass)
+
+    expect(tagsWithCorrectType.length).toEqual(
+      activities.length + emotions.length
+    )
   })
 
   it('renders nothing for empty details', function () {

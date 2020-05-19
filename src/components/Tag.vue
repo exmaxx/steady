@@ -17,7 +17,7 @@ export default Vue.extend({
     type: {
       default: 'neutral',
       validator(value: string): boolean {
-        return ['neutral', 'positive', 'negative'].includes(value)
+        return ['neutral', 'positive', 'mixed', 'negative'].includes(value)
       },
     },
   },
@@ -36,18 +36,24 @@ span {
   border-radius: 0.5rem;
 
   &.neutral {
-    background-color: #f4f4f4;
+    color: black;
+    background-color: $color-neutral;
     border: 0.05rem solid #ccc;
   }
 
   &.negative {
     color: white;
-    background-color: #ff5e5e;
+    background-color: $color-negative;
+  }
+
+  &.mixed {
+    color: white;
+    background-color: $color-mixed;
   }
 
   &.positive {
     color: white;
-    background-color: #77c452;
+    background-color: $color-positive;
   }
 }
 </style>

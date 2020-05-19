@@ -2,7 +2,7 @@
   <div :key="experience.id" class="experience">
     <h2>{{ experience.datetime | formatDateAndTime }}</h2>
 
-    <h5 class="shadow">
+    <h5 class="neutral">
       {{ experience.datetime | dayInWeek }},
       {{ experience.datetime | asIntervalDate }}
     </h5>
@@ -32,7 +32,7 @@
               v-for="activity in experience.situationActivities"
               :key="activity"
             >
-              <tag :title="activity" type="negative" />
+              <tag :title="activity" type="neutral" />
             </li>
           </ul>
         </div>
@@ -42,7 +42,7 @@
 
           <ul>
             <li v-for="emotion in experience.situationEmotions" :key="emotion">
-              <tag :title="emotion" type="negative" />
+              <tag :title="emotion" type="neutral" />
             </li>
           </ul>
         </div>
@@ -83,7 +83,10 @@
                 v-for="activity in experience.reactionActivities"
                 :key="activity"
               >
-                <tag :title="activity" type="positive" />
+                <tag
+                  :title="activity"
+                  :type="experience.reactionAspect | aspectAsClass"
+                />
               </li>
             </ul>
           </div>
@@ -93,7 +96,10 @@
 
             <ul>
               <li v-for="emotion in experience.reactionEmotions" :key="emotion">
-                <tag :title="emotion" type="positive" />
+                <tag
+                  :title="emotion"
+                  :type="experience.reactionAspect | aspectAsClass"
+                />
               </li>
             </ul>
           </div>
